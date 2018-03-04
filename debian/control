@@ -1,0 +1,24 @@
+## Copyright (C) 2012 - 2018 ENCRYPTED SUPPORT LP <adrelanos@riseup.net>
+## See the file COPYING for copying conditions.
+
+Source: tor-control-panel
+Section: misc
+Priority: optional
+Maintainer: iry <iry@riseup.net>
+Uploaders: Patrick Schleizer <adrelanos@riseup.net>
+Build-Depends: debhelper (>= 9), genmkfile, ruby-ronn, python3
+Homepage: https://www.whonix.org/
+Vcs-Browser: https://github.com/troubadoour/tor-control-panel
+Vcs-Git: https://github.com/troubadoour/tor-control-panel.git
+Standards-Version: 3.9.8
+
+Package: tor-control-panel
+Architecture: all
+Depends: ${misc:Depends}, python3
+Recommends: tor, obfs4proxy
+Description: Tor Control Panel
+ tor-control-panel is a Tor controller.
+ .
+ tor-control-panel is produced independently from the Tor anonymity
+ software and carries no guarantee from The Tor Project about quality,
+ suitability or anything else.

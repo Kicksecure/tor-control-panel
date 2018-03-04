@@ -1,0 +1,4 @@
+#!/usr/bin/python3 -u
+
+from tor_control_panel import tor_control_panel
+tor_control_panel.main()

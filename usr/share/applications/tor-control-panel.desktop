@@ -1,0 +1,17 @@
+#!/usr/bin/env xdg-open
+## Copyright (C) 2012 - 2018 ENCRYPTED SUPPORT LP <adrelanos@riseup.net>
+## See the file COPYING for copying conditions.
+
+[Desktop Entry]
+Type=Application
+Terminal=false
+Exec=/usr/lib/tor-control-panel/tor-control-panel
+Name=Anon Connection Wizard
+GenericName=Anon Connection Wizard
+Comment=Tor Connection Configuration
+Categories=System;
+Icon=/usr/share/tor-control-panel/onion64.png
+## Because we need a wrapper to start it.
+X-KDE-StartupNotify=false
+Keywords=system;Whonix;setup;connection;Tor;Anon;
+X-Desktop-File-Install-Version=0.22
