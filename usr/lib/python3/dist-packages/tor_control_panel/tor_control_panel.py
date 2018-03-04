@@ -88,7 +88,7 @@ class TorControlPanel(QDialog):
         self.refresh_button.setGeometry(QtCore.QRect(10, 397, 83, 23))
         self.refresh_button.clicked.connect(lambda: self.refresh(True))
 
-        self.quit_button = QPushButton(self.exit_icon, '  Exit', self)
+        self.quit_button = QPushButton(self.exit_icon, ' Exit', self)
         self.quit_button.setIconSize(QtCore.QSize(20, 20))
         self.quit_button.setGeometry(QtCore.QRect(480, 397, 83, 23))
         self.quit_button.clicked.connect(self.quit)
@@ -97,9 +97,6 @@ class TorControlPanel(QDialog):
         self.layout.addWidget(self.tabs)
         self.layout.addWidget(self.button_box)
         self.setLayout(self.layout)
-
-        #self.status_icon = QLabel(self)
-        #self.status_icon.setGeometry(QtCore.QRect(100, 394, 32, 32))
 
         self.status = QPushButton(self.tab1)
         self.status.setEnabled(False)
@@ -113,14 +110,6 @@ class TorControlPanel(QDialog):
         self.bootstrap_progress.setMinimum(0)
         self.bootstrap_progress.setMaximum(100)
         self.bootstrap_progress.setVisible(False)
-
-        self.stop_thread_button = QPushButton(self.tab1)
-        self.stop_thread_button.setGeometry(116, 63, 150, 25)
-        self.stop_thread_button.setFlat(True)
-        self.stop_thread_button.setText(' Stop Tor bootstrap')
-        self.stop_thread_button.setIcon(QtGui.QIcon(self.stopicon))
-        self.stop_thread_button.setVisible(False)
-        self.stop_thread_button.clicked.connect(self.stop_bootstrap)
 
         self.user_frame = QFrame(self.tab1)
         self.user_frame.setLineWidth(2)
@@ -212,14 +201,12 @@ class TorControlPanel(QDialog):
 
     def update_bootstrap(self, bootstrap_phase, bootstrap_percent):
         self.bootstrap_progress.setVisible(True)
-        self.stop_thread_button.setVisible(True)
         self.bootstrap_progress.setValue(bootstrap_percent)
         self.bootstrap_done = False
         if bootstrap_percent == 100:
             message = '<p><b>Tor bootstrapping done</b></p>Bootstrap phase: {0}'.format(bootstrap_phase)
             self.message = message.split(':')[1]
             self.bootstrap_progress.setVisible(False)
-            self.stop_thread_button.setVisible(False)
             self.control_box.setEnabled(True)
             self.refresh(False)
             self.bootstrap_done = True
@@ -238,7 +225,6 @@ class TorControlPanel(QDialog):
             Please manually remove or comment those lines and then run \
             anon-connection-wizard or restart Tor.'
             self.bootstrap_progress.setVisible(False)
-            self.stop_thread_button.setVisible(False)
             self.control_box.setEnabled(True)
             self.refresh_status()
 
@@ -248,20 +234,9 @@ class TorControlPanel(QDialog):
             <p>Tor allows for authentication by reading it a cookie file, \
             but we cannot read that file (probably due to permissions)'
             self.bootstrap_progress.setVisible(False)
-            self.stop_thread_button.setVisible(False)
+            #self.stop_thread_button.setVisible(False)
             self.control_box.setEnabled(True)
             self.refresh_status()
-
-    def stop_bootstrap(self):
-        self.tor_status = 'stopped'
-        self.message = '<b>Tor is not fulluy bootstrapped.</b> \
-        Bootstrap phase :<p>%s' % self.message
-        self.refresh_status()
-        self.bootstrap_progress.setVisible(False)
-        self.stop_thread_button.setVisible(False)
-        self.control_box.setEnabled(True)
-        self.bootstrap_thread.terminate()
-        #self.stop_tor()
 
     def start_bootstrap(self):
         self.bootstrap_thread = tor_bootstrap.TorBootstrap(self)
@@ -339,10 +314,8 @@ class TorControlPanel(QDialog):
                 self.tor_status =  'stopped'
             if not tor_is_enabled:
                 if tor_is_running:
-                    #self.bootstrap_progress.setVisible(False)
                     self.tor_status =  'disabled-running'
                 elif not tor_is_running:
-                    #self.bootstrap_progress.setVisible(False)
                     self.tor_status =  'disabled'
             self.message = self.tor_message[self.tor_status_list.index(self.tor_status)]
 
@@ -351,7 +324,6 @@ class TorControlPanel(QDialog):
         self.refresh_user_configuration()
 
     def restart_tor(self):
-        #self.stop_thread_button.setVisible(True)
         self.control_box.setEnabled(False)
         ## if running restart tor directly stem returns
         ## bootstrap_percent 100 or  a socket error, randomly.
