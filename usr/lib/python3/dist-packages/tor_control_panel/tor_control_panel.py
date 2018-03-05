@@ -72,7 +72,6 @@ class TorControlPanel(QDialog):
         self.button_name = ['&torrc', 'Tor &log', 'systemd &journal']
 
         self.journal_command = ['journalctl', '-n', '200', '-u', 'tor@default.service']
-        QApplication.setOverrideCursor(Qt.WaitCursor)
 
         self.bootstrap_done = True
 
@@ -234,7 +233,6 @@ class TorControlPanel(QDialog):
             <p>Tor allows for authentication by reading it a cookie file, \
             but we cannot read that file (probably due to permissions)'
             self.bootstrap_progress.setVisible(False)
-            #self.stop_thread_button.setVisible(False)
             self.control_box.setEnabled(True)
             self.refresh_status()
 
@@ -246,11 +244,8 @@ class TorControlPanel(QDialog):
     def refresh_status(self):
         self.tor_message_browser.setText(self.message)
 
-        ## update [Tor status] color and icon in Logs tab
         color = self.tor_status_color[self.tor_status_list.index(self.tor_status)]
         self.status.setStyleSheet('background-color:%s; color:white; font:bold' % color)
-        #image = QtGui.QImage(self.tor_icon[self.tor_status_list.index(self.tor_status)])
-        #self.status_icon.setPixmap(QPixmap.fromImage(image))
 
     def refresh_logs(self):
         for button in self.files_box.findChildren(QRadioButton):
@@ -295,10 +290,6 @@ class TorControlPanel(QDialog):
             self.proxy_socket.setVisible(False)
 
     def refresh(self, check_boostrap):
-        use_bridge = False
-        use_proxy = False
-
-        QApplication.setOverrideCursor(Qt.BusyCursor)
         ## get status
         tor_is_enabled = tor_status.tor_status() == 'tor_enabled'
         tor_is_running = os.path.exists(self.tor_running_path)
