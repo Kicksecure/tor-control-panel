@@ -5,8 +5,7 @@ import os
 import json
 import shutil
 import tempfile
-from anon_connection_wizard import repair_torrc
-#from subprocess import Popen, PIPE, call
+#from anon_connection_wizard import repair_torrc
 
 whonix = os.path.exists('/usr/share/anon-gw-base-files/gateway')
 if whonix:
@@ -48,8 +47,16 @@ command_sock5 = 'Socks5Proxy '
 command_sock5Username = 'Socks5ProxyUsername'
 command_sock5Password = 'Socks5ProxyPassword'
 
-def gen_torrc(bridge_type):
-    repair_torrc.repair_torrc()  # This guarantees a good set of torrc files
+def gen_torrc(args):
+    bridge_type =   str(args[0])
+    proxy_type =    str(args[1])
+    if not proxy_type == 'None':
+        proxy_ip =          str(args[2])
+        proxy_port =        str(args[3])
+        proxy_username =    str(args[4])
+        proxy_password  =   str(args[5])
+
+    #repair_torrc.repair_torrc()  # This guarantees a good set of torrc files
 
     # Creates a file and returns a tuple containing both the handle and the path.
     # we are responsible for removing tmp file when finished which is the reason we
@@ -113,19 +120,19 @@ the next time you run anon-connection-wizard.\n\
     #'''
     #if use_proxy:
         #with open(torrc_tmp_file_path, 'a') as f:
-            #if proxy_type == 'HTTP/HTTPS':
-                #f.write('HTTPSProxy {0}:{1}\n'.format(proxy_ip, proxy_port))
-                #if (proxy_username != ''):  # there is no need to check password because
-                                                   ##username is essential
-                    #f.write('HTTPSProxyAuthenticator {0}:{1}\n'.format(proxy_username, proxy_password))
-            #elif proxy_type == 'SOCKS4':
-                ## Notice that SOCKS4 does not support proxy username and password
-                #f.write('Socks4Proxy {0}:{1}\n'.format(proxy_ip, proxy_port))
-            #elif proxy_type == 'SOCKS5':
-                #f.write('Socks5Proxy {0}:{1}\n'.format(proxy_ip, proxy_port))
-                #if (proxy_username != ''):
-                    #f.write('Socks5ProxyUsername {0}\n'.format(proxy_username))
-                    #f.write('Socks5ProxyPassword {0}\n'.format(proxy_password))
+        if proxy_type == 'HTTP/HTTPS':
+            f.write('HTTPSProxy {0}:{1}\n'.format(proxy_ip, proxy_port))
+            if (proxy_username != ''):  # there is no need to check password because
+                                                #username is essential
+                f.write('HTTPSProxyAuthenticator {0}:{1}\n'.format(proxy_username, proxy_password))
+        elif proxy_type == 'SOCKS4':
+            # Notice that SOCKS4 does not support proxy username and password
+            f.write('Socks4Proxy {0}:{1}\n'.format(proxy_ip, proxy_port))
+        elif proxy_type == 'SOCKS5':
+            f.write('Socks5Proxy {0}:{1}\n'.format(proxy_ip, proxy_port))
+            if (proxy_username != ''):
+                f.write('Socks5ProxyUsername {0}\n'.format(proxy_username))
+                f.write('Socks5ProxyPassword {0}\n'.format(proxy_password))
 
     #shutil.move(torrc_tmp_file_path, torrc_file_path)
 
