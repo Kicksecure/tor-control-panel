@@ -22,7 +22,7 @@ class TorControlPanel(QDialog):
         self.refresh_icon = QtGui.QIcon('/usr/share/tor-control-panel/refresh.png')
         self.exit_icon = QtGui.QIcon('/usr/share/tor-control-panel/Exit.png')
 
-        self.restart_icon = QtGui.QIcon('/usr/share/tor-control-panel/restart_tor.png')
+        self.restart_icon = QtGui.QIcon('/usr/share/tor-control-panel/restart.png')
         self.stop_icon = QtGui.QIcon('/usr/share/tor-control-panel/stop.png')
         self.tool_icon = QtGui.QIcon('/usr/share/tor-control-panel/tools.png')
         self.info_icon = QtGui.QIcon('/usr/share/tor-control-panel/help.png')
@@ -60,7 +60,7 @@ class TorControlPanel(QDialog):
                         'Custom bridges']
 
         self.proxies = ['None',
-                        'HTTP / HTTPS',
+                        'HTTP/HTTPS',
                         'SOCKS4',
                         'SOCKS5']
 
@@ -192,6 +192,7 @@ class TorControlPanel(QDialog):
         self.bridge_info_button.setGeometry(335, 26, 20, 20)
         self.bridge_info_button.setFlat(True)
         self.bridge_info_button.setVisible(False)
+        self.bridge_info_button.setToolTip('Show bridges help')
 
         self.proxy_label.setText('Proxy type :')
         self.proxy_label.setGeometry(10, 53, 90, 20)
@@ -230,6 +231,7 @@ class TorControlPanel(QDialog):
         self.proxy_info_button.setGeometry(335, 53, 20, 20)
         self.proxy_info_button.setFlat(True)
         self.proxy_info_button.setVisible(False)
+        self.proxy_info_button.setToolTip('Show proxies help')
 
         self.control_box.setGeometry(QtCore.QRect(380, 8, 140, 133))
         self.control_box.setTitle('Control')
@@ -318,6 +320,8 @@ class TorControlPanel(QDialog):
             self.proxy_pwd_edit.setVisible(False)
 
     def configure(self):
+        args = []
+        
         if self.configure_button.text() == ' Configure':
             self.configure_button.setText(' Connect  ')
             self.restart_button.setEnabled(False)
@@ -326,9 +330,18 @@ class TorControlPanel(QDialog):
             self.proxy_combo.setVisible(True)
             self.bridge_info_button.setVisible(True)
             self.proxy_info_button.setVisible(True)
+            
         elif self.configure_button.text() == ' Connect  ':
-            bridge = self.bridges_combo.currentText().split(' ')[0]
-            torrc_gen.gen_torrc(bridge)
+            args.append(self.bridges_combo.currentText().split(' ')[0])
+            proxy = self.proxy_combo.currentText()
+            args.append(proxy)
+            print(proxy)
+            if not proxy == None:
+                args.append(self.proxy_ip_edit.text())
+                args.append(self.proxy_port_edit.text())
+                args.append(self.proxy_user_edit.text())
+                args.append(self.proxy_pwd_edit.text())
+            torrc_gen.gen_torrc(args)
             self.restart_tor()
             self.configure_button.setText(' Configure')
             self.restart_button.setEnabled(True)

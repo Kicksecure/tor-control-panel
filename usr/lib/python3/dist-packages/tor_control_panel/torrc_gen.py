@@ -50,6 +50,8 @@ command_sock5Password = 'Socks5ProxyPassword'
 def gen_torrc(args):
     bridge_type =   str(args[0])
     proxy_type =    str(args[1])
+    print(proxy_type)
+    print(bridge_type)
     if not proxy_type == 'None':
         proxy_ip =          str(args[2])
         proxy_port =        str(args[3])
