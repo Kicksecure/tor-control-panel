@@ -35,11 +35,6 @@ bridges_command = ['ClientTransportPlugin obfs2,obfs3 exec /usr/bin/obfs4proxy\n
 
 bridges_type = ['obfs3', 'obfs4', 'meek-amazon', 'meek-azure']
 
-#meek_address =    ['a0.awsstatic.com\n',
-                   #'ajax.aspnetcdn.com\n']
-#requested_meek =  ['meek-amazon', 'meek-azure']
-
-
 command_http = 'HTTPSProxy '
 command_httpAuth = 'HTTPSProxyAuthenticator'
 command_sock4 = 'Socks4Proxy '
@@ -148,21 +143,84 @@ def parse_torrc():
             use_proxy = True
 
         if use_bridge:
+            #with open(torrc_file_path, 'r') as f:
+                #for line in f:
+                    #if 'ClientTransportPlugin' in line:
+                        #bridge_type = line.split()[1]
             with open(torrc_file_path, 'r') as f:
+                ## This falg is for parsing meek_lite
+                use_meek_lite = False
                 for line in f:
-                    if 'ClientTransportPlugin' in line:
-                        bridge_type = line.split()[1]
+                    #if line.startswith(command_use_custom_bridge):  # this condition must be above '#' condition, because it also contains '#'
+                        #use_default_bridge = False
+                    #elif line.startswith('#'):
+                        #pass  # add this line to improve efficiency
+                    #elif line.startswith(command_useBridges):
+                        #use_bridges = True
+                    if line.startswith(command_obfs3):
+                        bridge_type = 'obfs3'
+                    elif line.startswith(command_obfs4):
+                        bridge_type = 'obfs4'
+                    elif line.startswith(command_meek_lite):
+                        use_meek_lite = True
+                    elif use_meek_lite and line.endswith(command_meek_amazon_address):
+                        bridge_type = 'meek-amazon'
+                        #bridge_custom += ' '.join(line.split(' ')[1:])  # eliminate the 'Bridge'
+                    elif use_meek_lite and line.endswith(command_meek_azure_address):
+                        bridge_type = 'meek-azure'
+                        #bridge_custom += ' '.join(line.split(' ')[1:])  # eliminate the 'Bridge'
+                    elif line.startswith(command_fte):
+                        bridge_type = 'fte'
+                    elif line.startswith(command_scramblesuit):
+                        bridge_type = 'scramblesuit'
+                    #elif line.startswith(command_bridgeInfo):
+                        #bridge_custom += ' '.join(line.split(' ')[1:])  # eliminate the 'Bridge'
+                if bridge_type == 'obfs4':
+                    bridge_type = 'obfs4 (recommended)'
+                elif bridge_type == 'meek-amazon':
+                    bridge_type = 'meek-amazon (works in China)'
+                elif bridge_type == 'meek-azure':
+                    bridge_type = 'meek-azure (works in China)'
         else:
             bridge_type = 'None'
 
         if use_proxy:
             with open(torrc_file_path, 'r') as f:
                 for line in f:
-                    if 'Proxy' in line:
-                        proxy_type = line.split()[0]
-                        proxy_socket = line.split()[1]
+                    if line.startswith(command_http):
+                        #use_proxy = True
+                        proxy_type = 'HTTP/HTTPS'
+                        ''' Using the following parsing fragments is too fixed,
+                        which is not good implementation.
+                        But as long as leave .conf untouched by user, it will be Okay.
+                        We should also be careful when changing the command line format in this app
+                        '''
+                        proxy_ip = line.split(' ')[1].split(':')[0]
+                        proxy_port = line.split(' ')[1].split(':')[1].split('\n')[0]
+
+                    elif line.startswith(command_httpAuth):
+                        proxy_username = line.split(' ')[1].split(':')[0]
+                        proxy_password = line.split(' ')[1].split(':')[1]
+                    elif line.startswith(command_sock4):
+                        use_proxy = True
+                        proxy_type = 'SOCKS4'
+                        proxy_ip = line.split(' ')[1].split(':')[0]
+                        proxy_port = line.split(' ')[1].split(':')[1].split('\n')[0]
+                    elif line.startswith(command_sock5):
+                        use_proxy = True
+                        proxy_type = 'SOCKS5'
+                        proxy_ip = line.split(' ')[1].split(':')[0]
+                        proxy_port = line.split(' ')[1].split(':')[1].split('\n')[0]
+                    elif line.startswith(command_sock5Username):
+                        proxy_username = line.split(' ')[1]
+                    elif line.startswith(command_sock5Password):
+                        proxy_password = line.split(' ')[1]
+                    #if 'Proxy' in line:
+                        #proxy_type = line.split()[0]
+                        #proxy_socket = line.split()[1]
         else:
             proxy_type = 'None'
-            proxy_socket = 'None'
+            proxy_ip = 'None'
+            proxy_port = 'None'
 
-        return(bridge_type, proxy_type, proxy_socket)
+        return(bridge_type, proxy_type, proxy_ip, proxy_port)
