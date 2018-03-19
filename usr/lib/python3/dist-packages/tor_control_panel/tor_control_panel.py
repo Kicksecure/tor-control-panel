@@ -116,7 +116,7 @@ class TorControlPanel(QDialog):
         self.proxy_info_button.clicked.connect(info.show_proxy_help)
 
         self.prev_button = QPushButton(self.back_icon, '',self.config_frame)
-        self.prev_button.clicked.connect(self.exit_configure)
+        self.prev_button.clicked.connect(self.exit_configuration)
 
         self.proxy_ip_label = QLabel(self.config_frame)
         self.proxy_ip_edit = QLineEdit(self.config_frame)
@@ -191,7 +191,7 @@ class TorControlPanel(QDialog):
         self.bridges_label.setGeometry(10, 26, 90, 20)
         self.bridges_label.setText('Bridges type :')
         self.bridges_type.setGeometry(100, 26, 250, 20)
-        self.bridges_type.setText('<b>None</b>')
+        self.bridges_type.setStyleSheet('font:bold')
         self.bridges_combo.setGeometry(100, 26, 250, 20)
         self.bridges_combo.setMaximumWidth(220)
         self.bridges_combo.setVisible(False)
@@ -203,7 +203,7 @@ class TorControlPanel(QDialog):
         self.proxy_label.setText('Proxy type :')
         self.proxy_label.setGeometry(10, 53, 90, 20)
         self.proxy_type.setGeometry(100, 53, 250, 20)
-        self.proxy_type.setText('<b>None</b>')
+        self.proxy_type.setStyleSheet('font:bold')
         self.proxy_combo.setGeometry(100, 53, 250, 20)
         self.proxy_combo.setMaximumWidth(220)
         self.proxy_combo.setVisible(False)
@@ -349,9 +349,18 @@ class TorControlPanel(QDialog):
             self.proxy_user_edit.setEnabled(True)
             self.proxy_pwd_edit.setEnabled(True)
             self.proxy_settings_show(self.proxy_combo.currentText())
+            self.prev_proxy = self.proxy_combo.currentText()
             self.bridge_info_button.setVisible(True)
             self.proxy_info_button.setVisible(True)
             self.prev_button.setVisible(True)
+
+            bridge = self.bridges_type.text()
+            index = self.bridges_combo.findText(bridge, QtCore.Qt.MatchFixedString)
+            self.bridges_combo.setCurrentIndex(index)
+            proxy = self.proxy_type.text()
+            index = self.proxy_combo.findText(proxy, QtCore.Qt.MatchFixedString)
+            self.proxy_combo.setCurrentIndex(index)
+            self.proxy_settings_show(self.proxy_type.text())
 
         elif self.configure_button.text() == ' Connect  ':
             args.append(self.bridges_combo.currentText().split(' ')[0])
@@ -364,11 +373,10 @@ class TorControlPanel(QDialog):
                 args.append(self.proxy_pwd_edit.text())
             torrc_gen.gen_torrc(args)
             self.restart_tor()
-            self.restore_configure()
+            self.exit_configuration()
 
-    def restore_configure(self):
+    def exit_configuration(self):
         self.configure_button.setText(' Configure')
-        #self.control_box.setEnabled(True)
         self.prev_button.setVisible(False)
         self.restart_button.setEnabled(True)
         self.stop_button.setEnabled(True)
@@ -376,23 +384,11 @@ class TorControlPanel(QDialog):
         self.proxy_combo.setVisible(False)
         self.bridge_info_button.setVisible(False)
         self.proxy_info_button.setVisible(False)
-        if self.proxy_combo.currentText() == 'None':
-            self.proxy_ip_label.setVisible(False)
-            self.proxy_ip_edit.setVisible(False)
-            self.proxy_port_label.setVisible(False)
-            self.proxy_port_edit.setVisible(False)
-            self.proxy_user_label.setVisible(False)
-            self.proxy_user_edit.setVisible(False)
-            self.proxy_pwd_label.setVisible(False)
-            self.proxy_pwd_edit.setVisible(False)
+        self.proxy_settings_show(self.proxy_type.text())
         self.proxy_ip_edit.setEnabled(False)
         self.proxy_port_edit.setEnabled(False)
         self.proxy_user_edit.setEnabled(False)
         self.proxy_pwd_edit.setEnabled(False)
-
-    def exit_configure(self):
-        self.restore_configure()
-        self.prev_button.setVisible(False)
 
     def refresh_status(self):
         self.tor_message_browser.setText(self.message)
@@ -414,11 +410,11 @@ class TorControlPanel(QDialog):
 
     def refresh_user_configuration(self):
         args = torrc_gen.parse_torrc()
-        self.bridges_type.setText('<b>' + args[0].split()[0])
+        self.bridges_type.setText(args[0])#.split()[0])
         index = self.bridges_combo.findText(args[0], QtCore.Qt.MatchFixedString)
         self.bridges_combo.setCurrentIndex(index)
 
-        self.proxy_type.setText('<b>' + args[1])
+        self.proxy_type.setText(args[1])
         index = self.proxy_combo.findText(args[1], QtCore.Qt.MatchFixedString)
         self.proxy_combo.setCurrentIndex(index)
         if not args[1] == 'None':
