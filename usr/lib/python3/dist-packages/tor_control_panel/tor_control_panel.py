@@ -280,17 +280,14 @@ class TorControlPanel(QDialog):
         if bootstrap_percent == 100:
             self.message = bootstrap_phase
             self.bootstrap_progress.setVisible(False)
-            #self.control_box.setEnabled(True)
             self.restart_button.setEnabled(True)
             self.stop_button.setEnabled(True)
             self.refresh(False)
             self.bootstrap_done = True
-            #self.prev_button.setVisible(False)
         else:
             self.message = bootstrap_phase
             self.tor_status = 'acquiring'
             self.refresh_status()
-            #self.prev_button.setVisible(True)
 
         if bootstrap_phase == 'no_controller':
             self.bootstrap_thread.terminate()
@@ -301,11 +298,9 @@ class TorControlPanel(QDialog):
             Please manually remove or comment those lines and then run \
             anon-connection-wizard or restart Tor.'
             self.bootstrap_progress.setVisible(False)
-            #self.control_box.setEnabled(True)
             self.restart_button.setEnabled(True)
             self.stop_button.setEnabled(True)
             self.refresh_status()
-            #self.prev_button.setVisible(False)
 
         elif bootstrap_phase == 'cookie_authentication_failed':
             self.bootstrap_thread.terminate()
@@ -362,7 +357,6 @@ class TorControlPanel(QDialog):
             args.append(self.bridges_combo.currentText().split(' ')[0])
             proxy = self.proxy_combo.currentText()
             args.append(proxy)
-            print(proxy)
             if not proxy == None:
                 args.append(self.proxy_ip_edit.text())
                 args.append(self.proxy_port_edit.text())
@@ -395,14 +389,10 @@ class TorControlPanel(QDialog):
         self.proxy_port_edit.setEnabled(False)
         self.proxy_user_edit.setEnabled(False)
         self.proxy_pwd_edit.setEnabled(False)
-        #if self.bootstrap_done:
-            #self.prev_button.setVisible(False)
 
     def exit_configure(self):
         self.restore_configure()
         self.prev_button.setVisible(False)
-        #if not self.bootstrap_done:
-            #self.bootstrap_thread.terminate()
 
     def refresh_status(self):
         self.tor_message_browser.setText(self.message)
@@ -424,8 +414,6 @@ class TorControlPanel(QDialog):
 
     def refresh_user_configuration(self):
         args = torrc_gen.parse_torrc()
-        print(args)
-
         self.bridges_type.setText('<b>' + args[0].split()[0])
         index = self.bridges_combo.findText(args[0], QtCore.Qt.MatchFixedString)
         self.bridges_combo.setCurrentIndex(index)
@@ -434,8 +422,8 @@ class TorControlPanel(QDialog):
         index = self.proxy_combo.findText(args[1], QtCore.Qt.MatchFixedString)
         self.proxy_combo.setCurrentIndex(index)
         if not args[1] == 'None':
-            self.proxy_ip_edit.setText(args[2])#.split(':')[0])
-            self.proxy_port_edit.setText(args[3])#.split(':')[1])
+            self.proxy_ip_edit.setText(args[2])
+            self.proxy_port_edit.setText(args[3])
 
     def refresh(self, check_boostrap):
         ## get status
@@ -463,7 +451,6 @@ class TorControlPanel(QDialog):
         self.refresh_user_configuration()
 
     def restart_tor(self):
-        #self.control_box.setEnabled(False)
         self.restart_button.setEnabled(False)
         self.stop_button.setEnabled(False)
         ## if running restart tor directly stem returns
