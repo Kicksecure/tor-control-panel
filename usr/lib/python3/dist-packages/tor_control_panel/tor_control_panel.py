@@ -275,8 +275,8 @@ class TorControlPanel(QDialog):
         self.custom_bridges_frame.setLineWidth(2)
         self.custom_bridges_frame.setFrameShape(QFrame.Panel |
                                                 QFrame.Raised)
-        #self.custom_bridges_frame.setVisible(False)
-        self.user_frame.setVisible(False)
+        self.custom_bridges_frame.setVisible(False)
+        #self.user_frame.setVisible(False)
         self.custom_cancel_button.setGeometry(380, 300, 65, 25)
         self.custom_cancel_button.setFlat(True)
         self.custom_accept_button.setGeometry(455, 300, 65 ,25)
