@@ -44,7 +44,23 @@ You have to know the port number you are trying to connect to. It should be a po
 If you do not know what they are, just leave them blank to see if the connection will success. Because in most cases, you do not need them.</blockquote>''', QtWidgets.QMessageBox.Ok)
     reply.exec_()
 
-def tor_message():
+def custom_bridges_help():
+    message = '''
+<p>As an alternative to using the provided bridges, you may obtain a
+custom set of addresses by using one of these two methods:</p>
+
+<p><b>1.</b> Use a web browser to visit:
+<b>https://bridges.torproject.org/options</b></p>
+
+<p><b>2.</b> Send an email to <b>bridges@torproject.org</b> with the line 'get bridges' by itself in the body of the message. You must send this request from one of the following email providers
+(listed in order of preference):<br>
+https://www.riseup.net, https://mail.google.com, or https://mail.yahoo.com</p>
+<p>For assistance, visit <b>torproject.org/about/contact.html#support</p>
+<p>Paste the bridges list received from Tor Project:
+'''
+    return(message)
+
+def tor_stopped():
     tor_message = ['',
             '<b>Tor is not running.</b> <p> \
             If Tor was stopped intentionally, you can restart it from the \
