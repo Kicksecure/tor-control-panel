@@ -43,16 +43,16 @@ command_sock5Username = 'Socks5ProxyUsername'
 command_sock5Password = 'Socks5ProxyPassword'
 
 def gen_torrc(args):
-    bridge_type =   str(args[0])
-    proxy_type =    str(args[1])
-    #print(proxy_type)
-    #print(bridge_type)
+    bridge_type =       str(args[0])
+    custom_bridges =    str(args[1])
+    proxy_type =        str(args[2])
     if not proxy_type == 'None':
-        proxy_ip =          str(args[2])
-        proxy_port =        str(args[3])
-        proxy_username =    str(args[4])
-        proxy_password  =   str(args[5])
-
+        proxy_ip =          str(args[3])
+        proxy_port =        str(args[4])
+        proxy_username =    str(args[5])
+        proxy_password  =   str(args[6])
+    print(bridge_type)
+    #return()
     #repair_torrc.repair_torrc()  # This guarantees a good set of torrc files
 
     # Creates a file and returns a tuple containing both the handle and the path.
@@ -71,9 +71,31 @@ def gen_torrc(args):
 # However, deleting this file will be fine since a new plain file will be generated \
 the next time you run anon-connection-wizard.\n\
 ")
-
         if bridge_type == 'None':
             f.write('DisableNetwork 0\n')
+
+        elif bridge_type == 'Custom bridges':
+            f.write(command_use_custom_bridge + '\n')
+            f.write(command_useBridges + '\n')
+            f.write('DisableNetwork 0\n')
+            if custom_bridges.lower().startswith('obfs4'):
+                f.write(command_obfs4 + '\n')
+            #elif bridge_custom.lower().startswith('obfs3'):
+                #f.write(command_obfs3 + '\n')
+            #elif bridge_custom.lower().startswith('fte'):
+                #f.write(command_fte + '\n')
+            #elif bridge_custom.lower().startswith('meek_lite'):
+                #f.write(command_meek_lite + '\n')
+            bridge_custom_list = custom_bridges.split('\n')
+            for bridge in bridge_custom_list:
+                if bridge != '':  # check if the line is actually empty
+                    f.write('bridge {0}\n'.format(bridge))
+
+            ## Write the specific bridge address, port, cert etc.
+            #bridge_custom_list = bridge_custom.split('\n')
+            #for bridge in bridge_custom_list:
+                #if bridge != '':  # check if the line is actually empty
+                    #f.write('bridge {0}\n'.format(bridge))
         else:
             f.write(command_useBridges + '\n')
             #if bridge_type in bridges_type:
@@ -137,10 +159,10 @@ def parse_torrc():
     if os.path.exists(torrc_file_path):
         use_bridge = False
         use_proxy = False
-        if 'UseBridges' in open(torrc_file_path).read():
-            use_bridge = True
         if 'Proxy' in open(torrc_file_path).read():
             use_proxy = True
+        if 'UseBridges' in open(torrc_file_path).read():
+            use_bridge = True
 
         if use_bridge:
             #with open(torrc_file_path, 'r') as f:
@@ -148,7 +170,7 @@ def parse_torrc():
                     #if 'ClientTransportPlugin' in line:
                         #bridge_type = line.split()[1]
             with open(torrc_file_path, 'r') as f:
-                ## This falg is for parsing meek_lite
+                ## This flag is for parsing meek_lite
                 use_meek_lite = False
                 for line in f:
                     #if line.startswith(command_use_custom_bridge):  # this condition must be above '#' condition, because it also contains '#'
@@ -173,6 +195,8 @@ def parse_torrc():
                         bridge_type = 'fte'
                     elif line.startswith(command_scramblesuit):
                         bridge_type = 'scramblesuit'
+                    #elif line.startswith(command_use_custom_bridge):
+                        #bridges_type = 'Custom bridges'
                     #elif line.startswith(command_bridgeInfo):
                         #bridge_custom += ' '.join(line.split(' ')[1:])  # eliminate the 'Bridge'
                 if bridge_type == 'obfs4':

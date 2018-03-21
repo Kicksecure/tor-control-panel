@@ -19,23 +19,16 @@ class TorControlPanel(QDialog):
         self.setMinimumSize(575, 430)
         self.setMaximumSize(575, 430)
 
-        self.refresh_icon = QtGui.QIcon('/usr/share/tor-control-panel/refresh.png')
-        self.exit_icon = QtGui.QIcon('/usr/share/tor-control-panel/Exit.png')
+        icons_path = '/usr/share/tor-control-panel/'
+        self.refresh_icon = QtGui.QIcon(icons_path + 'refresh.png')
+        self.exit_icon = QtGui.QIcon(icons_path + 'Exit.png')
 
-        self.restart_icon = QtGui.QIcon('/usr/share/tor-control-panel/restart.png')
-        self.stop_icon = QtGui.QIcon('/usr/share/tor-control-panel/stop.png')
-        self.tool_icon = QtGui.QIcon('/usr/share/tor-control-panel/tools.png')
-        self.info_icon = QtGui.QIcon('/usr/share/tor-control-panel/help.png')
-        #self.back_icon = QtGui.QIcon('/usr/share/tor-control-panel/prev.png')
-        self.back_icon = QtGui.QIcon('/usr/share/icons/oxygen/base/32x32/actions/window-close.png')
-
-        self.tor_icon = [
-            '/usr/share/icons/oxygen/base/32x32/actions/dialog-ok-apply.png',
-            '/usr/share/icons/oxygen/base/32x32/actions/window-close.png',
-            '/usr/share/icons/oxygen/base/32x32/actions/window-close.png',
-            '/usr/share/icons/oxygen/base/32x32/status/dialog-warning',
-            '/usr/share/icons/oxygen/base/32x32/status/dialog-warning',
-            '/usr/share/icons/oxygen/base/32x32/actions/window-close.png']
+        self.restart_icon = QtGui.QIcon(icons_path + 'restart.png')
+        self.stop_icon = QtGui.QIcon(icons_path + 'stop.png')
+        self.tool_icon = QtGui.QIcon(icons_path + 'tools.png')
+        self.info_icon = QtGui.QIcon(icons_path + 'help.png')
+        self.back_icon = QtGui.QIcon(icons_path + 'back_icon.png')
+        self.accept_icon = QtGui.QIcon(icons_path + 'accept_icon.png')
 
         self.tor_status_color = ['green', '#AF0000', '#AF0000', 'orange',
                                  'orange', '#AF0000']
@@ -52,7 +45,8 @@ class TorControlPanel(QDialog):
 
         self.button_name = ['&torrc', 'Tor &log', 'systemd &journal']
 
-        self.journal_command = ['journalctl', '-n', '200', '-u', 'tor@default.service']
+        self.journal_command = ['journalctl', '-n', '200', '-u',
+                                'tor@default.service']
 
         self.bridges = ['None',
                         'obfs4 (recommended)',
@@ -100,7 +94,8 @@ class TorControlPanel(QDialog):
         self.bridges_combo.insertSeparator(1)
         self.bridges_combo.insertSeparator(7)
         self.bridges_combo.addItem('Disable Tor')
-        self.bridge_info_button = QPushButton(self.info_icon, '', self.config_frame)
+        self.bridge_info_button = QPushButton(self.info_icon, '',
+                                              self.config_frame)
         self.bridge_info_button.clicked.connect(info.show_help_censorship)
 
         self.proxy_label = QLabel(self.config_frame)
@@ -112,7 +107,8 @@ class TorControlPanel(QDialog):
         self.proxy_combo.currentIndexChanged.connect(
             lambda: self.proxy_settings_show(self.proxy_combo.currentText()))
 
-        self.proxy_info_button = QPushButton(self.info_icon, '',self.config_frame)
+        self.proxy_info_button = QPushButton(self.info_icon, '',
+                                             self.config_frame)
         self.proxy_info_button.clicked.connect(info.show_proxy_help)
 
         self.prev_button = QPushButton(self.back_icon, '',self.config_frame)
@@ -158,10 +154,10 @@ class TorControlPanel(QDialog):
         self.custom_bridges = QtWidgets.QTextEdit(self.custom_bridges_frame)
 
         self.custom_cancel_button = QPushButton(QtGui.QIcon(
-            self.tor_icon[1]), 'Cancel', self .custom_bridges_frame)
+            self.back_icon), 'Cancel', self .custom_bridges_frame)
         self.custom_cancel_button.clicked.connect(self.cancel_custom_bridges)
         self.custom_accept_button = QPushButton(QtGui.QIcon(
-            self.tor_icon[0]), 'Accept', self .custom_bridges_frame)
+            self.accept_icon), 'Accept', self .custom_bridges_frame)
         self.custom_accept_button.clicked.connect(self.accept_custom_bridges)
 
         self.setup_ui()
@@ -192,7 +188,6 @@ class TorControlPanel(QDialog):
         self.bootstrap_progress.setVisible(False)
 
         self.user_frame.setLineWidth(2)
-        #self.user_frame.setVisible(False)
         self.user_frame.setGeometry(10, 190, 530, 152)
         self.user_frame.setFrameShape(QFrame.Panel | QFrame.Raised)
 
@@ -276,7 +271,6 @@ class TorControlPanel(QDialog):
         self.custom_bridges_frame.setFrameShape(QFrame.Panel |
                                                 QFrame.Raised)
         self.custom_bridges_frame.setVisible(False)
-        #self.user_frame.setVisible(False)
         self.custom_cancel_button.setGeometry(380, 300, 65, 25)
         self.custom_cancel_button.setFlat(True)
         self.custom_accept_button.setGeometry(455, 300, 65 ,25)
@@ -352,7 +346,26 @@ class TorControlPanel(QDialog):
         self.exit_configuration()
 
     def accept_custom_bridges(self):
-        pass
+        args = []
+        args.append(self.bridges_combo.currentText())
+        if not str(self.custom_bridges.toPlainText()) == '':
+            args.append(str(self.custom_bridges.toPlainText()))
+        else:
+            return()
+        proxy = self.proxy_combo.currentText()
+        args.append(proxy)
+        if not proxy == None:
+            args.append(self.proxy_ip_edit.text())
+            args.append(self.proxy_port_edit.text())
+            args.append(self.proxy_user_edit.text())
+            args.append(self.proxy_pwd_edit.text())
+        torrc_gen.gen_torrc(args)
+        self.restart_tor()
+        self.status.setVisible(True)
+        self.tor_message_browser.setVisible(True)
+        self.user_frame.setVisible(True)
+        self.custom_bridges_frame.setVisible(False)
+        self.exit_configuration()
 
     def proxy_settings_show(self, proxy):
         if not proxy == 'None':
@@ -408,6 +421,7 @@ class TorControlPanel(QDialog):
             else:
                 args = []
                 args.append(self.bridges_combo.currentText().split(' ')[0])
+                args.append('')
                 proxy = self.proxy_combo.currentText()
                 args.append(proxy)
                 if not proxy == None:
@@ -488,7 +502,6 @@ class TorControlPanel(QDialog):
                     self.tor_status =  'disabled'
             self.message = self.tor_message[self.tor_status_list.index
                                             (self.tor_status)]
-
         self.refresh_status()
         self.refresh_logs()
         self.refresh_user_configuration()
