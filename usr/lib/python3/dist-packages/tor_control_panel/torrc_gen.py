@@ -30,7 +30,7 @@ command_meek_azure_address = 'ajax.aspnetcdn.com\n'
 
 bridges_command = ['ClientTransportPlugin obfs2,obfs3 exec /usr/bin/obfs4proxy\n',
                    'ClientTransportPlugin obfs4 exec /usr/bin/obfs4proxy\n',
-                   'ClientTransportPlugin meek_lite exec /usr/bin/obfs4proxy\n'
+                   'ClientTransportPlugin meek_lite exec /usr/bin/obfs4proxy\n',
                    'ClientTransportPlugin meek_lite exec /usr/bin/obfs4proxy\n']
 
 bridges_type = ['obfs3', 'obfs4', 'meek-amazon', 'meek-azure']
@@ -60,7 +60,7 @@ def gen_torrc(args):
     # use shutil.move(), not shutil.copy(), below
     handle, torrc_tmp_file_path = tempfile.mkstemp()
 
-    # Write directly to torrc. If we create a tempfile and move it to torrc.d,
+    # Temporary. Write directly to torrc. If we create a tempfile and move it to torrc.d,
     # tor daemon cannot open it: 'permission denied'.
     with open(torrc_file_path, "w") as f:
         f.write("\
@@ -80,70 +80,36 @@ the next time you run anon-connection-wizard.\n\
             f.write('DisableNetwork 0\n')
             if custom_bridges.lower().startswith('obfs4'):
                 f.write(command_obfs4 + '\n')
-            #elif bridge_custom.lower().startswith('obfs3'):
-                #f.write(command_obfs3 + '\n')
-            #elif bridge_custom.lower().startswith('fte'):
-                #f.write(command_fte + '\n')
-            #elif bridge_custom.lower().startswith('meek_lite'):
-                #f.write(command_meek_lite + '\n')
+            elif bridge_custom.lower().startswith('obfs3'):
+                f.write(command_obfs3 + '\n')
+            elif bridge_custom.lower().startswith('fte'):
+                f.write(command_fte + '\n')
+            elif bridge_custom.lower().startswith('meek_lite'):
+                f.write(command_meek_lite + '\n')
             bridge_custom_list = custom_bridges.split('\n')
             for bridge in bridge_custom_list:
-                if bridge != '':  # check if the line is actually empty
+                if bridge != '':
                     f.write('bridge {0}\n'.format(bridge))
 
-            ## Write the specific bridge address, port, cert etc.
-            #bridge_custom_list = bridge_custom.split('\n')
-            #for bridge in bridge_custom_list:
-                #if bridge != '':  # check if the line is actually empty
-                    #f.write('bridge {0}\n'.format(bridge))
         else:
             f.write(command_useBridges + '\n')
-            #if bridge_type in bridges_type:
-                #command = bridges_command[bridges_type.index(bridge_type)]
-                #f.write(command)
-            if bridge_type == 'obfs3':
-                f.write(command_obfs3)
-            elif bridge_type == 'scramblesuit':
-                f.write(command_scramblesuit)
-            elif bridge_type == 'obfs4':
-                f.write(command_obfs4)
-            elif bridge_type == 'meek-amazon':
-                f.write(command_meek_lite)
-            elif bridge_type == 'meek-azure':
-                f.write(command_meek_lite)
+            if bridge_type in bridges_type:
+                command = bridges_command[bridges_type.index(bridge_type)]
+                f.write(command)
             bridges = json.loads(open(bridges_default_path).read())
             # The bridges variable are like a multilayer-dictionary
             for bridge in bridges['bridges'][bridge_type]:
                 f.write('bridge {0}\n'.format(bridge))
             f.write('DisableNetwork 0\n')
-            #else:  # Use custom bridges
-                #f.write(command_use_custom_bridge + '\n')  # mark custom bridges are used
-
-                #if bridge_custom.lower().startswith('obfs4'):
-                    #f.write(command_obfs4 + '\n')
-                #elif bridge_custom.lower().startswith('obfs3'):
-                    #f.write(command_obfs3 + '\n')
-                #elif bridge_custom.lower().startswith('fte'):
-                    #f.write(command_fte + '\n')
-                #elif bridge_custom.lower().startswith('meek_lite'):
-                    #f.write(command_meek_lite + '\n')
-
-                ## Write the specific bridge address, port, cert etc.
-                #bridge_custom_list = bridge_custom.split('\n')
-                #for bridge in bridge_custom_list:
-                    #if bridge != '':  # check if the line is actually empty
-                        #f.write('bridge {0}\n'.format(bridge))
 
     #''' The part is the IO to torrc for proxy settings.
     #Related official docs: https://www.torproject.org/docs/tor-manual.html.en
     #'''
-    #if use_proxy:
-        #with open(torrc_tmp_file_path, 'a') as f:
         if proxy_type == 'HTTP/HTTPS':
             f.write('HTTPSProxy {0}:{1}\n'.format(proxy_ip, proxy_port))
-            if (proxy_username != ''):  # there is no need to check password because
-                                                #username is essential
-                f.write('HTTPSProxyAuthenticator {0}:{1}\n'.format(proxy_username, proxy_password))
+            if (proxy_username != ''):
+                f.write('HTTPSProxyAuthenticator {0}:{1}\n'.format(proxy_username,
+                                                                   proxy_password))
         elif proxy_type == 'SOCKS4':
             # Notice that SOCKS4 does not support proxy username and password
             f.write('Socks4Proxy {0}:{1}\n'.format(proxy_ip, proxy_port))
@@ -165,10 +131,6 @@ def parse_torrc():
             use_bridge = True
 
         if use_bridge:
-            #with open(torrc_file_path, 'r') as f:
-                #for line in f:
-                    #if 'ClientTransportPlugin' in line:
-                        #bridge_type = line.split()[1]
             with open(torrc_file_path, 'r') as f:
                 ## This flag is for parsing meek_lite
                 use_meek_lite = False
@@ -245,6 +207,8 @@ def parse_torrc():
         else:
             proxy_type = 'None'
             proxy_ip = 'None'
-            proxy_port = 'None'
+            proxy_port = ''
+            proxy_username = ''
+            proxy_password = ''
 
-        return(bridge_type, proxy_type, proxy_ip, proxy_port)
+        return(bridge_type, proxy_type, proxy_ip, proxy_port, proxy_username, proxy_password)
