@@ -2,7 +2,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPixmap, QCursor
+from PyQt5.QtGui import QCursor
 from PyQt5.QtWidgets import *
 
 from subprocess import Popen, PIPE
@@ -155,7 +155,7 @@ class TorControlPanel(QDialog):
 
         self.custom_cancel_button = QPushButton(QtGui.QIcon(
             self.back_icon), 'Cancel', self .custom_bridges_frame)
-        self.custom_cancel_button.clicked.connect(self.cancel_custom_bridges)
+        self.custom_cancel_button.clicked.connect(self.hide_custom_bridges)
         self.custom_accept_button = QPushButton(QtGui.QIcon(
             self.accept_icon), 'Accept', self .custom_bridges_frame)
         self.custom_accept_button.clicked.connect(self.accept_custom_bridges)
@@ -234,6 +234,7 @@ class TorControlPanel(QDialog):
         self.proxy_user_label.setGeometry(10, 105, 90, 20)
         self.proxy_user_label.setVisible(False)
         self.proxy_user_edit.setGeometry(48, 105, 90, 20)
+        self.proxy_user_edit.setPlaceholderText('Optional')
         self.proxy_user_edit.setVisible(False)
         self.proxy_user_edit.setEnabled(False)
 
@@ -241,6 +242,7 @@ class TorControlPanel(QDialog):
         self.proxy_pwd_label.setGeometry(150, 105, 60, 20)
         self.proxy_pwd_label.setVisible(False)
         self.proxy_pwd_edit.setGeometry(218, 105, 102, 20)
+        self.proxy_pwd_edit.setPlaceholderText('Optional')
         self.proxy_pwd_edit.setVisible(False)
         self.proxy_pwd_edit.setEnabled(False)
 
@@ -338,7 +340,7 @@ class TorControlPanel(QDialog):
         self.bootstrap_thread.signal.connect(self.update_bootstrap)
         self.bootstrap_thread.start()
 
-    def cancel_custom_bridges(self):
+    def hide_custom_bridges(self):
         self.status.setVisible(True)
         self.tor_message_browser.setVisible(True)
         self.user_frame.setVisible(True)
@@ -361,11 +363,7 @@ class TorControlPanel(QDialog):
             args.append(self.proxy_pwd_edit.text())
         torrc_gen.gen_torrc(args)
         self.restart_tor()
-        self.status.setVisible(True)
-        self.tor_message_browser.setVisible(True)
-        self.user_frame.setVisible(True)
-        self.custom_bridges_frame.setVisible(False)
-        self.exit_configuration()
+        self.hide_custom_bridges()
 
     def proxy_settings_show(self, proxy):
         if not proxy == 'None':
@@ -480,6 +478,9 @@ class TorControlPanel(QDialog):
         if not args[1] == 'None':
             self.proxy_ip_edit.setText(args[2])
             self.proxy_port_edit.setText(args[3])
+            self.proxy_user_edit.setText(args[4])
+            self.proxy_pwd_edit.setText(args[5])
+
 
     def refresh(self, bootstrap):
         ## get status
