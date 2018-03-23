@@ -267,6 +267,7 @@ class TorControlPanel(QDialog):
         self.configure_button.setIconSize(QtCore.QSize(28, 28))
         self.configure_button.setFlat(True)
         self.configure_button.setGeometry(QtCore.QRect(10, 98, 102, 32))
+        self.configure_button.setDefault(True)
 
         self.custom_bridges_frame.setGeometry(10, 10, 530, 332)
         self.custom_bridges_frame.setLineWidth(2)
@@ -367,7 +368,6 @@ class TorControlPanel(QDialog):
 
     def check_proxy_ip(self, address):
         import ipaddress
-        print(address)
         try:
             ipaddress.ip_address(address)
             return(True)
@@ -378,7 +378,7 @@ class TorControlPanel(QDialog):
         r = range(1,65535)
         try:
             return(int(port) in r)
-        except ValueError:  # not a number
+        except ValueError:  # not a integer
             return(False)
 
     def proxy_settings_show(self, proxy):
