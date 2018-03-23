@@ -27,7 +27,7 @@ class TorControlPanel(QDialog):
         self.stop_icon = QtGui.QIcon(icons_path + 'stop.png')
         self.tool_icon = QtGui.QIcon(icons_path + 'tools.png')
         self.info_icon = QtGui.QIcon(icons_path + 'help.png')
-        self.back_icon = QtGui.QIcon(icons_path + 'back_icon.png')
+        self.back_icon = QtGui.QIcon(icons_path + 'prev.png')
         self.accept_icon = QtGui.QIcon(icons_path + 'accept_icon.png')
 
         self.tor_status_color = ['green', '#AF0000', '#AF0000', 'orange',
@@ -359,11 +359,26 @@ class TorControlPanel(QDialog):
         if not proxy == None:
             args.append(self.proxy_ip_edit.text())
             args.append(self.proxy_port_edit.text())
-            args.append(self.proxy_user_edit.text())
-            args.append(self.proxy_pwd_edit.text())
+            #args.append(self.proxy_user_edit.text())
+            #args.append(self.proxy_pwd_edit.text())
         torrc_gen.gen_torrc(args)
         self.restart_tor()
         self.hide_custom_bridges()
+
+    def check_proxy_ip(self, address):
+        import socket
+        try:
+            socket.inet_aton(address)
+            return(True)
+        except socket.error:
+            return(False)
+
+    def check_proxy_port(self, port):
+        r = range(1,65535)
+        try:
+            return(int(port) in r)
+        except ValueError:
+            return(False)
 
     def proxy_settings_show(self, proxy):
         if not proxy == 'None':
@@ -388,6 +403,7 @@ class TorControlPanel(QDialog):
     def configure(self):
         if self.configure_button.text() == ' Configure':
             self.configure_button.setText(' Accept    ')
+            self.configure_button.setIcon(self.accept_icon)
             self.restart_button.setEnabled(False)
             self.stop_button.setEnabled(False)
             self.bridges_combo.setVisible(True)
@@ -421,18 +437,30 @@ class TorControlPanel(QDialog):
                 args.append(self.bridges_combo.currentText().split(' ')[0])
                 args.append('')
                 proxy = self.proxy_combo.currentText()
+                print(proxy)
+                if not proxy == 'None':
+                    if self.check_proxy_ip(self.proxy_ip_edit.text()) and \
+                        self.check_proxy_port(self.proxy_port_edit.text()):
+                        args.append(proxy)
+                        args.append(self.proxy_ip_edit.text())
+                        args.append(self.proxy_port_edit.text())
+                    #args.append(self.proxy_user_edit.text())
+                    #args.append(self.proxy_pwd_edit.text())
+                    else:
+                        self.reply = QMessageBox(QMessageBox.NoIcon, 'Warning',
+                '''<p><b>  Please input valid Address and Port number.</b></p>
+                <p> The Address should look like: 127.0.0.1 or localhost</p>
+                <p> The Port number should be an integer between 1 and 65535</p>''', QtWidgets.QMessageBox.Ok)
+                        self.reply.exec_()
+                        return()
                 args.append(proxy)
-                if not proxy == None:
-                    args.append(self.proxy_ip_edit.text())
-                    args.append(self.proxy_port_edit.text())
-                    args.append(self.proxy_user_edit.text())
-                    args.append(self.proxy_pwd_edit.text())
                 torrc_gen.gen_torrc(args)
                 self.restart_tor()
                 self.exit_configuration()
 
     def exit_configuration(self):
         self.configure_button.setText(' Configure')
+        self.configure_button.setIcon(self.tool_icon)
         self.prev_button.setVisible(False)
         self.restart_button.setEnabled(True)
         self.stop_button.setEnabled(True)
@@ -478,8 +506,8 @@ class TorControlPanel(QDialog):
         if not args[1] == 'None':
             self.proxy_ip_edit.setText(args[2])
             self.proxy_port_edit.setText(args[3])
-            self.proxy_user_edit.setText(args[4])
-            self.proxy_pwd_edit.setText(args[5])
+            #self.proxy_user_edit.setText(args[4])
+            #self.proxy_pwd_edit.setText(args[5])
 
 
     def refresh(self, bootstrap):

@@ -47,16 +47,14 @@ def gen_torrc(args):
     if not proxy_type == 'None':
         proxy_ip =          str(args[3])
         proxy_port =        str(args[4])
-        proxy_username =    str(args[5])
-        proxy_password  =   str(args[6])
-    print(bridge_type)
-    #return()
+        #proxy_username =    str(args[5])
+        #proxy_password  =   str(args[6])
     #repair_torrc.repair_torrc()  # This guarantees a good set of torrc files
 
     # Creates a file and returns a tuple containing both the handle and the path.
     # we are responsible for removing tmp file when finished which is the reason we
     # use shutil.move(), not shutil.copy(), below
-    handle, torrc_tmp_file_path = tempfile.mkstemp()
+    #handle, torrc_tmp_file_path = tempfile.mkstemp()
 
     # Temporary. Write directly to torrc. If we create a tempfile and move it to torrc.d,
     # tor daemon cannot open it: 'permission denied'.
@@ -91,14 +89,11 @@ the next time you run anon-connection-wizard.\n\
                     f.write('bridge {0}\n'.format(bridge))
                 #f.write(command_use_custom_bridge)
 
-    #''' The part is the IO to torrc for proxy settings.
-    #Related official docs: https://www.torproject.org/docs/tor-manual.html.en
-    #'''
         if proxy_type == 'HTTP/HTTPS':
             f.write('HTTPSProxy {0}:{1}\n'.format(proxy_ip, proxy_port))
-            if (proxy_username != ''):
-                f.write('HTTPSProxyAuthenticator {0}:{1}\n'.format(proxy_username,
-                                                                   proxy_password))
+            #if (proxy_username != ''):
+                #f.write('HTTPSProxyAuthenticator {0}:{1}\n'.format(proxy_username,
+                                                                   #proxy_password))
         elif proxy_type == 'SOCKS4':
             # Notice that SOCKS4 does not support proxy username and password
             f.write('Socks4Proxy {0}:{1}\n'.format(proxy_ip, proxy_port))
@@ -121,7 +116,6 @@ def parse_torrc():
 
         if use_bridge:
             with open(torrc_file_path, 'r') as f:
-                ## This flag is for parsing meek_lite
                 for line in f:
                     if line.startswith('ClientTransportPlugin'):
                         bridge_type = bridges_type[bridges_command.index(line)]
@@ -155,9 +149,9 @@ def parse_torrc():
                         proxy_ip = line.split(' ')[1].split(':')[0]
                         proxy_port = line.split(' ')[1].split(':')[1].split('\n')[0]
 
-                    elif line.startswith(command_httpAuth):
-                        proxy_username = line.split(' ')[1].split(':')[0]
-                        proxy_password = line.split(' ')[1].split(':')[1]
+                    #elif line.startswith(command_httpAuth):
+                        #proxy_username = line.split(' ')[1].split(':')[0]
+                        #proxy_password = line.split(' ')[1].split(':')[1]
                     elif line.startswith(command_sock4):
                         use_proxy = True
                         proxy_type = 'SOCKS4'
@@ -179,7 +173,7 @@ def parse_torrc():
             proxy_type = 'None'
             proxy_ip = 'None'
             proxy_port = ''
-            proxy_username = ''
-            proxy_password = ''
+            #proxy_username = ''
+            #proxy_password = ''
 
-        return(bridge_type, proxy_type, proxy_ip, proxy_port, proxy_username, proxy_password)
+        return(bridge_type, proxy_type, proxy_ip, proxy_port)#, proxy_username, proxy_password)
