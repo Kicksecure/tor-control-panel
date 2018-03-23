@@ -14,7 +14,7 @@ Standards-Version: 3.9.8
 
 Package: tor-control-panel
 Architecture: all
-Depends: ${misc:Depends}, python3
+Depends: ${misc:Depends}, python3, python3-ipy
 Recommends: tor, obfs4proxy
 Description: Tor Control Panel
  tor-control-panel is a Tor controller.

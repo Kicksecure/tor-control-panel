@@ -366,18 +366,19 @@ class TorControlPanel(QDialog):
         self.hide_custom_bridges()
 
     def check_proxy_ip(self, address):
-        import socket
+        import ipaddress
+        print(address)
         try:
-            socket.inet_aton(address)
+            ipaddress.ip_address(address)
             return(True)
-        except socket.error:
+        except ValueError:
             return(False)
 
     def check_proxy_port(self, port):
         r = range(1,65535)
         try:
             return(int(port) in r)
-        except ValueError:
+        except ValueError:  # not a number
             return(False)
 
     def proxy_settings_show(self, proxy):
@@ -401,7 +402,7 @@ class TorControlPanel(QDialog):
             self.proxy_pwd_edit.setVisible(False)
 
     def configure(self):
-        if self.configure_button.text() == ' Configure':
+        if 'Configure' in self.configure_button.text():
             self.configure_button.setText(' Accept    ')
             self.configure_button.setIcon(self.accept_icon)
             self.restart_button.setEnabled(False)
@@ -426,7 +427,7 @@ class TorControlPanel(QDialog):
             self.proxy_combo.setCurrentIndex(index)
             self.proxy_settings_show(proxy)
 
-        elif self.configure_button.text() == ' Accept    ':
+        elif 'Accept' in self.configure_button.text():
             if self.bridges_combo.currentText() == 'Custom bridges':
                 self.status.setVisible(False)
                 self.tor_message_browser.setVisible(False)
@@ -435,9 +436,8 @@ class TorControlPanel(QDialog):
             else:
                 args = []
                 args.append(self.bridges_combo.currentText().split(' ')[0])
-                args.append('')
+                args.append('')  # custom bridges argument
                 proxy = self.proxy_combo.currentText()
-                print(proxy)
                 if not proxy == 'None':
                     if self.check_proxy_ip(self.proxy_ip_edit.text()) and \
                         self.check_proxy_port(self.proxy_port_edit.text()):
