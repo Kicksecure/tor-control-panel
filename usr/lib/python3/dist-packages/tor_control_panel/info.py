@@ -64,12 +64,9 @@ def tor_stopped():
     tor_message = ['',
             '<b>Tor is not running.</b> <p> \
             If Tor was stopped intentionally, you can restart it from the \
-            button [Restart Tor] below, or run in a terminal: \
-            <blockquote>sudo service tor@default restart</blockquote> \
-            Otherwise you have to fix this error before you can use Tor. <br> \
-            Please restart Tor after fixing it. <p> Hints:<br>  \
-            In the <b>Logs</b> tab, check the content of torrc  (the default \
-            file is /usr/local/etc/torrc.d/40_anon_connection_wizard.conf) and \
+            button [Restart Tor] below</p> \
+            <p> Hints:<br>  \
+            In the <b>Logs</b> tab, check the content of torrc and \
             inspect Tor log and systemd journal <br><br>',
 
             '<b>Tor is disabled</b>. <br><br>A line <i>DisableNetwork 1</i> \

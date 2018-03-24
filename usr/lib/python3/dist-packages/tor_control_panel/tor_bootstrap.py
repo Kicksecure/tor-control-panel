@@ -13,8 +13,8 @@ class TorBootstrap(QThread):
     signal = pyqtSignal(str, int)
 
     def __init__(self, main):
-        #super(TorBootstrap, self).__init__(main)
-        QThread.__init__(self, parent=None)
+        super(TorBootstrap, self).__init__(main)
+
         self.control_cookie_path = '/var/run/tor/control.authcookie'
         self.control_socket_path = '/var/run/tor/control'
         self.previous_status = ''
