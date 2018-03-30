@@ -47,8 +47,8 @@ def gen_torrc(args):
     if not proxy_type == 'None':
         proxy_ip =          str(args[3])
         proxy_port =        str(args[4])
-        #proxy_username =    str(args[5])
-        #proxy_password  =   str(args[6])
+        proxy_username =    str(args[5])
+        proxy_password  =   str(args[6])
     #repair_torrc.repair_torrc()  # This guarantees a good set of torrc files
 
     # Creates a file and returns a tuple containing both the handle and the path.
@@ -139,7 +139,6 @@ def parse_torrc():
             with open(torrc_file_path, 'r') as f:
                 for line in f:
                     if line.startswith(command_http):
-                        #use_proxy = True
                         proxy_type = 'HTTP/HTTPS'
                         ''' Using the following parsing fragments is too fixed,
                         which is not good implementation.
@@ -149,9 +148,9 @@ def parse_torrc():
                         proxy_ip = line.split(' ')[1].split(':')[0]
                         proxy_port = line.split(' ')[1].split(':')[1].split('\n')[0]
 
-                    #elif line.startswith(command_httpAuth):
-                        #proxy_username = line.split(' ')[1].split(':')[0]
-                        #proxy_password = line.split(' ')[1].split(':')[1]
+                    elif line.startswith(command_httpAuth):
+                        proxy_username = line.split(' ')[1].split(':')[0]
+                        proxy_password = line.split(' ')[1].split(':')[1]
                     elif line.startswith(command_sock4):
                         use_proxy = True
                         proxy_type = 'SOCKS4'
@@ -166,14 +165,12 @@ def parse_torrc():
                         proxy_username = line.split(' ')[1]
                     elif line.startswith(command_sock5Password):
                         proxy_password = line.split(' ')[1]
-                    #if 'Proxy' in line:
-                        #proxy_type = line.split()[0]
-                        #proxy_socket = line.split()[1]
+
         else:
             proxy_type = 'None'
-            proxy_ip = 'None'
+            proxy_ip = ''
             proxy_port = ''
-            #proxy_username = ''
-            #proxy_password = ''
+            proxy_username = ''
+            proxy_password = ''
 
-        return(bridge_type, proxy_type, proxy_ip, proxy_port)#, proxy_username, proxy_password)
+        return(bridge_type, proxy_type, proxy_ip, proxy_port, proxy_username, proxy_password)

@@ -69,7 +69,7 @@ class TorControlPanel(QDialog):
 
         self.button_box = QFrame(self)
         self.refresh_button = QPushButton(self.refresh_icon, ' Refresh', self)
-        self.refresh_button.clicked.connect(lambda: self.refresh(True))
+        self.refresh_button.clicked.connect(lambda: self.refresh(False))
         self.quit_button = QPushButton(self.exit_icon, ' Exit', self)
         self.quit_button.clicked.connect(self.quit)
 
@@ -363,8 +363,8 @@ class TorControlPanel(QDialog):
                 args.append(proxy)
                 args.append(self.proxy_ip_edit.text())
                 args.append(self.proxy_port_edit.text())
-            #args.append(self.proxy_user_edit.text())
-            #args.append(self.proxy_pwd_edit.text())
+                args.append(self.proxy_user_edit.text())
+                args.append(self.proxy_pwd_edit.text())
         torrc_gen.gen_torrc(args)
         self.restart_tor()
         self.hide_custom_bridges()
@@ -385,16 +385,7 @@ class TorControlPanel(QDialog):
             return(False)
 
     def proxy_settings_show(self, proxy):
-        if not proxy == 'None':
-            self.proxy_ip_label.show()#show()
-            self.proxy_ip_edit.show()
-            self.proxy_port_label.show()
-            self.proxy_port_edit.show()
-            self.proxy_user_label.show()
-            self.proxy_user_edit.show()
-            self.proxy_pwd_label.show()
-            self.proxy_pwd_edit.show()
-        elif proxy == 'None':
+        if proxy == 'None':
             self.proxy_ip_label.hide()
             self.proxy_ip_edit.hide()
             self.proxy_port_label.hide()
@@ -403,6 +394,15 @@ class TorControlPanel(QDialog):
             self.proxy_user_edit.hide()
             self.proxy_pwd_label.hide()
             self.proxy_pwd_edit.hide()
+        elif not proxy == 'None':
+            self.proxy_ip_label.show()#show()
+            self.proxy_ip_edit.show()
+            self.proxy_port_label.show()
+            self.proxy_port_edit.show()
+            self.proxy_user_label.show()
+            self.proxy_user_edit.show()
+            self.proxy_pwd_label.show()
+            self.proxy_pwd_edit.show()
 
     def configure(self):
         if 'Configure' in self.configure_button.text():
@@ -417,7 +417,6 @@ class TorControlPanel(QDialog):
             self.proxy_user_edit.setEnabled(True)
             self.proxy_pwd_edit.setEnabled(True)
             self.proxy_settings_show(self.proxy_combo.currentText())
-            self.prev_proxy = self.proxy_combo.currentText()
             self.bridge_info_button.show()
             self.proxy_info_button.show()
             self.prev_button.show()
@@ -447,15 +446,17 @@ class TorControlPanel(QDialog):
                         args.append(proxy)
                         args.append(self.proxy_ip_edit.text())
                         args.append(self.proxy_port_edit.text())
-                    #args.append(self.proxy_user_edit.text())
-                    #args.append(self.proxy_pwd_edit.text())
+                        args.append(self.proxy_user_edit.text())
+                        args.append(self.proxy_pwd_edit.text())
                     else:
                         self.reply = QMessageBox(QMessageBox.NoIcon, 'Warning',
                 '''<p><b>  Please input valid Address and Port number.</b></p>
                 <p> The Address should look like: 127.0.0.1 or localhost</p>
                 <p> The Port number should be an integer between 1 and 65535</p>''', QtWidgets.QMessageBox.Ok)
+
                         self.reply.exec_()
                         return()
+
                 args.append(proxy)
                 torrc_gen.gen_torrc(args)
                 self.restart_tor()
@@ -509,8 +510,8 @@ class TorControlPanel(QDialog):
         if not args[1] == 'None':
             self.proxy_ip_edit.setText(args[2])
             self.proxy_port_edit.setText(args[3])
-            #self.proxy_user_edit.setText(args[4])
-            #self.proxy_pwd_edit.setText(args[5])
+            self.proxy_user_edit.setText(args[4])
+            self.proxy_pwd_edit.setText(args[5])
 
     def refresh(self, bootstrap):
         ## get status
@@ -540,7 +541,6 @@ class TorControlPanel(QDialog):
     def restart_tor(self):
         if not self.bootstrap_done:
             self.bootstrap_thread.terminate()
-        #self.stop_button.setEnabled(False)
         ## if running restart tor directly stem returns
         ## bootstrap_percent 100 or  a socket error, randomly.
         self.stop_tor()
