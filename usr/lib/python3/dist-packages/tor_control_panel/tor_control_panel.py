@@ -395,7 +395,7 @@ class TorControlPanel(QDialog):
             self.proxy_pwd_label.hide()
             self.proxy_pwd_edit.hide()
         elif not proxy == 'None':
-            self.proxy_ip_label.show()#show()
+            self.proxy_ip_label.show()
             self.proxy_ip_edit.show()
             self.proxy_port_label.show()
             self.proxy_port_edit.show()
@@ -403,6 +403,12 @@ class TorControlPanel(QDialog):
             self.proxy_user_edit.show()
             self.proxy_pwd_label.show()
             self.proxy_pwd_edit.show()
+            enable_auth = not proxy == 'SOCKS4' and 'Accept' in \
+                self.configure_button.text()
+            self.proxy_user_label.setEnabled(enable_auth)
+            self.proxy_user_edit.setEnabled(enable_auth)
+            self.proxy_pwd_label.setEnabled(enable_auth)
+            self.proxy_pwd_edit.setEnabled(enable_auth)
 
     def configure(self):
         if 'Configure' in self.configure_button.text():
@@ -425,6 +431,7 @@ class TorControlPanel(QDialog):
             index = self.bridges_combo.findText(bridge, QtCore.Qt.MatchFixedString)
             self.bridges_combo.setCurrentIndex(index)
             proxy = self.proxy_type.text()
+            print(proxy)
             index = self.proxy_combo.findText(proxy, QtCore.Qt.MatchFixedString)
             self.proxy_combo.setCurrentIndex(index)
             self.proxy_settings_show(proxy)
@@ -437,7 +444,7 @@ class TorControlPanel(QDialog):
                 self.custom_bridges_frame.show()
             else:
                 args = []
-                args.append(self.bridges_combo.currentText().split(' ')[0])
+                args.append(self.bridges_combo.currentText().split()[0])
                 args.append('')  # custom bridges argument
                 proxy = self.proxy_combo.currentText()
                 if not proxy == 'None':
@@ -446,8 +453,14 @@ class TorControlPanel(QDialog):
                         args.append(proxy)
                         args.append(self.proxy_ip_edit.text())
                         args.append(self.proxy_port_edit.text())
-                        args.append(self.proxy_user_edit.text())
-                        args.append(self.proxy_pwd_edit.text())
+                        if not self.proxy_user_edit.text() == None:
+                            args.append(self.proxy_user_edit.text())
+                        else:
+                            args.append('')
+                        if not self.proxy_pwd_edit.text() == None:
+                            args.append(self.proxy_pwd_edit.text())
+                        else:
+                            args.append('')
                     else:
                         self.reply = QMessageBox(QMessageBox.NoIcon, 'Warning',
                 '''<p><b>  Please input valid Address and Port number.</b></p>

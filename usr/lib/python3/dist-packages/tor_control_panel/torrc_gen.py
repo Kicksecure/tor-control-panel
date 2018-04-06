@@ -33,12 +33,24 @@ bridges_type = ['obfs3', 'obfs4', 'meek-amazon', 'meek-azure', 'scramblesuit', '
 meek_amazon_address = 'a0.awsstatic.com\n'
 meek_azure_address = 'ajax.aspnetcdn.com\n'
 
-command_http = 'HTTPSProxy '
-command_httpAuth = 'HTTPSProxyAuthenticator'
-command_sock4 = 'Socks4Proxy '
-command_sock5 = 'Socks5Proxy '
-command_sock5Username = 'Socks5ProxyUsername'
-command_sock5Password = 'Socks5ProxyPassword'
+proxy_torrc =    ['HTTPSProxy',
+                'Socks4Proxy',
+                'Socks5Proxy']
+
+proxies =      ['HTTP/HTTPS',
+                'SOCKS4',
+                'SOCKS5']
+
+proxy_auth =    ['HTTPSProxyAuthenticator',
+                'Socks5ProxyUsername',
+                'Socks5ProxyPassword']
+
+#command_http = 'HTTPSProxy '
+#command_httpAuth = 'HTTPSProxyAuthenticator'
+#command_sock4 = 'Socks4Proxy '
+#command_sock5 = 'Socks5Proxy '
+#command_sock5Username = 'Socks5ProxyUsername'
+#command_sock5Password = 'Socks5ProxyPassword'
 
 def gen_torrc(args):
     bridge_type =       str(args[0])
@@ -91,9 +103,9 @@ the next time you run anon-connection-wizard.\n\
 
         if proxy_type == 'HTTP/HTTPS':
             f.write('HTTPSProxy {0}:{1}\n'.format(proxy_ip, proxy_port))
-            #if (proxy_username != ''):
-                #f.write('HTTPSProxyAuthenticator {0}:{1}\n'.format(proxy_username,
-                                                                   #proxy_password))
+            if not proxy_username == '':
+                f.write('HTTPSProxyAuthenticator {0}:{1}\n'.format(proxy_username,
+                                                                   proxy_password))
         elif proxy_type == 'SOCKS4':
             # Notice that SOCKS4 does not support proxy username and password
             f.write('Socks4Proxy {0}:{1}\n'.format(proxy_ip, proxy_port))
@@ -135,41 +147,42 @@ def parse_torrc():
         else:
             bridge_type = 'None'
 
+        auth_check = False
         if use_proxy:
             with open(torrc_file_path, 'r') as f:
                 for line in f:
-                    if line.startswith(command_http):
-                        proxy_type = 'HTTP/HTTPS'
-                        ''' Using the following parsing fragments is too fixed,
-                        which is not good implementation.
-                        But as long as leave .conf untouched by user, it will be Okay.
-                        We should also be careful when changing the command line format in this app
-                        '''
-                        proxy_ip = line.split(' ')[1].split(':')[0]
-                        proxy_port = line.split(' ')[1].split(':')[1].split('\n')[0]
+                    proxy = line.split()[0] in proxy_torrc
+                    auth_http = line.startswith(proxy_auth[0])
+                    socks5_user = line.startswith(proxy_auth[1])
+                    socks5_pwd = line.startswith(proxy_auth[2])
 
-                    elif line.startswith(command_httpAuth):
-                        proxy_username = line.split(' ')[1].split(':')[0]
-                        proxy_password = line.split(' ')[1].split(':')[1]
-                    elif line.startswith(command_sock4):
-                        use_proxy = True
-                        proxy_type = 'SOCKS4'
-                        proxy_ip = line.split(' ')[1].split(':')[0]
-                        proxy_port = line.split(' ')[1].split(':')[1].split('\n')[0]
-                    elif line.startswith(command_sock5):
-                        use_proxy = True
-                        proxy_type = 'SOCKS5'
-                        proxy_ip = line.split(' ')[1].split(':')[0]
-                        proxy_port = line.split(' ')[1].split(':')[1].split('\n')[0]
-                    elif line.startswith(command_sock5Username):
-                        proxy_username = line.split(' ')[1]
-                    elif line.startswith(command_sock5Password):
-                        proxy_password = line.split(' ')[1]
+                    if proxy:
+                        proxy_type = proxies[proxy_torrc.index(line.split()[0])]
+                        proxy_ip = line.split()[1].split(':')[0]
+                        proxy_port = line.split()[1].split(':')[1].split('\n')[0]
+                        proxy = False
+                    if auth_http:
+                        auth_check = True
+                        proxy_username = line.split()[1].split(':')[0]
+                        proxy_password = line.split()[1].split(':')[1]
+                        auth_http = False
+                    if socks5_user:
+                        auth_check = True
+                        proxy_username = line.split()[1]
+                        socks5_user = False
+                    if socks5_pwd:
+                        auth_check = True
+                        proxy_password = line.split()[1]
+                        socks5_pwd = False
 
         else:
             proxy_type = 'None'
             proxy_ip = ''
             proxy_port = ''
+            proxy_username = ''
+            proxy_password = ''
+
+        if not auth_check:
             proxy_username = ''
             proxy_password = ''
 
