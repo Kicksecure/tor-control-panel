@@ -167,8 +167,8 @@ class TorControlPanel(QDialog):
         self.tabs.setGeometry(10, 10, 410, 380)
 
         self.tabs.addTab(self.tab1,'Status')
-        self.tabs.addTab(self.tab2,'Logs')
         self.tabs.addTab(self.tab3,'Utilities')
+        self.tabs.addTab(self.tab2,'Logs')
 
         self.refresh_button.setGeometry(QtCore.QRect(10, 397, 83, 23))
         self.refresh_button.setFlat(True)

@@ -49,13 +49,6 @@ proxy_auth =    ['HTTPSProxyAuthenticator',
                 'Socks5ProxyUsername',
                 'Socks5ProxyPassword']
 
-#command_http = 'HTTPSProxy '
-#command_httpAuth = 'HTTPSProxyAuthenticator'
-#command_sock4 = 'Socks4Proxy '
-#command_sock5 = 'Socks5Proxy '
-#command_sock5Username = 'Socks5ProxyUsername'
-#command_sock5Password = 'Socks5ProxyPassword'
-
 def gen_torrc(args):
     bridge_type =       str(args[0])
     custom_bridges =    str(args[1])
@@ -102,14 +95,13 @@ def gen_torrc(args):
             f.write('{0} {1}:{2}\n'.format(proxy_torrc[proxies.index(proxy_type)],
                                         proxy_ip, proxy_port))
 
-            if proxy_type == proxies[0] and not proxy_username == '':
-                f.write('{0} {1}:{2}\n'.format(proxy_auth[0],
-                                               proxy_username,
-                                               proxy_password))
-
-            if proxy_type == proxies[2] and not proxy_username == '':
-                f.write('{0} {1}\n'.format(proxy_auth[1], proxy_username))
-                f.write('{0} {1}\n'.format(proxy_auth[2], proxy_password))
+            if not proxy_username == '':
+                if proxy_type == proxies[0]:
+                    f.write('{0} {1}:{2}\n'.format(proxy_auth[0], proxy_username,
+                                                   proxy_password))
+                if proxy_type == proxies[2]:
+                    f.write('{0} {1}\n'.format(proxy_auth[1], proxy_username))
+                    f.write('{0} {1}\n'.format(proxy_auth[2], proxy_password))
 
     #shutil.move(torrc_tmp_file_path, torrc_file_path)
 
@@ -118,8 +110,8 @@ def parse_torrc():
         use_bridge = 'UseBridges' in open(torrc_file_path).read()
         use_proxy = 'Proxy' in open(torrc_file_path).read()
 
-        if use_bridge:
-            with open(torrc_file_path, 'r') as f:
+        with open(torrc_file_path, 'r') as f:
+            if use_bridge:
                 for line in f:
                     if line.startswith('ClientTransportPlugin'):
                         bridge_type = bridges_type[bridges_command.index(line)]
@@ -127,21 +119,17 @@ def parse_torrc():
                         bridge_type = 'meek-amazon'
                     if line.endswith(meek_azure_address):
                         bridge_type = 'meek-azure'
-
                 bridge_type = bridges_display[bridges_type.index(bridge_type)]
+            else:
+                bridge_type = 'None'
 
-        else:
-            bridge_type = 'None'
-
-        auth_check = False
-        if use_proxy:
-            with open(torrc_file_path, 'r') as f:
+            if use_proxy:
+                auth_check = False
                 for line in f:
                     proxy = line.split()[0] in proxy_torrc
                     auth_http = line.startswith(proxy_auth[0])
                     socks5_user = line.startswith(proxy_auth[1])
                     socks5_pwd = line.startswith(proxy_auth[2])
-
                     if proxy:
                         proxy_type = proxies[proxy_torrc.index(line.split()[0])]
                         proxy_ip = line.split()[1].split(':')[0]
@@ -160,17 +148,15 @@ def parse_torrc():
                         auth_check = True
                         proxy_password = line.split()[1]
                         socks5_pwd = False
-
-            if not auth_check:
+                if not auth_check:
+                    proxy_username = ''
+                    proxy_password = ''
+            else:
+                proxy_type = 'None'
+                proxy_ip = ''
+                proxy_port = ''
                 proxy_username = ''
                 proxy_password = ''
-
-        else:
-            proxy_type = 'None'
-            proxy_ip = ''
-            proxy_port = ''
-            proxy_username = ''
-            proxy_password = ''
 
         return(bridge_type, proxy_type, proxy_ip, proxy_port,
                proxy_username, proxy_password)
