@@ -5,8 +5,7 @@ import os
 import json
 import shutil
 import tempfile
-#from anon_connection_wizard import repair_torrc
-from tor_control_panel import info
+from . import info
 
 whonix = os.path.exists('/usr/share/anon-gw-base-files/gateway')
 if whonix:
@@ -37,7 +36,7 @@ bridges_display = ['obfs3', 'obfs4 (recommended)', 'meek-amazon (works in China)
 meek_amazon_address = 'a0.awsstatic.com\n'
 meek_azure_address = 'ajax.aspnetcdn.com\n'
 
-proxy_torrc =    ['HTTPSProxy',
+proxy_torrc =   ['HTTPSProxy',
                 'Socks4Proxy',
                 'Socks5Proxy']
 
@@ -45,7 +44,7 @@ proxies =      ['HTTP/HTTPS',
                 'SOCKS4',
                 'SOCKS5']
 
-proxy_auth =    ['HTTPSProxyAuthenticator',
+proxy_auth =   ['HTTPSProxyAuthenticator',
                 'Socks5ProxyUsername',
                 'Socks5ProxyPassword']
 
@@ -58,25 +57,15 @@ def gen_torrc(args):
         proxy_port =        str(args[4])
         proxy_username =    str(args[5])
         proxy_password  =   str(args[6])
-    #repair_torrc.repair_torrc()  # This guarantees a good set of torrc files
 
-    # Creates a file and returns a tuple containing both the handle and the path.
-    # we are responsible for removing tmp file when finished which is the reason we
-    # use shutil.move(), not shutil.copy(), below
-    #handle, torrc_tmp_file_path = tempfile.mkstemp()
-
-    # Temporary. Write directly to torrc. If we create a tempfile and move it to torrc.d,
-    # tor daemon cannot open it: 'permission denied'.
     with open(torrc_file_path, "w") as f:
         f.write(info.torrc_info())
         f.write('DisableNetwork 0\n')
 
         if bridge_type in bridges_type:
             f.write(command_useBridges)
-            command = bridges_command[bridges_type.index(bridge_type)]
-            f.write(command)
+            f.write(bridges_command[bridges_type.index(bridge_type)])
             bridges = json.loads(open(bridges_default_path).read())
-            # The bridges variable are like a multilayer-dictionary
             for bridge in bridges['bridges'][bridge_type]:
                 f.write('bridge {0}\n'.format(bridge))
 
@@ -84,17 +73,14 @@ def gen_torrc(args):
             bridge = str(custom_bridges.split()[0]).lower()
             if bridge in bridges_type:
                 f.write(command_useBridges)
-                command = bridges_command[bridges_type.index(bridge)]
-                f.write(command)
+                f.write(bridges_command[bridges_type.index(bridge)])
                 bridge_custom_list = custom_bridges.split('\n')
                 for bridge in bridge_custom_list:
                     f.write('bridge {0}\n'.format(bridge))
-                #f.write(command_use_custom_bridge)
 
         if proxy_type in proxies:
             f.write('{0} {1}:{2}\n'.format(proxy_torrc[proxies.index(proxy_type)],
                                         proxy_ip, proxy_port))
-
             if not proxy_username == '':
                 if proxy_type == proxies[0]:
                     f.write('{0} {1}:{2}\n'.format(proxy_auth[0], proxy_username,
@@ -103,15 +89,13 @@ def gen_torrc(args):
                     f.write('{0} {1}\n'.format(proxy_auth[1], proxy_username))
                     f.write('{0} {1}\n'.format(proxy_auth[2], proxy_password))
 
-    #shutil.move(torrc_tmp_file_path, torrc_file_path)
-
 def parse_torrc():
     if os.path.exists(torrc_file_path):
         use_bridge = 'UseBridges' in open(torrc_file_path).read()
         use_proxy = 'Proxy' in open(torrc_file_path).read()
 
-        with open(torrc_file_path, 'r') as f:
-            if use_bridge:
+        if use_bridge:
+            with open(torrc_file_path, 'r') as f:
                 for line in f:
                     if line.startswith('ClientTransportPlugin'):
                         bridge_type = bridges_type[bridges_command.index(line)]
@@ -120,11 +104,12 @@ def parse_torrc():
                     if line.endswith(meek_azure_address):
                         bridge_type = 'meek-azure'
                 bridge_type = bridges_display[bridges_type.index(bridge_type)]
-            else:
-                bridge_type = 'None'
+        else:
+            bridge_type = 'None'
 
-            if use_proxy:
-                auth_check = False
+        if use_proxy:
+            auth_check = False
+            with open(torrc_file_path, 'r') as f:
                 for line in f:
                     proxy = line.split()[0] in proxy_torrc
                     auth_http = line.startswith(proxy_auth[0])
@@ -148,15 +133,15 @@ def parse_torrc():
                         auth_check = True
                         proxy_password = line.split()[1]
                         socks5_pwd = False
-                if not auth_check:
-                    proxy_username = ''
-                    proxy_password = ''
-            else:
-                proxy_type = 'None'
-                proxy_ip = ''
-                proxy_port = ''
+            if not auth_check:
                 proxy_username = ''
                 proxy_password = ''
+        else:
+            proxy_type = 'None'
+            proxy_ip = ''
+            proxy_port = ''
+            proxy_username = ''
+            proxy_password = ''
 
         return(bridge_type, proxy_type, proxy_ip, proxy_port,
                proxy_username, proxy_password)

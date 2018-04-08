@@ -9,7 +9,7 @@ from subprocess import Popen, PIPE
 import os, re, time
 import glob
 
-from tor_control_panel import tor_status, tor_bootstrap, torrc_gen, info
+from . import tor_status, tor_bootstrap, torrc_gen, info
 
 
 class TorControlPanel(QDialog):
@@ -431,7 +431,6 @@ class TorControlPanel(QDialog):
             index = self.bridges_combo.findText(bridge, QtCore.Qt.MatchFixedString)
             self.bridges_combo.setCurrentIndex(index)
             proxy = self.proxy_type.text()
-            print(proxy)
             index = self.proxy_combo.findText(proxy, QtCore.Qt.MatchFixedString)
             self.proxy_combo.setCurrentIndex(index)
             self.proxy_settings_show(proxy)
