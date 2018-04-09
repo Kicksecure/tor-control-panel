@@ -59,7 +59,7 @@ def gen_torrc(args):
         proxy_password  =   str(args[6])
 
     with open(torrc_file_path, "w") as f:
-        f.write(info.torrc_info())
+        f.write(info.torrc_info(torrc_user_file_path))
         f.write('DisableNetwork 0\n')
 
         if bridge_type in bridges_type:

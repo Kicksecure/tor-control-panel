@@ -97,6 +97,7 @@ class TorControlPanel(QDialog):
         self.bridge_info_button = QPushButton(self.info_icon, '',
                                               self.config_frame)
         self.bridge_info_button.clicked.connect(info.show_help_censorship)
+        self.bridge_info_label = QLabel()
 
         self.proxy_label = QLabel(self.config_frame)
         self.proxy_type = QLabel(self.config_frame)
@@ -205,6 +206,9 @@ class TorControlPanel(QDialog):
         self.bridge_info_button.setFlat(True)
         self.bridge_info_button.hide()
         self.bridge_info_button.setToolTip('Show bridges help')
+        self.bridge_info_label.setMinimumSize(575, 400)
+        self.bridge_info_label.setWordWrap(True)
+        self.bridge_info_label.setText
 
         self.proxy_label.setText('Proxy type :')
         self.proxy_label.setGeometry(10, 53, 90, 20)
@@ -370,11 +374,11 @@ class TorControlPanel(QDialog):
         self.hide_custom_bridges()
 
     def check_proxy_ip(self, address):
-        import ipaddress
+        import socket
         try:
-            ipaddress.ip_address(address)
+            sock = socket.gethostbyname(address)
             return(True)
-        except ValueError:
+        except:
             return(False)
 
     def check_proxy_port(self, port):
@@ -436,6 +440,7 @@ class TorControlPanel(QDialog):
             self.proxy_settings_show(proxy)
 
         elif 'Accept' in self.configure_button.text():
+            print(self.proxy_ip_edit.text())
             if self.bridges_combo.currentText() == 'Custom bridges':
                 self.status.hide()
                 self.tor_message_browser.hide()
@@ -447,7 +452,7 @@ class TorControlPanel(QDialog):
                 args.append('')  # custom bridges argument
                 proxy = self.proxy_combo.currentText()
                 if not proxy == 'None':
-                    if self.check_proxy_ip(self.proxy_ip_edit.text()) and \
+                    if self.check_proxy_ip(str(self.proxy_ip_edit.text())) and \
                         self.check_proxy_port(self.proxy_port_edit.text()):
                         args.append(proxy)
                         args.append(self.proxy_ip_edit.text())
@@ -462,10 +467,8 @@ class TorControlPanel(QDialog):
                             args.append('')
                     else:
                         self.reply = QMessageBox(QMessageBox.NoIcon, 'Warning',
-                '''<p><b>  Please input valid Address and Port number.</b></p>
-                <p> The Address should look like: 127.0.0.1 or localhost</p>
-                <p> The Port number should be an integer between 1 and 65535</p>''', QtWidgets.QMessageBox.Ok)
-
+                                                info.invalid_ip_port(),
+                                                QtWidgets.QMessageBox.Ok)
                         self.reply.exec_()
                         return()
 
