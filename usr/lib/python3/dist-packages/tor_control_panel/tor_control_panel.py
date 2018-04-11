@@ -69,7 +69,7 @@ class TorControlPanel(QDialog):
 
         self.button_box = QFrame(self)
         self.refresh_button = QPushButton(self.refresh_icon, ' Refresh', self)
-        self.refresh_button.clicked.connect(lambda: self.refresh(False))
+        self.refresh_button.clicked.connect(lambda: self.refresh(True))
         self.quit_button = QPushButton(self.exit_icon, ' Exit', self)
         self.quit_button.clicked.connect(self.quit)
 
@@ -148,6 +148,7 @@ class TorControlPanel(QDialog):
         self.journal_button.toggled.connect(self.refresh_logs)
 
         self.file_browser = QTextBrowser(self.tab2)
+        self.file_browser.setLineWrapMode(QTextBrowser.NoWrap)
         self.file_browser.setGeometry(QtCore.QRect(10, 95, 530, 247))
 
         self.custom_bridges_frame = QFrame(self.tab1)
@@ -177,13 +178,13 @@ class TorControlPanel(QDialog):
         self.quit_button.setGeometry(QtCore.QRect(480, 397, 83, 23))
 
         self.status.setText('Tor status')
-        self.status.setGeometry(QtCore.QRect(10, 18, 100, 24))
+        self.status.setGeometry(QtCore.QRect(10, 18, 80, 24))
 
-        self.tor_message_browser.setGeometry(QtCore.QRect(112, 20, 425, 148))
+        self.tor_message_browser.setGeometry(QtCore.QRect(92, 20, 445, 148))
         self.tor_message_browser.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.tor_message_browser.setStyleSheet('background-color:rgba(0, 0, 0, 0)')
 
-        self.bootstrap_progress.setGeometry(115, 45, 410, 15)
+        self.bootstrap_progress.setGeometry(95, 45, 445, 15)
         self.bootstrap_progress.setMinimum(0)
         self.bootstrap_progress.setMaximum(100)
         self.bootstrap_progress.hide()
@@ -557,7 +558,7 @@ class TorControlPanel(QDialog):
         if not self.bootstrap_done:
             self.bootstrap_thread.terminate()
         ## if running restart tor directly stem returns
-        ## bootstrap_percent 100 or  a socket error, randomly.
+        ## bootstrap_percent 100 or a socket error, randomly.
         self.stop_tor()
         self.restart_button.setEnabled(False)
 
