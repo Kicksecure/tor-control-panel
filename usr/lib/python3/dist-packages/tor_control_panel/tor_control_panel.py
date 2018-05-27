@@ -512,16 +512,16 @@ class TorControlPanel(QDialog):
                 elif button.text() == 'Tor &log':
                     # Copy Tor log to a new file, HTML format for highlighting
                     # warnings and errors. Use the new file in text browser.
-                    warn = '<span style="background-color:yellow">{}</span>'
-                           .format('[warn]'))
-                    error = '<span style="background-color:yellow">{}</span>'
-                           .format('[error]'))
+                    warn = '<span style="background-color:yellow">{}</span>'\
+                           .format('[warn]')
+                    error = '<span style="background-color:yellow">{}</span>'\
+                           .format('[error]')
 
                     with open('/var/run/tor/log', 'r') as fr:
                         with open('/home/user/tmp', 'w') as fw:
                             for line in fr:
                                 line = line.replace('[warn]', warn)
-                                line = line.replace('[error]', error
+                                line = line.replace('[error]', error)
                                 line = line.replace('\n', '<br>')
                                 fw.write(line)
 
