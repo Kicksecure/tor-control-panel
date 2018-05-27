@@ -41,7 +41,8 @@ class TorControlPanel(QDialog):
         self.tor_running_path = '/var/run/tor/tor.pid'
 
         self.paths = ['/usr/local/etc/torrc.d/40_anon_connection_wizard.conf',
-                      '/var/log/tor/log']
+                      #'/var/log/tor/log']
+                      '/home/user/tmp']
 
         self.button_name = ['&torrc', 'Tor &log', 'systemd &journal']
 
@@ -508,9 +509,29 @@ class TorControlPanel(QDialog):
                     p = Popen(self.journal_command, stdout=PIPE, stderr=PIPE)
                     stdout, stderr = p.communicate()
                     text = stdout.decode()
-                else:
-                    with open(self.paths[self.button_name.index(button.text())]) as f:
+                elif button.text() == 'Tor &log':
+                    # Copy Tor log to a new file, HTML format for highlighting
+                    # warnings and errors. Use the new file in text browser.
+                    warn = '<span style="background-color:yellow">{}</span>'
+                           .format('[warn]'))
+                    error = '<span style="background-color:yellow">{}</span>'
+                           .format('[error]'))
+
+                    with open('/var/run/tor/log', 'r') as fr:
+                        with open('/home/user/tmp', 'w') as fw:
+                            for line in fr:
+                                line = line.replace('[warn]', warn)
+                                line = line.replace('[error]', error
+                                line = line.replace('\n', '<br>')
+                                fw.write(line)
+
+                    with open('/home/user/tmp', 'r') as f:
                         text = f.read()
+
+                elif button.text() == '&torrc':
+                    with open(self.paths[0]) as f:
+                        text = f.read()
+
                 self.file_browser.setText(text)
                 self.file_browser.moveCursor(QtGui.QTextCursor.End)
 
