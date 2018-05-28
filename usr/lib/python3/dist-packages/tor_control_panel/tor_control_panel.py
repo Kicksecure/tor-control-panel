@@ -44,7 +44,7 @@ class TorControlPanel(QDialog):
                       #'/var/log/tor/log']
                       '/home/user/tmp']
 
-        self.button_name = ['&torrc', 'Tor &log', 'systemd &journal']
+        self.button_name = ['systemd &journal', 'Tor &log', '&torrc']
 
         self.journal_command = ['journalctl', '-n', '200', '-u',
                                 'tor@default.service']
@@ -60,6 +60,12 @@ class TorControlPanel(QDialog):
                         'HTTP/HTTPS',
                         'SOCKS4',
                         'SOCKS5']
+
+        ## tor log HTML
+        self.warn_style = '<span style="background-color:yellow">{}'\
+                        .format('[warn]')
+        self.error_style = '<span style="background-color:red">{}'\
+                        .format('[error]')
 
         self.bootstrap_done = True
 
@@ -169,7 +175,7 @@ class TorControlPanel(QDialog):
         self.tabs.setMaximumHeight(380)
         self.tabs.setGeometry(10, 10, 410, 380)
 
-        self.tabs.addTab(self.tab1,'Status')
+        self.tabs.addTab(self.tab1,'Control')
         self.tabs.addTab(self.tab3,'Utilities')
         self.tabs.addTab(self.tab2,'Logs')
 
@@ -505,34 +511,28 @@ class TorControlPanel(QDialog):
     def refresh_logs(self):
         for button in self.files_box.findChildren(QRadioButton):
             if button.isChecked():
-                if button.text() == 'systemd &journal':
+                if button.text() == self.button_name[0]:
                     p = Popen(self.journal_command, stdout=PIPE, stderr=PIPE)
                     stdout, stderr = p.communicate()
                     text = stdout.decode()
 
-                elif button.text() == 'Tor &log':
+                elif button.text() == self.button_name[1]:
                     # Copy Tor log to a new file, HTML format for highlighting
-                    # warnings and errors. Use the new file in text browser.
-                    warn = '<span style="background-color:yellow">{}'\
-                           .format('[warn]')
-                    error = '<span style="background-color:red">{}'\
-                           .format('[error]')
-
+                    # warnings and errors, use the new file in text browser.
                     with open('/var/run/tor/log', 'r') as fr:
                         with open('/home/user/tmp', 'w') as fw:
                             for line in fr:
-                                line = line.replace('[warn]', warn)
-                                line = line.replace('[error]', error)
+                                line = line.replace('[warn]', self.warn_style)
+                                line = line.replace('[error]', self.error_style)
                                 if '[warn]' in line or '[error]' in line:
                                     line = line.replace('\n', '</span><br>')
                                 else:
                                     line = line.replace('\n', '<br>')
                                 fw.write(line)
-
                     with open('/home/user/tmp', 'r') as f:
                         text = f.read()
 
-                elif button.text() == '&torrc':
+                elif button.text() == self.button_name[2]:
                     with open(self.paths[0]) as f:
                         text = f.read()
 
@@ -541,6 +541,7 @@ class TorControlPanel(QDialog):
 
     def refresh_user_configuration(self):
         args = torrc_gen.parse_torrc()
+
         self.bridges_type.setText(args[0])
         index = self.bridges_combo.findText(args[0], QtCore.Qt.MatchFixedString)
         self.bridges_combo.setCurrentIndex(index)
