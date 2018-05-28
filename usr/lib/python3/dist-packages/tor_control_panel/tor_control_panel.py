@@ -509,12 +509,13 @@ class TorControlPanel(QDialog):
                     p = Popen(self.journal_command, stdout=PIPE, stderr=PIPE)
                     stdout, stderr = p.communicate()
                     text = stdout.decode()
+
                 elif button.text() == 'Tor &log':
                     # Copy Tor log to a new file, HTML format for highlighting
                     # warnings and errors. Use the new file in text browser.
-                    warn = '<span style="background-color:yellow">{}</span>'\
+                    warn = '<span style="background-color:yellow">{}'\
                            .format('[warn]')
-                    error = '<span style="background-color:yellow">{}</span>'\
+                    error = '<span style="background-color:red">{}'\
                            .format('[error]')
 
                     with open('/var/run/tor/log', 'r') as fr:
@@ -522,7 +523,10 @@ class TorControlPanel(QDialog):
                             for line in fr:
                                 line = line.replace('[warn]', warn)
                                 line = line.replace('[error]', error)
-                                line = line.replace('\n', '<br>')
+                                if '[warn]' in line or '[error]' in line:
+                                    line = line.replace('\n', '</span><br>')
+                                else:
+                                    line = line.replace('\n', '<br>')
                                 fw.write(line)
 
                     with open('/home/user/tmp', 'r') as f:
