@@ -61,7 +61,9 @@ class TorControlPanel(QDialog):
                         'SOCKS4',
                         'SOCKS5']
 
-        ## tor log HTML
+        self.tor_log = '/var/run/tor/log'
+        self.tor_log_html = '/home/user/tmp'
+        ## tor log HTML style
         self.warn_style = '<span style="background-color:yellow">{}'\
                         .format('[warn]')
         self.error_style = '<span style="background-color:red">{}'\
@@ -168,6 +170,20 @@ class TorControlPanel(QDialog):
         self.custom_accept_button = QPushButton(QtGui.QIcon(
             self.accept_icon), 'Accept', self .custom_bridges_frame)
         self.custom_accept_button.clicked.connect(self.accept_custom_bridges)
+
+        self.utils_layout = QtWidgets.QVBoxLayout(self.tab3)
+        self.newnym_box = QFrame()
+        self.onioncircuits_box = QFrame()
+        self.dummy1 = QFrame()
+        self.dummy2 = QFrame()
+        self.utils_layout.addWidget(self.newnym_box)
+        self.utils_layout.addWidget(self.onioncircuits_box)
+
+        self.utils_layout.addWidget(self.dummy1)
+        self.utils_layout.addWidget(self.dummy2)
+
+        self.newnym_box.setFrameShape(QFrame.Panel | QFrame.Raised)
+        self.onioncircuits_box.setFrameShape(QFrame.Panel | QFrame.Raised)
 
         self.setup_ui()
 
@@ -519,8 +535,8 @@ class TorControlPanel(QDialog):
                 elif button.text() == self.button_name[1]:
                     # Copy Tor log to a new file, HTML format for highlighting
                     # warnings and errors, use the new file in text browser.
-                    with open('/var/run/tor/log', 'r') as fr:
-                        with open('/home/user/tmp', 'w') as fw:
+                    with open(self.tor_log, 'r') as fr:
+                        with open(self.tor_log_html, 'w') as fw:
                             for line in fr:
                                 line = line.replace('[warn]', self.warn_style)
                                 line = line.replace('[error]', self.error_style)
@@ -529,7 +545,7 @@ class TorControlPanel(QDialog):
                                 else:
                                     line = line.replace('\n', '<br>')
                                 fw.write(line)
-                    with open('/home/user/tmp', 'r') as f:
+                    with open(self.tor_log_html, 'r') as f:
                         text = f.read()
 
                 elif button.text() == self.button_name[2]:
