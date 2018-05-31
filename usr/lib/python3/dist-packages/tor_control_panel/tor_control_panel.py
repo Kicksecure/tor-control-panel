@@ -5,7 +5,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QCursor
 from PyQt5.QtWidgets import *
 
-from subprocess import Popen, PIPE
+from subprocess import call, Popen, PIPE
 import os, re, time
 import glob
 
@@ -173,7 +173,12 @@ class TorControlPanel(QDialog):
 
         self.utils_layout = QtWidgets.QVBoxLayout(self.tab3)
         self.newnym_box = QFrame()
+        self.newnym_button = QPushButton(self.exit_icon, 'New Identity', self.newnym_box)
+        self.newnym_button.clicked.connect(self.newnym)
+        self.quit_button.clicked.connect(self.quit)
         self.onioncircuits_box = QFrame()
+        self.onioncircuits_button = QPushButton(self.exit_icon, 'Onion Circuits', self.onioncircuits_box)
+        self.onioncircuits_button.clicked.connect(self.onioncircuits)
         self.dummy1 = QFrame()
         self.dummy2 = QFrame()
         self.utils_layout.addWidget(self.newnym_box)
@@ -325,6 +330,17 @@ class TorControlPanel(QDialog):
         self.journal_button.setGeometry(QtCore.QRect(90, 40, 141, 21))
         self.journal_button.setText('systemd &journal')
         self.torrc_button.setChecked(True)
+
+    def newnym(self):
+        from stem import Signal
+        from stem.control import Controller
+        with Controller.from_socket_file('/var/run/tor/control') as controller:
+            controller.authenticate()
+            controller.signal(Signal.NEWNYM)
+
+    def onioncircuits(self):
+        command = '/usr/bin/onioncircuits &'
+        call(command, shell=True)
 
     def update_bootstrap(self, bootstrap_phase, bootstrap_percent):
         self.bootstrap_progress.show()
