@@ -29,6 +29,8 @@ class TorControlPanel(QDialog):
         self.info_icon = QtGui.QIcon(icons_path + 'help.png')
         self.back_icon = QtGui.QIcon(icons_path + 'prev.png')
         self.accept_icon = QtGui.QIcon(icons_path + 'accept_icon.png')
+        self.onions_icon = QtGui.QIcon(icons_path + 'onion.png')
+        self.newid_icon = QtGui.QIcon(icons_path + 'silhouette2.png')
 
         self.tor_status_color = ['green', '#AF0000', '#AF0000', 'orange',
                                  'orange', '#AF0000']
@@ -172,18 +174,29 @@ class TorControlPanel(QDialog):
         self.custom_accept_button.clicked.connect(self.accept_custom_bridges)
 
         self.utils_layout = QtWidgets.QVBoxLayout(self.tab3)
+
         self.newnym_box = QFrame()
-        self.newnym_button = QPushButton(self.exit_icon, 'New Identity', self.newnym_box)
+        self.newnym_layout = QHBoxLayout(self.newnym_box)
+        self.newnym_button = QPushButton(self.newid_icon, ' New &Identity ')
         self.newnym_button.clicked.connect(self.newnym)
-        self.quit_button.clicked.connect(self.quit)
+        self.newnym_label = QLabel()
+        self.newnym_layout.addWidget(self.newnym_button)
+        self.newnym_layout.addWidget(self.newnym_label)
+
         self.onioncircuits_box = QFrame()
-        self.onioncircuits_button = QPushButton(self.exit_icon, 'Onion Circuits', self.onioncircuits_box)
+        self.onions_layout = QHBoxLayout(self.onioncircuits_box)
+        self.onioncircuits_button = QPushButton(self.onions_icon, ' Onion &Circuits ')
         self.onioncircuits_button.clicked.connect(self.onioncircuits)
+        self.onions_label = QLabel()
+        self.onions_layout.addWidget(self.onioncircuits_button)
+        self.onions_layout.addWidget(self.onions_label)
+
+
         self.dummy1 = QFrame()
         self.dummy2 = QFrame()
+
         self.utils_layout.addWidget(self.newnym_box)
         self.utils_layout.addWidget(self.onioncircuits_box)
-
         self.utils_layout.addWidget(self.dummy1)
         self.utils_layout.addWidget(self.dummy2)
 
@@ -268,7 +281,7 @@ class TorControlPanel(QDialog):
         self.proxy_user_label.hide()
         self.proxy_user_edit.setGeometry(48, 105, 90, 20)
         self.proxy_user_edit.setPlaceholderText('Optional')
-        self.proxy_user_edit.hide()#hide()
+        self.proxy_user_edit.hide()
         self.proxy_user_edit.setEnabled(False)
 
         self.proxy_pwd_label.setText('Password: ')
@@ -317,6 +330,21 @@ class TorControlPanel(QDialog):
             Qt.TextSelectableByMouse)
         self.custom_bridges_help.setText(info.custom_bridges_help())
         self.custom_bridges.setGeometry(10, 190, 510, 105)
+
+        #self.newnym_button.setFlat(True)
+        self.newnym_button.setMaximumWidth(120)
+        self.newnym_button.setIconSize(QtCore.QSize(26, 26))
+        #self.newnym_button.setGeometry(QtCore.QRect(8, 5, 113, 32))
+        self.newnym_label.setWordWrap(True)
+        self.newnym_label.setTextFormat(Qt.RichText)
+        self.newnym_label.setText(info.newnym_text())
+
+        #self.onioncircuits_button.setFlat(True)
+        self.onioncircuits_button.setMaximumWidth(120)
+        self.onioncircuits_button.setIconSize(QtCore.QSize(26, 26))
+        #self.onioncircuits_button.setGeometry(QtCore.QRect(10, 5, 113, 32))
+        self.onions_label.setWordWrap(True)
+        self.onions_label.setText(info.onions_text())
 
         self.views_label.setGeometry(QtCore.QRect(10, 20, 64, 15))
         self.views_label.setText('<b>Views</b>')
