@@ -100,7 +100,10 @@ def invalid_ip_port():
 def newnym_text():
     text = '''<p>Same functionality as Tor Button "New Identity", except:</p>
 
-<p><i>Should be <span style="font:bold;color:red">used with care</span>: after this operation, Tor Browser close the open tabs, clear the currrent history, cache and more... <b>"All linkable identifiers and browser state MUST be cleared by this feature"</b> (from Tor Browser design document).</i></p>'''
+<p><span style="font:bold;color:red">Use with care</span>.\
+ After this operation, Tor Browser close the tabs, clear the currrent \
+history, cache... <b>"All linkable identifiers and browser state \
+MUST be cleared by this feature"</b> (from Tor Browser design document).</p>'''
     return(text)
 
 def onions_text():
