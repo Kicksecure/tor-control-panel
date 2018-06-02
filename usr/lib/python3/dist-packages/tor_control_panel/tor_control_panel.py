@@ -177,7 +177,7 @@ class TorControlPanel(QDialog):
 
         self.newnym_box = QFrame()
         self.newnym_layout = QHBoxLayout(self.newnym_box)
-        self.newnym_button = QPushButton(self.newid_icon, ' New &Identity ')
+        self.newnym_button = QPushButton(self.newid_icon, ' New &Identity  ')
         self.newnym_button.clicked.connect(self.newnym)
         self.newnym_label = QLabel()
         self.newnym_layout.addWidget(self.newnym_button)
@@ -185,7 +185,7 @@ class TorControlPanel(QDialog):
 
         self.onioncircuits_box = QFrame()
         self.onions_layout = QHBoxLayout(self.onioncircuits_box)
-        self.onioncircuits_button = QPushButton(self.onions_icon, ' Onion &Circuits ')
+        self.onioncircuits_button = QPushButton(self.onions_icon, ' Onion &Circuits')
         self.onioncircuits_button.clicked.connect(self.onioncircuits)
         self.onions_label = QLabel()
         self.onions_layout.addWidget(self.onioncircuits_button)
@@ -193,12 +193,12 @@ class TorControlPanel(QDialog):
 
 
         self.dummy1 = QFrame()
-        self.dummy2 = QFrame()
+        #self.dummy2 = QFrame()
 
-        self.utils_layout.addWidget(self.newnym_box)
         self.utils_layout.addWidget(self.onioncircuits_box)
+        self.utils_layout.addWidget(self.newnym_box)
         self.utils_layout.addWidget(self.dummy1)
-        self.utils_layout.addWidget(self.dummy2)
+        #self.utils_layout.addWidget(self.dummy2)
 
         self.newnym_box.setFrameShape(QFrame.Panel | QFrame.Raised)
         self.onioncircuits_box.setFrameShape(QFrame.Panel | QFrame.Raised)
@@ -333,18 +333,18 @@ class TorControlPanel(QDialog):
 
         #self.newnym_button.setFlat(True)
         self.newnym_button.setMaximumWidth(120)
-        self.newnym_button.setIconSize(QtCore.QSize(26, 26))
-        #self.newnym_button.setGeometry(QtCore.QRect(8, 5, 113, 32))
+        self.newnym_button.setIconSize(QtCore.QSize(32, 32))
         self.newnym_label.setWordWrap(True)
         self.newnym_label.setTextFormat(Qt.RichText)
         self.newnym_label.setText(info.newnym_text())
+        self.newnym_layout.setAlignment(Qt.AlignTop)
 
         #self.onioncircuits_button.setFlat(True)
         self.onioncircuits_button.setMaximumWidth(120)
-        self.onioncircuits_button.setIconSize(QtCore.QSize(26, 26))
-        #self.onioncircuits_button.setGeometry(QtCore.QRect(10, 5, 113, 32))
+        self.onioncircuits_button.setIconSize(QtCore.QSize(32, 32))
         self.onions_label.setWordWrap(True)
         self.onions_label.setText(info.onions_text())
+        self.newnym_layout.setAlignment(Qt.AlignTop)
 
         self.views_label.setGeometry(QtCore.QRect(10, 20, 64, 15))
         self.views_label.setText('<b>Views</b>')
@@ -367,6 +367,7 @@ class TorControlPanel(QDialog):
             controller.signal(Signal.NEWNYM)
 
     def onioncircuits(self):
+        self.move(0, 0)
         command = '/usr/bin/onioncircuits &'
         call(command, shell=True)
 

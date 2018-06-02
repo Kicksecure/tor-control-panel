@@ -98,13 +98,13 @@ def invalid_ip_port():
                 <p> The Port number should be an integer between 1 and 65535</p>''')
 
 def newnym_text():
-    text = '''<p>This has the same functionality as Tor Button "New Identity".</p>
+    text = '''<p>Same functionality as Tor Button "New Identity", except:</p>
 
-<p>However, it should be used with care when Tor Browser is open in Whonix workstation, as a new identity signal should close the open tabs, clear the currrent history, cache and so on in Tor Browser... <b>"All linkable identifiers and browser state MUST be cleared by this feature"</b> according to the Tor design document.</p>'''
+<p><i>Should be <span style="font:bold;color:red">used with care</span>: after this operation, Tor Browser close the open tabs, clear the currrent history, cache and more... <b>"All linkable identifiers and browser state MUST be cleared by this feature"</b> (from Tor Browser design document).</i></p>'''
     return(text)
 
 def onions_text():
-    text = '''Displays  Tor  circuits and streams. It allows to inspect the circuits the locally running Tor daemon  has  built,  along  with  some additional metadata for each node.
+    text = '''Displays  Tor  circuits and streams. It allows to inspect the circuits the locally running Tor daemon  has built,  along  with  some additional metadata for each node.
 
 It is intended as a successor to the currently unmaintained Vidalia software.'''
     return(text)
