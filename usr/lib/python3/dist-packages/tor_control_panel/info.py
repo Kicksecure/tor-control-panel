@@ -92,6 +92,13 @@ the next time you run anon-connection-wizard.\n\
 "
     return(info)
 
+def no_controller():
+    return('<b>Tor Controller Not Constructed</b><p>Tor \
+        controller cannot be constructed.This is very likely because \
+        you have a \"DisableNetwork 1\" line in some torrc file(s).\
+        Please manually remove or comment those lines and then run \
+        anon-connection-wizard or restart Tor.')
+
 def invalid_ip_port():
     return('''<p><b>  Please input valid Address and Port number.</b></p>
                 <p> The Address should look like: 127.0.0.1 or localhost</p>
@@ -107,7 +114,7 @@ MUST be cleared by this feature"</b> (from Tor Browser design document).</p>'''
     return(text)
 
 def onions_text():
-    text = '''Displays  Tor  circuits and streams. It allows to inspect the circuits the locally running Tor daemon  has built,  along  with  some additional metadata for each node.
+    text = '''Displays Tor circuits and streams. It allows to inspect the circuits the locally running Tor daemon has built, along with some additional metadata for each node.
 
 It is intended as a successor to the currently unmaintained Vidalia software.'''
     return(text)

@@ -16,8 +16,8 @@ class TorControlPanel(QDialog):
     def __init__(self):
         super(TorControlPanel, self).__init__()
 
-        self.setMinimumSize(575, 430)
-        self.setMaximumSize(575, 430)
+        self.setMinimumSize(620, 450)
+        #self.setMaximumHeight(450)
 
         icons_path = '/usr/share/tor-control-panel/'
         self.refresh_icon = QtGui.QIcon(icons_path + 'refresh.png')
@@ -79,22 +79,29 @@ class TorControlPanel(QDialog):
         self.tab3 = QWidget()
 
         self.button_box = QFrame(self)
-        self.refresh_button = QPushButton(self.refresh_icon, ' Refresh', self)
-        self.refresh_button.clicked.connect(lambda: self.refresh(True))
-        self.quit_button = QPushButton(self.exit_icon, ' Exit', self)
+        self.button_layout = QHBoxLayout(self.button_box)
+        self.refresh_button = QPushButton(self.refresh_icon, ' Refresh')
+        self.refresh_button.clicked.connect(lambda: self.refresh(False))
+        self.quit_button = QPushButton(self.exit_icon, ' Exit')
         self.quit_button.clicked.connect(self.quit)
+
+        self.button_layout.addWidget(self.refresh_button)
+        self.button_layout.addWidget(self.quit_button)
 
         self.layout =  QtWidgets.QVBoxLayout()
         self.layout.addWidget(self.tabs)
         self.layout.addWidget(self.button_box)
         self.setLayout(self.layout)
 
-        self.status = QPushButton(self.tab1)
-        self.status.setEnabled(False)
-        self.tor_message_browser = QTextBrowser(self.tab1)
-        self.bootstrap_progress = QtWidgets.QProgressBar(self.tab1)
+        self.control_layout = QVBoxLayout(self)
+        self.control_frame = QFrame(self.tab1)
 
-        self.user_frame = QFrame(self.tab1)
+        self.status = QPushButton(self.control_frame)
+        self.status.setEnabled(False)
+        self.tor_message_browser = QTextBrowser(self.control_frame)
+        self.bootstrap_progress = QtWidgets.QProgressBar(self.control_frame)
+
+        self.user_frame = QFrame(self.control_frame)
         self.config_frame = QGroupBox(self.user_frame)
 
         self.bridges_label = QLabel(self.config_frame)
@@ -147,9 +154,13 @@ class TorControlPanel(QDialog):
                                             self.control_box)
         self.configure_button.clicked.connect(self.configure)
 
-        self.views_label = QLabel(self.tab2)
-        self.files_box = QGroupBox(self.tab2)
-        self.files_box.setGeometry(QtCore.QRect(70, 20, 230, 65))
+        self.control_layout.addWidget(self.control_frame)
+
+        self.log_layout = QVBoxLayout(self.tab2)
+
+        self.view_frame = QFrame()
+        self.views_label = QLabel(self.view_frame)
+        self.files_box = QGroupBox(self.view_frame)
 
         self.torrc_button = QRadioButton(self.files_box)
         self.torrc_button.toggled.connect(self.refresh_logs)
@@ -158,9 +169,10 @@ class TorControlPanel(QDialog):
         self.journal_button = QRadioButton(self.files_box)
         self.journal_button.toggled.connect(self.refresh_logs)
 
-        self.file_browser = QTextBrowser(self.tab2)
+        self.file_browser = QTextBrowser()
         self.file_browser.setLineWrapMode(QTextBrowser.NoWrap)
-        self.file_browser.setGeometry(QtCore.QRect(10, 95, 530, 247))
+        self.log_layout.addWidget(self.view_frame)
+        self.log_layout.addWidget(self.file_browser)
 
         self.custom_bridges_frame = QFrame(self.tab1)
         self.custom_bridges_help = QLabel(self.custom_bridges_frame)
@@ -175,6 +187,15 @@ class TorControlPanel(QDialog):
 
         self.utils_layout = QtWidgets.QVBoxLayout(self.tab3)
 
+        self.onioncircuits_box = QFrame()
+        self.onions_layout = QVBoxLayout(self.onioncircuits_box)
+        self.onioncircuits_button = QPushButton(self.onions_icon,
+                                                ' Onion &Circuits')
+        self.onioncircuits_button.clicked.connect(self.onioncircuits)
+        self.onions_label = QLabel()
+        self.onions_layout.addWidget(self.onioncircuits_button)
+        self.onions_layout.addWidget(self.onions_label)
+
         self.newnym_box = QFrame()
         self.newnym_layout = QVBoxLayout(self.newnym_box)
         self.newnym_button = QPushButton(self.newid_icon, ' New &Identity  ')
@@ -182,15 +203,6 @@ class TorControlPanel(QDialog):
         self.newnym_label = QLabel()
         self.newnym_layout.addWidget(self.newnym_button)
         self.newnym_layout.addWidget(self.newnym_label)
-
-        self.onioncircuits_box = QFrame()
-        self.onions_layout = QVBoxLayout(self.onioncircuits_box)
-        self.onioncircuits_button = QPushButton(self.onions_icon, ' Onion &Circuits')
-        self.onioncircuits_button.clicked.connect(self.onioncircuits)
-        self.onions_label = QLabel()
-        self.onions_layout.addWidget(self.onioncircuits_button)
-        self.onions_layout.addWidget(self.onions_label)
-
 
         self.dummy1 = QFrame()
         #self.dummy2 = QFrame()
@@ -212,11 +224,20 @@ class TorControlPanel(QDialog):
         self.tabs.addTab(self.tab1,'Control')
         self.tabs.addTab(self.tab3,'Utilities')
         self.tabs.addTab(self.tab2,'Logs')
+        #policy = self.tabs.sizePolicy()
+        #policy.setVerticalStretch(1)
+        self.tabs.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
-        self.refresh_button.setGeometry(QtCore.QRect(10, 397, 83, 23))
+        #self.button_box.setFrameShape(QFrame.Panel | QFrame.Raised)
+        self.button_box.setMaximumHeight(40)
+        self.refresh_button.setMaximumSize(70, 24)
         self.refresh_button.setFlat(True)
         self.quit_button.setIconSize(QtCore.QSize(20, 20))
-        self.quit_button.setGeometry(QtCore.QRect(480, 397, 83, 23))
+        self.quit_button.setMaximumWidth(70)
+        self.button_box.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+
+        self.control_frame.setSizePolicy(QSizePolicy.Expanding,
+                                         QSizePolicy.Expanding)
 
         self.status.setText('Tor status')
         self.status.setGeometry(QtCore.QRect(10, 18, 80, 24))
@@ -231,10 +252,10 @@ class TorControlPanel(QDialog):
         self.bootstrap_progress.hide()
 
         self.user_frame.setLineWidth(2)
-        self.user_frame.setGeometry(10, 190, 530, 152)
+        self.user_frame.setGeometry(10, 190, 575, 152)
         self.user_frame.setFrameShape(QFrame.Panel | QFrame.Raised)
 
-        self.config_frame.setGeometry(10, 8, 363, 133)
+        self.config_frame.setGeometry(10, 8, 408, 133)
         self.config_frame.setTitle('User configuration')
 
         self.bridges_label.setGeometry(10, 26, 90, 20)
@@ -244,7 +265,7 @@ class TorControlPanel(QDialog):
         self.bridges_combo.setGeometry(100, 26, 250, 20)
         self.bridges_combo.setMaximumWidth(220)
         self.bridges_combo.hide()
-        self.bridge_info_button.setGeometry(335, 26, 20, 20)
+        self.bridge_info_button.setGeometry(380, 26, 20, 20)
         self.bridge_info_button.setFlat(True)
         self.bridge_info_button.hide()
         self.bridge_info_button.setToolTip('Show bridges help')
@@ -292,17 +313,17 @@ class TorControlPanel(QDialog):
         self.proxy_pwd_edit.hide()
         self.proxy_pwd_edit.setEnabled(False)
 
-        self.proxy_info_button.setGeometry(335, 53, 20, 20)
+        self.proxy_info_button.setGeometry(380, 53, 20, 20)
         self.proxy_info_button.setFlat(True)
         self.proxy_info_button.hide()
         self.proxy_info_button.setToolTip('Show proxies help')
 
-        self.prev_button.setGeometry(335, 105, 20,20)
+        self.prev_button.setGeometry(380, 105, 20,20)
         self.prev_button.setFlat(True)
         self.prev_button.hide()
         self.prev_button.setToolTip('Quit configuration')
 
-        self.control_box.setGeometry(QtCore.QRect(380, 8, 140, 133))
+        self.control_box.setGeometry(QtCore.QRect(425, 8, 140, 133))
         self.control_box.setTitle('Control')
         self.restart_button.setIconSize(QtCore.QSize(28, 28))
         self.restart_button.setFlat(True)
@@ -346,10 +367,10 @@ class TorControlPanel(QDialog):
         self.onions_label.setText(info.onions_text())
         self.newnym_layout.setAlignment(Qt.AlignTop)
 
-        self.views_label.setGeometry(QtCore.QRect(10, 20, 64, 15))
+        self.views_label.setGeometry(QtCore.QRect(10, 0, 64, 15))
         self.views_label.setText('<b>Views</b>')
 
-        self.files_box.setGeometry(QtCore.QRect(70, 20, 230, 65))
+        self.files_box.setGeometry(QtCore.QRect(70, 0, 230, 65))
         self.files_box.setTitle('  File               Logs')
         self.torrc_button.setGeometry(QtCore.QRect(10, 20, 50, 21))
         self.torrc_button.setText('&torrc')
@@ -357,7 +378,8 @@ class TorControlPanel(QDialog):
         self.log_button.setText('Tor &log')
         self.journal_button.setGeometry(QtCore.QRect(90, 40, 141, 21))
         self.journal_button.setText('systemd &journal')
-        self.torrc_button.setChecked(True)
+        self.log_button.setChecked(True)
+        self.file_browser.setMaximumHeight(258)
 
     def newnym(self):
         from stem import Signal
@@ -367,7 +389,6 @@ class TorControlPanel(QDialog):
             controller.signal(Signal.NEWNYM)
 
     def onioncircuits(self):
-        self.move(0, 0)
         command = '/usr/bin/onioncircuits &'
         call(command, shell=True)
 
@@ -390,11 +411,7 @@ class TorControlPanel(QDialog):
         if bootstrap_phase == 'no_controller':
             self.bootstrap_thread.terminate()
             self.tor_status = 'no_controller'
-            self.message = '<b>Tor Controller Not Constructed</b><p>Tor \
-            controller cannot be constructed.This is very likely because \
-            you have a \"DisableNetwork 1\" line in some torrc file(s).\
-            Please manually remove or comment those lines and then run \
-            anon-connection-wizard or restart Tor.'
+            self.message = info.no_controller()
             self.bootstrap_progress.hide()
             self.restart_button.setEnabled(True)
             self.stop_button.setEnabled(True)
@@ -402,9 +419,7 @@ class TorControlPanel(QDialog):
 
         elif bootstrap_phase == 'cookie_authentication_failed':
             self.bootstrap_thread.terminate()
-            self.message = '<b>Tor Controller Authentication Failed</b> \
-            <p>Tor allows for authentication by reading it a cookie file, \
-            but we cannot read that file (probably due to permissions)'
+            self.message = info.cookie_error()
             self.bootstrap_progress.hide()
             self.control_box.setEnabled(True)
             self.refresh_status()
@@ -501,7 +516,8 @@ class TorControlPanel(QDialog):
             self.prev_button.show()
 
             bridge = self.bridges_type.text()
-            index = self.bridges_combo.findText(bridge, QtCore.Qt.MatchFixedString)
+            index = self.bridges_combo.findText(bridge,
+                                                QtCore.Qt.MatchFixedString)
             self.bridges_combo.setCurrentIndex(index)
             proxy = self.proxy_type.text()
             index = self.proxy_combo.findText(proxy, QtCore.Qt.MatchFixedString)
@@ -521,7 +537,7 @@ class TorControlPanel(QDialog):
                 args.append('')  # custom bridges argument
                 proxy = self.proxy_combo.currentText()
                 if not proxy == 'None':
-                    if self.check_proxy_ip(str(self.proxy_ip_edit.text())) and \
+                    if self.check_proxy_ip(str(self.proxy_ip_edit.text())) and\
                         self.check_proxy_port(self.proxy_port_edit.text()):
                         args.append(proxy)
                         args.append(self.proxy_ip_edit.text())
@@ -623,8 +639,8 @@ class TorControlPanel(QDialog):
 
         if tor_is_enabled and tor_is_running:
             self.tor_status = 'running'
-            ## when refresh is called from update_bootstrap, the thread would be
-            ## destroyed while running, crashing the program.
+            ## when refresh is called from update_bootstrap, the thread
+            ## would be destroyed while running, crashing the program.
             if bootstrap:
                 self.start_bootstrap()
         else:
