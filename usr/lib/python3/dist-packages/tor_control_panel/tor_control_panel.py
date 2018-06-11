@@ -17,7 +17,7 @@ class TorControlPanel(QDialog):
         super(TorControlPanel, self).__init__()
 
         self.setMinimumSize(620, 450)
-        #self.setMaximumHeight(450)
+        self.setMaximumHeight(450)
 
         icons_path = '/usr/share/tor-control-panel/'
         self.refresh_icon = QtGui.QIcon(icons_path + 'refresh.png')
@@ -93,8 +93,8 @@ class TorControlPanel(QDialog):
         self.layout.addWidget(self.button_box)
         self.setLayout(self.layout)
 
-        self.control_layout = QVBoxLayout(self)
-        self.control_frame = QFrame(self.tab1)
+        self.control_layout = QVBoxLayout(self.tab1)
+        self.control_frame = QFrame()
 
         self.status = QPushButton(self.control_frame)
         self.status.setEnabled(False)
@@ -240,7 +240,7 @@ class TorControlPanel(QDialog):
                                          QSizePolicy.Expanding)
 
         self.status.setText('Tor status')
-        self.status.setGeometry(QtCore.QRect(10, 18, 80, 24))
+        self.status.setGeometry(QtCore.QRect(0, 18, 80, 24))
 
         self.tor_message_browser.setGeometry(QtCore.QRect(92, 20, 445, 148))
         self.tor_message_browser.setFrameShape(QtWidgets.QFrame.NoFrame)
@@ -252,7 +252,7 @@ class TorControlPanel(QDialog):
         self.bootstrap_progress.hide()
 
         self.user_frame.setLineWidth(2)
-        self.user_frame.setGeometry(10, 190, 575, 152)
+        self.user_frame.setGeometry(0, 190, 575, 152)
         self.user_frame.setFrameShape(QFrame.Panel | QFrame.Raised)
 
         self.config_frame.setGeometry(10, 8, 408, 133)
@@ -599,6 +599,7 @@ class TorControlPanel(QDialog):
                     with open(self.tor_log, 'r') as fr:
                         with open(self.tor_log_html, 'w') as fw:
                             for line in fr:
+                                line = re.sub(line[12:19], '...', line)
                                 line = line.replace('[warn]', self.warn_style)
                                 line = line.replace('[error]', self.error_style)
                                 if '[warn]' in line or '[error]' in line:

@@ -92,12 +92,20 @@ the next time you run anon-connection-wizard.\n\
 "
     return(info)
 
+def cookie_error():
+    return('Tor Controller Authentication Failed', 'Tor allows for authentication by reading it a cookie file, but we cannot read that file (probably due to permissions')
+
 def no_controller():
     return('<b>Tor Controller Not Constructed</b><p>Tor \
         controller cannot be constructed.This is very likely because \
         you have a \"DisableNetwork 1\" line in some torrc file(s).\
         Please manually remove or comment those lines and then run \
         anon-connection-wizard or restart Tor.')
+
+def cookie_error():
+    return('<b>Tor Controller Authentication Failed</b> \
+            <p>Tor allows for authentication by reading it a cookie file, \
+            but we cannot read that file (probably due to permissions)')
 
 def invalid_ip_port():
     return('''<p><b>  Please input valid Address and Port number.</b></p>
