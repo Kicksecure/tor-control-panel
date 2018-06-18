@@ -16,7 +16,7 @@ else:
     torrc_user_file_path = '/etc/torrc.d/50_user.conf'
 torrc_tmp_file_path = ''
 
-bridges_default_path = '/usr/share/anon-connection-wizard/bridges_default'
+bridges_default_path = '/usr/share/tor-control-panel/bridges_default'
 
 command_useBridges = 'UseBridges 1\n'
 command_use_custom_bridge = '# Custom Bridge is used:'
