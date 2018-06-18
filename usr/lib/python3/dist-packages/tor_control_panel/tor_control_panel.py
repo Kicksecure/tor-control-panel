@@ -54,7 +54,8 @@ class TorControlPanel(QDialog):
         self.bridges = ['None',
                         'obfs4 (recommended)',
                         'obfs3',
-                        'meek-amazon (works in China)',
+                        'snowflake',
+                        #'meek-amazon (works in China)',
                         'meek-azure (works in China)',
                         'Custom bridges']
 

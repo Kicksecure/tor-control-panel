@@ -21,19 +21,21 @@ bridges_default_path = '/usr/share/anon-connection-wizard/bridges_default'
 command_useBridges = 'UseBridges 1\n'
 command_use_custom_bridge = '# Custom Bridge is used:'
 
-bridges_command = ['ClientTransportPlugin obfs2,obfs3 exec /usr/bin/obfs4proxy\n',
-                   'ClientTransportPlugin obfs4 exec /usr/bin/obfs4proxy\n',
-                   'ClientTransportPlugin meek_lite exec /usr/bin/obfs4proxy\n',
-                   'ClientTransportPlugin meek_lite exec /usr/bin/obfs4proxy\n',
-                   'ClientTransportPlugin scramblesuit exec /usr/bin/obfs4proxy\n',
-                   'ClientTransportPlugin fte exec /usr/bin/fteproxy --managed']
+bridges_command = [ 'ClientTransportPlugin obfs2,obfs3 exec /usr/bin/obfs4proxy\n',
+                    'ClientTransportPlugin obfs4 exec /usr/bin/obfs4proxy\n',
 
-bridges_type = ['obfs3', 'obfs4', 'meek-amazon', 'meek-azure', 'scramblesuit', 'fte']
+                    'ClientTransportPlugin snowflake exec /usr/bin/snowflake-client -url https://snowflake-broker.azureedge.net/ -front ajax.aspnetcdn.com -ice stun:stun.l.google.com:19302 -max 3\n',
 
-bridges_display = ['obfs3', 'obfs4 (recommended)', 'meek-amazon (works in China)',
+                    'ClientTransportPlugin meek_lite exec /usr/bin/obfs4proxy\n',
+                    'ClientTransportPlugin scramblesuit exec /usr/bin/obfs4proxy\n',
+                    'ClientTransportPlugin fte exec /usr/bin/fteproxy --managed\n']
+
+bridges_type = ['obfs3', 'obfs4', 'snowflake', 'meek-azure', 'scramblesuit', 'fte']
+
+bridges_display = ['obfs3', 'obfs4 (recommended)', 'snowflake',
                    'meek-azure (works in China)']
 
-meek_amazon_address = 'a0.awsstatic.com\n'
+#meek_amazon_address = 'a0.awsstatic.com\n'
 meek_azure_address = 'ajax.aspnetcdn.com\n'
 
 proxy_torrc =   ['HTTPSProxy',
@@ -99,8 +101,8 @@ def parse_torrc():
                 for line in f:
                     if line.startswith('ClientTransportPlugin'):
                         bridge_type = bridges_type[bridges_command.index(line)]
-                    if line.endswith(meek_amazon_address):
-                        bridge_type = 'meek-amazon'
+                    #if line.endswith(meek_amazon_address):
+                        #bridge_type = 'meek-amazon'
                     if line.endswith(meek_azure_address):
                         bridge_type = 'meek-azure'
                 bridge_type = bridges_display[bridges_type.index(bridge_type)]
