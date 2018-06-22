@@ -17,7 +17,7 @@ class TorControlPanel(QDialog):
         super(TorControlPanel, self).__init__()
 
         self.setMinimumSize(620, 450)
-        self.setMaximumHeight(450)
+        #self.setMaximumHeight(450)
 
         icons_path = '/usr/share/tor-control-panel/'
         self.refresh_icon = QtGui.QIcon(icons_path + 'refresh.png')
@@ -79,20 +79,16 @@ class TorControlPanel(QDialog):
         self.tab2 = QWidget()
         self.tab3 = QWidget()
 
-        self.button_box = QFrame(self)
-        self.button_layout = QHBoxLayout(self.button_box)
-        #self.refresh_button = QPushButton(self.refresh_icon, ' Refresh')
-        #self.refresh_button.clicked.connect(lambda: self.refresh(False))
+        self.button_layout = QHBoxLayout()
         self.quit_button = QPushButton(self.exit_icon, ' Exit')
         self.quit_button.clicked.connect(self.quit)
 
         self.button_layout.addWidget(self.quit_button)
-        #self.button_layout.addWidget(self.refresh_button)
         self.button_layout.setAlignment(Qt.AlignRight)
 
         self.layout =  QtWidgets.QVBoxLayout()
         self.layout.addWidget(self.tabs)
-        self.layout.addWidget(self.button_box)
+        self.layout.addLayout(self.button_layout)
         self.setLayout(self.layout)
 
         self.control_layout = QVBoxLayout(self.tab1)
@@ -171,6 +167,7 @@ class TorControlPanel(QDialog):
         self.refresh_button.clicked.connect(lambda: self.refresh(False))
         self.view_layout.addWidget(self.view_frame)
         self.view_layout.addWidget(self.refresh_button)
+        self.view_layout.setAlignment(Qt.AlignTop)
 
         self.torrc_button = QRadioButton(self.files_box)
         self.torrc_button.toggled.connect(self.refresh_logs)
@@ -214,12 +211,12 @@ class TorControlPanel(QDialog):
         self.newnym_layout.addWidget(self.newnym_label)
 
         self.dummy1 = QFrame()
-        #self.dummy2 = QFrame()
+        self.dummy2 = QFrame()
 
         self.utils_layout.addWidget(self.onioncircuits_box)
         self.utils_layout.addWidget(self.newnym_box)
         self.utils_layout.addWidget(self.dummy1)
-        #self.utils_layout.addWidget(self.dummy2)
+        self.utils_layout.addWidget(self.dummy2)
 
         self.newnym_box.setFrameShape(QFrame.Panel | QFrame.Raised)
         self.onioncircuits_box.setFrameShape(QFrame.Panel | QFrame.Raised)
@@ -227,26 +224,17 @@ class TorControlPanel(QDialog):
         self.setup_ui()
 
     def setup_ui(self):
-        self.tabs.setMaximumHeight(380)
         self.tabs.setGeometry(10, 10, 410, 380)
 
         self.tabs.addTab(self.tab1,'Control')
         self.tabs.addTab(self.tab3,'Utilities')
         self.tabs.addTab(self.tab2,'Logs')
-        #policy = self.tabs.sizePolicy()
-        #policy.setVerticalStretch(1)
         self.tabs.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
-        #self.button_box.setFrameShape(QFrame.Panel | QFrame.Raised)
-        self.button_box.setMaximumHeight(40)
         self.refresh_button.setMaximumWidth(70)
         self.refresh_button.setFlat(True)
         self.quit_button.setIconSize(QtCore.QSize(20, 20))
         self.quit_button.setMaximumWidth(70)
-        self.button_box.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-
-        self.control_frame.setSizePolicy(QSizePolicy.Expanding,
-                                         QSizePolicy.Expanding)
 
         self.status.setText('Tor status')
         self.status.setGeometry(QtCore.QRect(0, 18, 80, 24))
@@ -361,20 +349,16 @@ class TorControlPanel(QDialog):
         self.custom_bridges_help.setText(info.custom_bridges_help())
         self.custom_bridges.setGeometry(10, 190, 510, 105)
 
-        #self.newnym_button.setFlat(True)
         self.newnym_button.setMaximumWidth(120)
         self.newnym_button.setIconSize(QtCore.QSize(20, 20))
         self.newnym_label.setWordWrap(True)
         self.newnym_label.setTextFormat(Qt.RichText)
         self.newnym_label.setText(info.newnym_text())
-        self.newnym_layout.setAlignment(Qt.AlignTop)
 
-        #self.onioncircuits_button.setFlat(True)
         self.onioncircuits_button.setMaximumWidth(120)
         self.onioncircuits_button.setIconSize(QtCore.QSize(20, 20))
         self.onions_label.setWordWrap(True)
         self.onions_label.setText(info.onions_text())
-        self.newnym_layout.setAlignment(Qt.AlignTop)
 
         self.views_label.setGeometry(QtCore.QRect(10, 0, 64, 15))
         self.views_label.setText('<b>Views</b>')
@@ -388,7 +372,6 @@ class TorControlPanel(QDialog):
         self.journal_button.setGeometry(QtCore.QRect(90, 40, 141, 21))
         self.journal_button.setText('systemd &journal')
         self.log_button.setChecked(True)
-        self.file_browser.setMaximumHeight(258)
 
     def newnym(self):
         from stem import Signal
