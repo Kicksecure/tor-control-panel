@@ -81,13 +81,14 @@ class TorControlPanel(QDialog):
 
         self.button_box = QFrame(self)
         self.button_layout = QHBoxLayout(self.button_box)
-        self.refresh_button = QPushButton(self.refresh_icon, ' Refresh')
-        self.refresh_button.clicked.connect(lambda: self.refresh(False))
+        #self.refresh_button = QPushButton(self.refresh_icon, ' Refresh')
+        #self.refresh_button.clicked.connect(lambda: self.refresh(False))
         self.quit_button = QPushButton(self.exit_icon, ' Exit')
         self.quit_button.clicked.connect(self.quit)
 
-        self.button_layout.addWidget(self.refresh_button)
         self.button_layout.addWidget(self.quit_button)
+        #self.button_layout.addWidget(self.refresh_button)
+        self.button_layout.setAlignment(Qt.AlignRight)
 
         self.layout =  QtWidgets.QVBoxLayout()
         self.layout.addWidget(self.tabs)
@@ -158,10 +159,18 @@ class TorControlPanel(QDialog):
         self.control_layout.addWidget(self.control_frame)
 
         self.log_layout = QVBoxLayout(self.tab2)
+        self.view_layout = QHBoxLayout()
+        self.view_layout.setAlignment(Qt.AlignBottom)
+        self.log_layout.addLayout(self.view_layout)
 
         self.view_frame = QFrame()
+        self.view_frame.setMinimumHeight(70)
         self.views_label = QLabel(self.view_frame)
         self.files_box = QGroupBox(self.view_frame)
+        self.refresh_button = QPushButton(self.refresh_icon, ' Refresh')
+        self.refresh_button.clicked.connect(lambda: self.refresh(False))
+        self.view_layout.addWidget(self.view_frame)
+        self.view_layout.addWidget(self.refresh_button)
 
         self.torrc_button = QRadioButton(self.files_box)
         self.torrc_button.toggled.connect(self.refresh_logs)
@@ -172,7 +181,6 @@ class TorControlPanel(QDialog):
 
         self.file_browser = QTextBrowser()
         self.file_browser.setLineWrapMode(QTextBrowser.NoWrap)
-        self.log_layout.addWidget(self.view_frame)
         self.log_layout.addWidget(self.file_browser)
 
         self.custom_bridges_frame = QFrame(self.tab1)
@@ -231,7 +239,7 @@ class TorControlPanel(QDialog):
 
         #self.button_box.setFrameShape(QFrame.Panel | QFrame.Raised)
         self.button_box.setMaximumHeight(40)
-        self.refresh_button.setMaximumSize(70, 24)
+        self.refresh_button.setMaximumWidth(70)
         self.refresh_button.setFlat(True)
         self.quit_button.setIconSize(QtCore.QSize(20, 20))
         self.quit_button.setMaximumWidth(70)
