@@ -16,7 +16,7 @@ class TorControlPanel(QDialog):
     def __init__(self):
         super(TorControlPanel, self).__init__()
 
-        self.setMinimumSize(620, 450)
+        self.setMinimumSize(650, 465)
         #self.setMaximumHeight(450)
 
         icons_path = '/usr/share/tor-control-panel/'
@@ -92,15 +92,22 @@ class TorControlPanel(QDialog):
         self.setLayout(self.layout)
 
         self.control_layout = QVBoxLayout(self.tab1)
-        self.control_frame = QFrame()
+        self.info_frame = QFrame()
+        self.frame_layout = QGridLayout(self.info_frame)
+        self.frame_layout.setVerticalSpacing(2)
+        self.frame_layout.setAlignment(Qt.AlignTop)
 
-        self.status = QPushButton(self.control_frame)
+        self.status = QPushButton()
         self.status.setEnabled(False)
-        self.tor_message_browser = QTextBrowser(self.control_frame)
-        self.bootstrap_progress = QtWidgets.QProgressBar(self.control_frame)
+        self.frame_layout.addWidget(self.status, 1, 0, 1, 1)
+        self.tor_message_browser = QTextBrowser()
+        self.frame_layout.addWidget(self.tor_message_browser, 1, 1, 2, 1)
+        self.bootstrap_progress = QtWidgets.QProgressBar()
+        self.frame_layout.addWidget(self.bootstrap_progress, 2, 1, 1, 1)
 
-        self.user_frame = QFrame(self.control_frame)
-        self.config_frame = QGroupBox(self.user_frame)
+        self.user_frame = QFrame()
+        self.user_layout = QHBoxLayout(self.user_frame)
+        self.config_frame = QGroupBox()
 
         self.bridges_label = QLabel(self.config_frame)
         self.bridges_type = QLabel(self.config_frame)
@@ -141,7 +148,9 @@ class TorControlPanel(QDialog):
         self.proxy_pwd_label = QLabel(self.config_frame)
         self.proxy_pwd_edit = QLineEdit(self.config_frame)
 
-        self.control_box = QGroupBox(self.user_frame)
+        self.user_layout.addWidget(self.config_frame)
+
+        self.control_box = QGroupBox()
         self.restart_button = QPushButton(self.restart_icon, ' Restart Tor',
                                           self.control_box)
         self.restart_button.clicked.connect(self.restart_tor)
@@ -152,7 +161,10 @@ class TorControlPanel(QDialog):
                                             self.control_box)
         self.configure_button.clicked.connect(self.configure)
 
-        self.control_layout.addWidget(self.control_frame)
+        self.user_layout.addWidget(self.control_box)
+
+        self.control_layout.addWidget(self.info_frame)
+        self.control_layout.addWidget(self.user_frame)
 
         self.log_layout = QVBoxLayout(self.tab2)
         self.view_layout = QHBoxLayout()
@@ -161,13 +173,12 @@ class TorControlPanel(QDialog):
 
         self.view_frame = QFrame()
         self.view_frame.setMinimumHeight(70)
-        self.views_label = QLabel(self.view_frame)
         self.files_box = QGroupBox(self.view_frame)
         self.refresh_button = QPushButton(self.refresh_icon, ' Refresh')
         self.refresh_button.clicked.connect(lambda: self.refresh(False))
+        self.view_layout.setAlignment(Qt.AlignTop)
         self.view_layout.addWidget(self.view_frame)
         self.view_layout.addWidget(self.refresh_button)
-        self.view_layout.setAlignment(Qt.AlignTop)
 
         self.torrc_button = QRadioButton(self.files_box)
         self.torrc_button.toggled.connect(self.refresh_logs)
@@ -224,35 +235,27 @@ class TorControlPanel(QDialog):
         self.setup_ui()
 
     def setup_ui(self):
-        self.tabs.setGeometry(10, 10, 410, 380)
-
         self.tabs.addTab(self.tab1,'Control')
         self.tabs.addTab(self.tab3,'Utilities')
         self.tabs.addTab(self.tab2,'Logs')
-        self.tabs.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
 
-        self.refresh_button.setMaximumWidth(70)
-        self.refresh_button.setFlat(True)
         self.quit_button.setIconSize(QtCore.QSize(20, 20))
         self.quit_button.setMaximumWidth(70)
 
         self.status.setText('Tor status')
-        self.status.setGeometry(QtCore.QRect(0, 18, 80, 24))
 
-        self.tor_message_browser.setGeometry(QtCore.QRect(92, 20, 445, 148))
         self.tor_message_browser.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.tor_message_browser.setStyleSheet('background-color:rgba(0, 0, 0, 0)')
 
-        self.bootstrap_progress.setGeometry(95, 45, 445, 15)
         self.bootstrap_progress.setMinimum(0)
         self.bootstrap_progress.setMaximum(100)
         self.bootstrap_progress.hide()
 
         self.user_frame.setLineWidth(2)
-        self.user_frame.setGeometry(0, 190, 575, 152)
+        self.user_frame.setMaximumHeight(160)
+        self.user_frame.setMinimumHeight(160)
         self.user_frame.setFrameShape(QFrame.Panel | QFrame.Raised)
 
-        self.config_frame.setGeometry(10, 8, 408, 133)
         self.config_frame.setTitle('User configuration')
 
         self.bridges_label.setGeometry(10, 26, 90, 20)
@@ -320,7 +323,8 @@ class TorControlPanel(QDialog):
         self.prev_button.hide()
         self.prev_button.setToolTip('Quit configuration')
 
-        self.control_box.setGeometry(QtCore.QRect(425, 8, 140, 133))
+        self.control_box.setGeometry(0, 140, 0, 160)
+        self.control_box.setMaximumWidth(140)
         self.control_box.setTitle('Control')
         self.restart_button.setIconSize(QtCore.QSize(28, 28))
         self.restart_button.setFlat(True)
@@ -349,22 +353,21 @@ class TorControlPanel(QDialog):
         self.custom_bridges_help.setText(info.custom_bridges_help())
         self.custom_bridges.setGeometry(10, 190, 510, 105)
 
+        self.newnym_box.setMaximumHeight(130)
         self.newnym_button.setMaximumWidth(120)
         self.newnym_button.setIconSize(QtCore.QSize(20, 20))
         self.newnym_label.setWordWrap(True)
         self.newnym_label.setTextFormat(Qt.RichText)
         self.newnym_label.setText(info.newnym_text())
 
+        self.onioncircuits_box.setMaximumHeight(80)
         self.onioncircuits_button.setMaximumWidth(120)
         self.onioncircuits_button.setIconSize(QtCore.QSize(20, 20))
         self.onions_label.setWordWrap(True)
         self.onions_label.setText(info.onions_text())
 
-        self.views_label.setGeometry(QtCore.QRect(10, 0, 64, 15))
-        self.views_label.setText('<b>Views</b>')
-
-        self.files_box.setGeometry(QtCore.QRect(70, 0, 230, 65))
-        self.files_box.setTitle('  File               Logs')
+        self.files_box.setGeometry(QtCore.QRect(0, 0, 230, 65))
+        self.files_box.setTitle('  Files             Logs')
         self.torrc_button.setGeometry(QtCore.QRect(10, 20, 50, 21))
         self.torrc_button.setText('&torrc')
         self.log_button.setGeometry(QtCore.QRect(90, 20, 106, 21))
@@ -372,6 +375,9 @@ class TorControlPanel(QDialog):
         self.journal_button.setGeometry(QtCore.QRect(90, 40, 141, 21))
         self.journal_button.setText('systemd &journal')
         self.log_button.setChecked(True)
+
+        self.refresh_button.setMaximumWidth(70)
+        self.refresh_button.setFlat(True)
 
     def newnym(self):
         from stem import Signal
