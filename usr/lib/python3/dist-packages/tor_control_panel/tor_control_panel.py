@@ -90,10 +90,9 @@ class TorControlPanel(QDialog):
         self.layout.addLayout(self.button_layout)
         self.setLayout(self.layout)
 
-        self.control_layout = QVBoxLayout(self.tab1)
+        self.tab1_layout = QVBoxLayout(self.tab1)
         self.info_frame = QFrame()
         self.frame_layout = QGridLayout(self.info_frame)
-        self.frame_layout.setVerticalSpacing(2)
         self.frame_layout.setAlignment(Qt.AlignTop)
 
         self.status = QPushButton()
@@ -108,87 +107,126 @@ class TorControlPanel(QDialog):
         self.user_layout = QHBoxLayout(self.user_frame)
         self.config_frame = QGroupBox()
 
-        self.bridges_label = QLabel(self.config_frame)
-        self.bridges_type = QLabel(self.config_frame)
-        self.bridges_combo = QComboBox(self.config_frame)
+        self.bridges_label = QLabel()
+        self.bridges_type = QLabel()
+        self.bridges_combo = QComboBox()
         for bridge in self.bridges:
             self.bridges_combo.addItem(bridge)
         self.bridges_combo.insertSeparator(1)
         self.bridges_combo.insertSeparator(7)
         self.bridges_combo.addItem('Disable Tor')
-        self.bridge_info_button = QPushButton(self.info_icon, '',
-                                              self.config_frame)
+        self.bridge_info_button = QPushButton(self.info_icon, '')
         self.bridge_info_button.clicked.connect(info.show_help_censorship)
-        self.bridge_info_label = QLabel()
 
-        self.proxy_label = QLabel(self.config_frame)
-        self.proxy_type = QLabel(self.config_frame)
-        self.proxy_combo = QComboBox(self.config_frame)
+        self.proxy_label = QLabel()
+        self.proxy_type = QLabel()
+        self.proxy_combo = QComboBox()
         for proxy in self.proxies:
             self.proxy_combo.addItem(proxy)
         self.proxy_combo.insertSeparator(1)
         self.proxy_combo.currentIndexChanged.connect(
             lambda: self.proxy_settings_show(self.proxy_combo.currentText()))
 
-        self.proxy_info_button = QPushButton(self.info_icon, '',
-                                             self.config_frame)
+        self.proxy_info_button = QPushButton(self.info_icon, '')
         self.proxy_info_button.clicked.connect(info.show_proxy_help)
 
-        self.prev_button = QPushButton(self.back_icon, '',self.config_frame)
+        self.config_frame_layout = QGridLayout()
+        self.config_frame_layout.addWidget(self.bridges_label, 1, 0)
+        self.config_frame_layout.addWidget(self.bridges_type, 1, 1)
+        self.config_frame_layout.addWidget(self.bridges_combo, 1, 1)
+        self.config_frame_layout.addWidget(self.bridge_info_button, 1, 2)
+        self.config_frame_layout.addWidget(self.proxy_label, 2, 0)
+        self.config_frame_layout.addWidget(self.proxy_type, 2, 1)
+        self.config_frame_layout.addWidget(self.proxy_combo, 2, 1)
+        self.config_frame_layout.addWidget(self.proxy_info_button, 2, 2)
+        self.config_frame_layout.setAlignment(Qt.AlignTop)
+        self.config_frame_layout.setVerticalSpacing(6)
+
+        self.proxy_ip_label = QLabel()
+        self.proxy_ip_edit = QLineEdit()
+        self.proxy_port_label = QLabel()
+        self.proxy_port_edit = QLineEdit()
+
+        self.proxy_user_label = QLabel()
+        self.proxy_user_edit = QLineEdit()
+        self.proxy_pwd_label = QLabel()
+        self.proxy_pwd_edit = QLineEdit()
+
+        self.prev_button = QPushButton(self.back_icon, '')
         self.prev_button.clicked.connect(self.exit_configuration)
 
-        self.proxy_ip_label = QLabel(self.config_frame)
-        self.proxy_ip_edit = QLineEdit(self.config_frame)
-        self.proxy_port_label = QLabel(self.config_frame)
-        self.proxy_port_edit = QLineEdit(self.config_frame)
+        self.proxy_settings_layout = QGridLayout()
+        self.proxy_settings_layout.addWidget(self.proxy_ip_label, 1, 0)
+        self.proxy_settings_layout.addWidget(self.proxy_ip_edit, 1, 1)
+        self.proxy_settings_layout.addWidget(self.proxy_port_label, 1, 2)
+        self.proxy_settings_layout.addWidget(self.proxy_port_edit, 1, 3)
+        self.proxy_settings_layout.addWidget(self.proxy_user_label, 2, 0)
+        self.proxy_settings_layout.addWidget(self.proxy_user_edit, 2, 1)
+        self.proxy_settings_layout.addWidget(self.proxy_pwd_label, 2, 2)
+        self.proxy_settings_layout.addWidget(self.proxy_pwd_edit, 2, 3)
+        self.proxy_settings_layout.addWidget(self.prev_button, 2, 4)
+        self.proxy_settings_layout.setAlignment(Qt.AlignRight)
 
-        self.proxy_user_label = QLabel(self.config_frame)
-        self.proxy_user_edit = QLineEdit(self.config_frame)
-        self.proxy_pwd_label = QLabel(self.config_frame)
-        self.proxy_pwd_edit = QLineEdit(self.config_frame)
+        self.config_layout = QVBoxLayout(self.config_frame)
+        self.config_layout.addLayout(self.config_frame_layout)
+        self.config_layout.addLayout(self.proxy_settings_layout)
 
         self.user_layout.addWidget(self.config_frame)
 
         self.control_box = QGroupBox()
         self.restart_button = QPushButton(self.restart_icon, ' Restart Tor',
                                           self.control_box)
-        self.restart_button.clicked.connect(self.restart_tor)
         self.stop_button = QPushButton(self.stop_icon, ' Stop Tor',
                                        self.control_box)
         self.stop_button.clicked.connect(self.stop_tor)
         self.configure_button = QPushButton(self.tool_icon, ' Configure',
                                             self.control_box)
+
+        #self.control_layout = QVBoxLayout(self.control_box)
+        #self.control_layout.addWidget(self.restart_button)
+        #self.control_layout.addWidget(self.stop_button)
+        #self.control_layout.addWidget(self.configure_button)
+        #self.control_layout.setAlignment(Qt.AlignRight)
+
+        self.restart_button.clicked.connect(self.restart_tor)
+        self.stop_button.clicked.connect(self.stop_tor)
         self.configure_button.clicked.connect(self.configure)
 
         self.user_layout.addWidget(self.control_box)
 
-        self.control_layout.addWidget(self.info_frame)
-        self.control_layout.addWidget(self.user_frame)
+        self.tab1_layout.addWidget(self.info_frame)
+        self.tab1_layout.addWidget(self.user_frame)
 
-        self.log_layout = QVBoxLayout(self.tab2)
+        self.tab2_layout = QVBoxLayout(self.tab2)
         self.view_layout = QHBoxLayout()
         self.view_layout.setAlignment(Qt.AlignBottom)
-        self.log_layout.addLayout(self.view_layout)
 
         self.view_frame = QFrame()
         self.view_frame.setMinimumHeight(70)
         self.files_box = QGroupBox(self.view_frame)
         self.refresh_button = QPushButton(self.refresh_icon, ' Refresh')
-        self.refresh_button.clicked.connect(self.refresh_logs)
         self.view_layout.setAlignment(Qt.AlignTop)
         self.view_layout.addWidget(self.view_frame)
         self.view_layout.addWidget(self.refresh_button)
 
+        self.files_box_layout = QGridLayout(self.files_box)
         self.torrc_button = QRadioButton(self.files_box)
-        self.torrc_button.toggled.connect(self.refresh_logs)
         self.log_button = QRadioButton(self.files_box)
-        self.log_button.toggled.connect(self.refresh_logs)
         self.journal_button = QRadioButton(self.files_box)
+        self.files_box_layout.addWidget(self.torrc_button, 1, 0)
+        self.files_box_layout.addWidget(self.log_button, 1, 1)
+        self.files_box_layout.addWidget(self.journal_button, 2, 1)
+
+        self.torrc_button.toggled.connect(self.refresh_logs)
+        self.log_button.toggled.connect(self.refresh_logs)
         self.journal_button.toggled.connect(self.refresh_logs)
+        self.refresh_button.clicked.connect(self.refresh_logs)
 
         self.file_browser = QTextBrowser()
         self.file_browser.setLineWrapMode(QTextBrowser.NoWrap)
-        self.log_layout.addWidget(self.file_browser)
+
+        self.tab2_layout.addLayout(self.view_layout)
+        self.tab2_layout.addWidget(self.file_browser)
 
         self.custom_bridges_frame = QFrame(self.tab1)
         self.custom_bridges_layout = QVBoxLayout(self.custom_bridges_frame)
@@ -209,7 +247,7 @@ class TorControlPanel(QDialog):
         self.custom_buttons.setAlignment(Qt.AlignRight)
         self.custom_bridges_layout.addLayout(self.custom_buttons)
 
-        self.control_layout.addWidget(self.custom_bridges_frame)
+        self.tab1_layout.addWidget(self.custom_bridges_frame)
 
         self.utils_layout = QtWidgets.QVBoxLayout(self.tab3)
 
@@ -229,7 +267,6 @@ class TorControlPanel(QDialog):
         self.newnym_label = QLabel()
         self.newnym_layout.addWidget(self.newnym_button)
         self.newnym_layout.addWidget(self.newnym_label)
-
         self.dummy1 = QFrame()
         self.dummy2 = QFrame()
 
@@ -249,7 +286,6 @@ class TorControlPanel(QDialog):
         self.tabs.addTab(self.tab2,'Logs')
 
         self.quit_button.setIconSize(QtCore.QSize(20, 20))
-        self.quit_button.setMaximumWidth(70)
 
         self.status.setText('Tor status')
 
@@ -262,78 +298,62 @@ class TorControlPanel(QDialog):
         self.bootstrap_progress.hide()
 
         self.user_frame.setLineWidth(2)
-        self.user_frame.setMaximumHeight(160)
-        self.user_frame.setMinimumHeight(160)
+        self.user_frame.setMaximumHeight(175)
+        self.user_frame.setMinimumHeight(175)
         self.user_frame.setFrameShape(QFrame.Panel | QFrame.Raised)
 
         self.config_frame.setTitle('User configuration')
 
-        self.bridges_label.setGeometry(10, 26, 90, 20)
+        self.bridges_label.setMaximumWidth(90)
         self.bridges_label.setText('Bridges type :')
-        self.bridges_type.setGeometry(100, 26, 250, 20)
         self.bridges_type.setStyleSheet('font:bold')
-        self.bridges_combo.setGeometry(100, 26, 250, 20)
-        self.bridges_combo.setMaximumWidth(220)
+        self.bridges_type.setMinimumHeight(24)
         self.bridges_combo.hide()
-        self.bridge_info_button.setGeometry(380, 26, 20, 20)
+        self.bridge_info_button.setMaximumWidth(20)
         self.bridge_info_button.setFlat(True)
         self.bridge_info_button.hide()
         self.bridge_info_button.setToolTip('Show bridges help')
-        self.bridge_info_label.setMinimumSize(575, 400)
-        self.bridge_info_label.setWordWrap(True)
-        self.bridge_info_label.setText
 
         self.proxy_label.setText('Proxy type :')
-        self.proxy_label.setGeometry(10, 53, 90, 20)
-        self.proxy_type.setGeometry(100, 53, 250, 20)
+        self.proxy_label.setMaximumWidth(90)
         self.proxy_type.setStyleSheet('font:bold')
-        self.proxy_combo.setGeometry(100, 53, 250, 20)
-        self.proxy_combo.setMaximumWidth(220)
+        self.proxy_type.setMinimumHeight(24)
         self.proxy_combo.hide()
+        self.proxy_info_button.setMaximumWidth(20)
+        self.proxy_info_button.setFlat(True)
+        self.proxy_info_button.hide()
+        self.proxy_info_button.setToolTip('Show proxies help')
 
         self.proxy_ip_label.setText('Address:')
-        self.proxy_ip_label.setGeometry(10, 80, 60, 20)
         self.proxy_ip_label.hide()
-        self.proxy_ip_edit.setGeometry(70, 80, 120, 20)
         self.proxy_ip_edit.setPlaceholderText('ex : 127.0.0.1')
         self.proxy_ip_edit.hide()
         self.proxy_ip_edit.setEnabled(False)
 
         self.proxy_port_label.setText('Port:')
-        self.proxy_port_label.setGeometry(210, 80, 250, 20)
         self.proxy_port_label.hide()
-        self.proxy_port_edit.setGeometry(245, 80, 75, 20)
         self.proxy_port_edit.setPlaceholderText('1-65535')
         self.proxy_port_edit.hide()
         self.proxy_port_edit.setEnabled(False)
 
         self.proxy_user_label.setText('User: ')
-        self.proxy_user_label.setGeometry(10, 105, 90, 20)
         self.proxy_user_label.hide()
-        self.proxy_user_edit.setGeometry(48, 105, 90, 20)
         self.proxy_user_edit.setPlaceholderText('Optional')
         self.proxy_user_edit.hide()
         self.proxy_user_edit.setEnabled(False)
 
         self.proxy_pwd_label.setText('Password: ')
-        self.proxy_pwd_label.setGeometry(150, 105, 60, 20)
         self.proxy_pwd_label.hide()
-        self.proxy_pwd_edit.setGeometry(218, 105, 102, 20)
         self.proxy_pwd_edit.setPlaceholderText('Optional')
         self.proxy_pwd_edit.hide()
         self.proxy_pwd_edit.setEnabled(False)
 
-        self.proxy_info_button.setGeometry(380, 53, 20, 20)
-        self.proxy_info_button.setFlat(True)
-        self.proxy_info_button.hide()
-        self.proxy_info_button.setToolTip('Show proxies help')
-
-        self.prev_button.setGeometry(380, 105, 20,20)
+        self.prev_button.setMaximumWidth(20)
         self.prev_button.setFlat(True)
         self.prev_button.hide()
         self.prev_button.setToolTip('Quit configuration')
 
-        self.control_box.setGeometry(0, 140, 0, 160)
+        self.control_box.setMinimumWidth(140)
         self.control_box.setMaximumWidth(140)
         self.control_box.setTitle('Control')
         self.restart_button.setIconSize(QtCore.QSize(28, 28))
@@ -341,16 +361,12 @@ class TorControlPanel(QDialog):
         self.restart_button.setGeometry(QtCore.QRect(10, 28, 113, 32))
         self.stop_button.setIconSize(QtCore.QSize(28, 28))
         self.stop_button.setFlat(True)
-        self.stop_button.setGeometry(QtCore.QRect(10, 63, 96, 32))
+        self.stop_button.setGeometry(QtCore.QRect(10, 70, 96, 32))
         self.configure_button.setIconSize(QtCore.QSize(28, 28))
         self.configure_button.setFlat(True)
-        self.configure_button.setGeometry(QtCore.QRect(10, 98, 102, 32))
+        self.configure_button.setGeometry(QtCore.QRect(10, 110, 102, 32))
         self.configure_button.setDefault(True)
 
-        #self.custom_bridges_frame.setGeometry(10, 10, 600, 380)
-        self.custom_bridges_frame.setLineWidth(2)
-        self.custom_bridges_frame.setFrameShape(QFrame.Panel |
-                                                QFrame.Raised)
         self.custom_bridges_frame.hide()
         self.custom_cancel_button.setFlat(True)
         self.custom_accept_button.setFlat(True)
@@ -372,13 +388,12 @@ class TorControlPanel(QDialog):
         self.onions_label.setWordWrap(True)
         self.onions_label.setText(info.onions_text())
 
-        self.files_box.setGeometry(QtCore.QRect(0, 0, 230, 65))
-        self.files_box.setTitle('  Files             Logs')
-        self.torrc_button.setGeometry(QtCore.QRect(10, 20, 50, 21))
+        self.files_box_layout.setVerticalSpacing(0)
+        self.files_box_layout.setHorizontalSpacing(20)
+        self.files_box_layout.setContentsMargins(0, 0, 0, 0)
+        self.files_box.setTitle('  Files            Logs')
         self.torrc_button.setText('&torrc')
-        self.log_button.setGeometry(QtCore.QRect(90, 20, 106, 21))
         self.log_button.setText('Tor &log')
-        self.journal_button.setGeometry(QtCore.QRect(90, 40, 141, 21))
         self.journal_button.setText('systemd &journal')
         self.log_button.setChecked(True)
 
