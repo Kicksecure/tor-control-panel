@@ -17,7 +17,6 @@ class TorControlPanel(QDialog):
         super(TorControlPanel, self).__init__()
 
         self.setMinimumSize(650, 465)
-        #self.setMaximumHeight(450)
 
         icons_path = '/usr/share/tor-control-panel/'
         self.refresh_icon = QtGui.QIcon(icons_path + 'refresh.png')
@@ -175,7 +174,7 @@ class TorControlPanel(QDialog):
         self.view_frame.setMinimumHeight(70)
         self.files_box = QGroupBox(self.view_frame)
         self.refresh_button = QPushButton(self.refresh_icon, ' Refresh')
-        self.refresh_button.clicked.connect(lambda: self.refresh(False))
+        self.refresh_button.clicked.connect(self.refresh_logs)
         self.view_layout.setAlignment(Qt.AlignTop)
         self.view_layout.addWidget(self.view_frame)
         self.view_layout.addWidget(self.refresh_button)
@@ -192,15 +191,25 @@ class TorControlPanel(QDialog):
         self.log_layout.addWidget(self.file_browser)
 
         self.custom_bridges_frame = QFrame(self.tab1)
+        self.custom_bridges_layout = QVBoxLayout(self.custom_bridges_frame)
         self.custom_bridges_help = QLabel(self.custom_bridges_frame)
         self.custom_bridges = QtWidgets.QTextEdit(self.custom_bridges_frame)
+        self.custom_bridges_layout.addWidget(self.custom_bridges_help)
+        self.custom_bridges_layout.addWidget(self.custom_bridges)
 
+        self.custom_buttons = QHBoxLayout(self.custom_bridges_frame)
         self.custom_cancel_button = QPushButton(QtGui.QIcon(
             self.back_icon), 'Cancel', self .custom_bridges_frame)
         self.custom_cancel_button.clicked.connect(self.hide_custom_bridges)
         self.custom_accept_button = QPushButton(QtGui.QIcon(
             self.accept_icon), 'Accept', self .custom_bridges_frame)
         self.custom_accept_button.clicked.connect(self.accept_custom_bridges)
+        self.custom_buttons.addWidget(self.custom_cancel_button)
+        self.custom_buttons.addWidget(self.custom_accept_button)
+        self.custom_buttons.setAlignment(Qt.AlignRight)
+        self.custom_bridges_layout.addLayout(self.custom_buttons)
+
+        self.control_layout.addWidget(self.custom_bridges_frame)
 
         self.utils_layout = QtWidgets.QVBoxLayout(self.tab3)
 
@@ -247,6 +256,7 @@ class TorControlPanel(QDialog):
         self.tor_message_browser.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.tor_message_browser.setStyleSheet('background-color:rgba(0, 0, 0, 0)')
 
+        self.bootstrap_progress.setMaximumHeight(15)
         self.bootstrap_progress.setMinimum(0)
         self.bootstrap_progress.setMaximum(100)
         self.bootstrap_progress.hide()
@@ -337,21 +347,17 @@ class TorControlPanel(QDialog):
         self.configure_button.setGeometry(QtCore.QRect(10, 98, 102, 32))
         self.configure_button.setDefault(True)
 
-        self.custom_bridges_frame.setGeometry(10, 10, 530, 332)
+        #self.custom_bridges_frame.setGeometry(10, 10, 600, 380)
         self.custom_bridges_frame.setLineWidth(2)
         self.custom_bridges_frame.setFrameShape(QFrame.Panel |
                                                 QFrame.Raised)
         self.custom_bridges_frame.hide()
-        self.custom_cancel_button.setGeometry(380, 300, 65, 25)
         self.custom_cancel_button.setFlat(True)
-        self.custom_accept_button.setGeometry(455, 300, 65 ,25)
         self.custom_accept_button.setFlat(True)
-        self.custom_bridges_help.setGeometry(10, 10, 510, 175)
         self.custom_bridges_help.setWordWrap(True)
         self.custom_bridges_help.setTextInteractionFlags(
             Qt.TextSelectableByMouse)
         self.custom_bridges_help.setText(info.custom_bridges_help())
-        self.custom_bridges.setGeometry(10, 190, 510, 105)
 
         self.newnym_box.setMaximumHeight(130)
         self.newnym_button.setMaximumWidth(120)
@@ -653,8 +659,8 @@ class TorControlPanel(QDialog):
             self.message = self.tor_message[self.tor_status_list.index
                                             (self.tor_status)]
         self.refresh_status()
-        self.refresh_logs()
         self.refresh_user_configuration()
+        self.refresh_logs()
 
     def restart_tor(self):
         if not self.bootstrap_done:
