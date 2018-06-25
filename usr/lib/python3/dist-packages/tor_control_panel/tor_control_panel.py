@@ -78,30 +78,28 @@ class TorControlPanel(QDialog):
         self.tab2 = QWidget()
         self.tab3 = QWidget()
 
-        self.button_layout = QHBoxLayout()
-        self.quit_button = QPushButton(self.exit_icon, ' Exit')
+        self.layout =  QtWidgets.QVBoxLayout()
+        self.quit_button = QPushButton(self.exit_icon, 'Exit')
         self.quit_button.clicked.connect(self.quit)
-
+        self.button_layout = QHBoxLayout()
         self.button_layout.addWidget(self.quit_button)
         self.button_layout.setAlignment(Qt.AlignRight)
-
-        self.layout =  QtWidgets.QVBoxLayout()
         self.layout.addWidget(self.tabs)
         self.layout.addLayout(self.button_layout)
         self.setLayout(self.layout)
 
         self.tab1_layout = QVBoxLayout(self.tab1)
         self.info_frame = QFrame()
-        self.frame_layout = QGridLayout(self.info_frame)
-        self.frame_layout.setAlignment(Qt.AlignTop)
+        self.status_layout = QGridLayout(self.info_frame)
+        self.status_layout.setAlignment(Qt.AlignTop)
 
-        self.status = QPushButton()
+        self.status = QPushButton(self.info_frame)
         self.status.setEnabled(False)
-        self.frame_layout.addWidget(self.status, 1, 0, 1, 1)
-        self.tor_message_browser = QTextBrowser()
-        self.frame_layout.addWidget(self.tor_message_browser, 1, 1, 2, 1)
-        self.bootstrap_progress = QtWidgets.QProgressBar()
-        self.frame_layout.addWidget(self.bootstrap_progress, 2, 1, 1, 1)
+        self.tor_message_browser = QTextBrowser(self.info_frame)
+        self.bootstrap_progress = QtWidgets.QProgressBar(self.info_frame)
+        self.status_layout.addWidget(self.status, 1, 0, 1, 1)
+        self.status_layout.addWidget(self.tor_message_browser, 1, 1, 2, 1)
+        self.status_layout.addWidget(self.bootstrap_progress, 2, 1, 1, 1)
 
         self.user_frame = QFrame()
         self.user_layout = QHBoxLayout(self.user_frame)
@@ -139,8 +137,6 @@ class TorControlPanel(QDialog):
         self.config_frame_layout.addWidget(self.proxy_type, 2, 1)
         self.config_frame_layout.addWidget(self.proxy_combo, 2, 1)
         self.config_frame_layout.addWidget(self.proxy_info_button, 2, 2)
-        self.config_frame_layout.setAlignment(Qt.AlignTop)
-        self.config_frame_layout.setVerticalSpacing(6)
 
         self.proxy_ip_label = QLabel()
         self.proxy_ip_edit = QLineEdit()
@@ -165,7 +161,6 @@ class TorControlPanel(QDialog):
         self.proxy_settings_layout.addWidget(self.proxy_pwd_label, 2, 2)
         self.proxy_settings_layout.addWidget(self.proxy_pwd_edit, 2, 3)
         self.proxy_settings_layout.addWidget(self.prev_button, 2, 4)
-        self.proxy_settings_layout.setAlignment(Qt.AlignRight)
 
         self.config_layout = QVBoxLayout(self.config_frame)
         self.config_layout.addLayout(self.config_frame_layout)
@@ -181,12 +176,6 @@ class TorControlPanel(QDialog):
         self.stop_button.clicked.connect(self.stop_tor)
         self.configure_button = QPushButton(self.tool_icon, ' Configure',
                                             self.control_box)
-
-        #self.control_layout = QVBoxLayout(self.control_box)
-        #self.control_layout.addWidget(self.restart_button)
-        #self.control_layout.addWidget(self.stop_button)
-        #self.control_layout.addWidget(self.configure_button)
-        #self.control_layout.setAlignment(Qt.AlignRight)
 
         self.restart_button.clicked.connect(self.restart_tor)
         self.stop_button.clicked.connect(self.stop_tor)
@@ -289,6 +278,7 @@ class TorControlPanel(QDialog):
 
         self.status.setText('Tor status')
 
+        self.tor_message_browser.setMinimumHeight(20)
         self.tor_message_browser.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.tor_message_browser.setStyleSheet('background-color:rgba(0, 0, 0, 0)')
 
@@ -303,6 +293,8 @@ class TorControlPanel(QDialog):
         self.user_frame.setFrameShape(QFrame.Panel | QFrame.Raised)
 
         self.config_frame.setTitle('User configuration')
+        self.config_frame_layout.setAlignment(Qt.AlignTop)
+        self.config_frame_layout.setVerticalSpacing(6)
 
         self.bridges_label.setMaximumWidth(90)
         self.bridges_label.setText('Bridges type :')
@@ -314,6 +306,7 @@ class TorControlPanel(QDialog):
         self.bridge_info_button.hide()
         self.bridge_info_button.setToolTip('Show bridges help')
 
+        self.proxy_settings_layout.setAlignment(Qt.AlignRight)
         self.proxy_label.setText('Proxy type :')
         self.proxy_label.setMaximumWidth(90)
         self.proxy_type.setStyleSheet('font:bold')
@@ -544,7 +537,6 @@ class TorControlPanel(QDialog):
             self.proxy_settings_show(proxy)
 
         elif 'Accept' in self.configure_button.text():
-            print(self.proxy_ip_edit.text())
             if self.bridges_combo.currentText() == 'Custom bridges':
                 self.status.hide()
                 self.tor_message_browser.hide()
