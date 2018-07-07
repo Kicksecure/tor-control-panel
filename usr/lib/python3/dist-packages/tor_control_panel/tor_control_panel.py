@@ -290,6 +290,7 @@ class TorControlPanel(QDialog):
         self.status.setText('Tor status')
 
         self.tor_message_browser.setFrameShape(QtWidgets.QFrame.NoFrame)
+        self.tor_message_browser.setMinimumHeight(24)
         self.tor_message_browser.setStyleSheet('background-color:rgba(0, 0, 0, 0)')
 
         self.bootstrap_progress.setMaximumHeight(15)
