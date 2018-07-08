@@ -6,8 +6,8 @@
 Type=Application
 Terminal=false
 Exec=/usr/lib/tor-control-panel/tor-control-panel
-Name=Anon Connection Wizard
-GenericName=Anon Connection Wizard
+Name=Tor Control panel
+GenericName=Tor Control Panel
 Comment=Tor Connection Configuration
 Categories=System;
 Icon=/usr/share/tor-control-panel/onion64.png

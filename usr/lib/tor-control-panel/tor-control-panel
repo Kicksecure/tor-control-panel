@@ -9,7 +9,7 @@ import time
 import shutil
 
 tor_control_panel = shutil.which("tor-control-panel")
-if anon_connection_wizard == None:
+if tor_control_panel == None:
     print('ERROR: tor-control-panel not found! Exiting.')
     sys.exit(1)
 

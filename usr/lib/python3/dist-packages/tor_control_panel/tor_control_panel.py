@@ -29,7 +29,7 @@ class TorControlPanel(QDialog):
         self.back_icon = QtGui.QIcon(icons_path + 'prev.png')
         self.accept_icon = QtGui.QIcon(icons_path + 'accept_icon.png')
         self.onions_icon = QtGui.QIcon(icons_path + 'onion.png')
-        self.newid_icon = QtGui.QIcon(icons_path + 'silhouette2.png')
+        self.newid_icon = QtGui.QIcon(icons_path + 'silhouette.png')
 
         self.tor_status_color = ['green', '#AF0000', '#AF0000', 'orange',
                                  'orange', '#AF0000']
@@ -82,6 +82,7 @@ class TorControlPanel(QDialog):
         self.quit_button = QPushButton(self.exit_icon, ' Exit')
         self.quit_button.clicked.connect(self.quit)
 
+        self.button_box = QFrame()
         self.button_layout.addWidget(self.quit_button)
         self.button_layout.setAlignment(Qt.AlignRight)
 
@@ -155,7 +156,8 @@ class TorControlPanel(QDialog):
         self.prev_button = QPushButton(self.back_icon, '')
         self.prev_button.clicked.connect(self.exit_configuration)
 
-        self.proxy_settings_layout = QGridLayout()
+        #self.proxy_frame = QFrame()
+        self.proxy_settings_layout = QGridLayout() #(self.proxy_frame)
         self.proxy_settings_layout.addWidget(self.proxy_ip_label, 1, 0)
         self.proxy_settings_layout.addWidget(self.proxy_ip_edit, 1, 1)
         self.proxy_settings_layout.addWidget(self.proxy_port_label, 1, 2)
@@ -167,9 +169,11 @@ class TorControlPanel(QDialog):
         self.proxy_settings_layout.addWidget(self.prev_button, 2, 4)
         self.proxy_settings_layout.setAlignment(Qt.AlignRight)
 
+
         self.config_layout = QVBoxLayout(self.config_frame)
         self.config_layout.addLayout(self.config_frame_layout)
         self.config_layout.addLayout(self.proxy_settings_layout)
+        #self.config_layout.addWidget(self.proxy_frame)
 
         self.user_layout.addWidget(self.config_frame)
 
@@ -391,7 +395,7 @@ class TorControlPanel(QDialog):
 
         self.files_box_layout.setVerticalSpacing(0)
         self.files_box_layout.setHorizontalSpacing(20)
-        self.files_box_layout.setContentsMargins(0, 0, 0, 0)
+        self.files_box_layout.setContentsMargins(6, 0, 6, 0)
         self.files_box.setTitle('  Files            Logs')
         self.torrc_button.setText('&torrc')
         self.log_button.setText('Tor &log')
