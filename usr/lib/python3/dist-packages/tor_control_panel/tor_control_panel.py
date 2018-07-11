@@ -678,6 +678,7 @@ class TorControlPanel(QDialog):
 
         if tor_is_enabled and tor_is_running:
             self.tor_status = 'running'
+            tor_state = True
             ## when refresh is called from update_bootstrap, the thread
             ## would be destroyed while running, crashing the program.
             if bootstrap:
@@ -685,13 +686,22 @@ class TorControlPanel(QDialog):
         else:
             if not tor_is_running:
                 self.tor_status =  'stopped'
+                tor_state = False
+
             if not tor_is_enabled:
                 if tor_is_running:
                     self.tor_status =  'disabled-running'
+                    tor_state = True
+
                 elif not tor_is_running:
                     self.tor_status =  'disabled'
+                    tor_state = False
+
             self.message = self.tor_message[self.tor_status_list.index
                                             (self.tor_status)]
+
+        self.newnym_button.setEnabled(tor_state)
+
         self.refresh_status()
         self.refresh_user_configuration()
         self.refresh_logs()
