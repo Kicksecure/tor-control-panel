@@ -1,3 +1,6 @@
+## Copyright (C) 2018 Patrick Schleizer <adrelanos@riseup.net>
+## See the file COPYING for copying conditions.
+
 from PyQt5 import QtWidgets
 
 def show_help_censorship():
