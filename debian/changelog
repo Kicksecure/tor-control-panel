@@ -1,6 +1,16 @@
-tor-control-panel (1:0.1-1.1) UNRELEASED; urgency=low
+tor-control-panel (1:0.3-1) unstable; urgency=medium
 
+  * New upstream version (local package).
+
+ -- Patrick Schleizer <adrelanos@riseup.net>  Thu, 12 Jul 2018 07:50:54 +0000
+
+tor-control-panel (1:0.2-1) unstable; urgency=low
+
+  [ troubadoour ]
   * Initial release.
   * remove stop_bootstrap
 
- -- troubadoour <trobador@riseup.net>  Sun, 04 Mar 2018 21:57:29 +0000
+  [ Patrick Schleizer ]
+  * New upstream version (local package).
+
+ -- Patrick Schleizer <adrelanos@riseup.net>  Thu, 12 Jul 2018 07:49:42 +0000

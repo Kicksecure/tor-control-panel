@@ -1,0 +1,320 @@
+commit bcacc9ed686eec3ce061d5983409e2b132cdb983
+Merge: 60fa4a2 f87bb84
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Thu Jul 12 07:25:25 2018 +0000
+
+    Merge remote-tracking branch 'troubadoour/master'
+
+commit f87bb846c5a5dfa12a064eb44f8fc06fe42a983e
+Author: troubadoour <trobador@riseup.net>
+Date:   Wed Jul 11 21:03:37 2018 +0000
+
+    add copyright
+
+commit 709b89717cc77d11a5ee21454858265189f631e5
+Author: troubadoour <trobador@riseup.net>
+Date:   Wed Jul 11 20:19:44 2018 +0000
+
+    disable newnym button if tor is stopped
+
+commit 60fa4a2ecc70c62ebb7b3d390562f1ec817ff4b7
+Author: troubadoour <trobador@riseup.net>
+Date:   Sun Jul 8 13:47:13 2018 +0000
+
+    desktop file, minor gui
+
+commit 311750e07307d71107d0b4274226378264232673
+Author: troubadoour <trobador@riseup.net>
+Date:   Sat Jul 7 19:03:53 2018 +0000
+
+    minor GUI
+
+commit 3e7a9e41a06471bfd88e55d90f9cb0442a4997df
+Author: troubadoour <trobador@riseup.net>
+Date:   Fri Jul 6 20:52:20 2018 +0000
+
+    tail n lines from tor log
+    misc gui
+
+commit 0d75378371a21cb35e9099173bad41b1c6c610df
+Author: troubadoour <trobador@riseup.net>
+Date:   Mon Jun 25 15:24:36 2018 +0000
+
+    layout status frame
+
+commit 720b9b1742a7370e0999900163ac11041c016c61
+Author: troubadoour <trobador@riseup.net>
+Date:   Sun Jun 24 19:42:09 2018 +0000
+
+    layout user frame
+
+commit 0262a35b7795357d3eb2b3efd2ce8ccc4777b3e6
+Author: troubadoour <trobador@riseup.net>
+Date:   Sun Jun 24 14:35:39 2018 +0000
+
+    custom bridges layout
+
+commit 81f66f9dbd050fefa65a693dff487f8202375c7f
+Author: troubadoour <trobador@riseup.net>
+Date:   Sat Jun 23 18:45:55 2018 +0000
+
+    gui layout for resizing window
+
+commit 9d60e4de47f9b180e97d60843579bc762db49111
+Author: troubadoour <trobador@riseup.net>
+Date:   Fri Jun 22 19:27:40 2018 +0000
+
+    misc gui, cleanup
+
+commit c494f4f8c03ce2dac0cca2db82a1af2acea093c9
+Author: troubadoour <trobador@riseup.net>
+Date:   Fri Jun 22 16:07:19 2018 +0000
+
+    move refresh button in logs tab
+
+commit e88d13f0cbc510d558495c50d9fcb8b23282f468
+Author: troubadoour <trobador@riseup.net>
+Date:   Mon Jun 18 20:58:59 2018 +0000
+
+    move bridges_default to /usr/shre/tor-control-panel
+
+commit 64248725ffc5a7afd07cc13338b391460628f918
+Author: troubadoour <trobador@riseup.net>
+Date:   Mon Jun 18 20:46:50 2018 +0000
+
+    remove meek-amazon add snowflake
+
+commit 8ad424ff84c903f154220ee3d18f01b376c0fce1
+Author: troubadoour <trobador@riseup.net>
+Date:   Mon Jun 11 20:04:54 2018 +0000
+
+    misg gui logs
+
+commit 0cdb7f214c13835efd94ac5981cdf2959adf4644
+Author: troubadoour <trobador@riseup.net>
+Date:   Mon Jun 4 21:06:34 2018 +0000
+
+    window and widgets expanding, misc
+
+commit 448d309842a608ba12e8f4f342211ffe3fad61e3
+Author: troubadoour <trobador@riseup.net>
+Date:   Sat Jun 2 21:31:20 2018 +0000
+
+    utilities tweaking 3
+
+commit 44e790c03942f028661c0ed406211e78164f815a
+Author: troubadoour <trobador@riseup.net>
+Date:   Sat Jun 2 20:49:41 2018 +0000
+
+    utilities tweaking 2
+
+commit 6762454e092651332e72a637b958d85e63a46ff2
+Author: troubadoour <trobador@riseup.net>
+Date:   Sat Jun 2 18:43:48 2018 +0000
+
+    utilities teaking
+
+commit 884dd465060282cfdf14f55adc62da58182baf26
+Author: troubadoour <trobador@riseup.net>
+Date:   Fri Jun 1 22:19:30 2018 +0000
+
+    newnym onioncircuits step 2
+
+commit 2340c7f49963ef90fa7feb4098fc4078d92332f9
+Author: troubadoour <trobador@riseup.net>
+Date:   Thu May 31 20:34:18 2018 +0000
+
+    newnym onioncircuits provisional
+
+commit 0d84fbfcf7b72fdf7e64b5e5c3609520632f3753
+Author: troubadoour <trobador@riseup.net>
+Date:   Wed May 30 21:30:03 2018 +0000
+
+    utilities step 1
+
+commit deea334d928a215cb7b66f0631bd9a6511d7c0a9
+Author: troubadoour <trobador@riseup.net>
+Date:   Mon May 28 20:42:17 2018 +0000
+
+    misc gui
+
+commit 6bc2b855f1f695e8b858ef52062d1086af3fd7c8
+Author: troubadoour <trobador@riseup.net>
+Date:   Mon May 28 14:47:11 2018 +0000
+
+    highlight warning error to end of line
+
+commit 952ee2cfffbed365df34bcc12f54f43c64101e9b
+Author: troubadoour <trobador@riseup.net>
+Date:   Sun May 27 20:54:52 2018 +0000
+
+    fix for the previous commit
+
+commit 0436c7147701eabd93f9ac0708895b1314a645f2
+Author: troubadoour <trobador@riseup.net>
+Date:   Sun May 27 20:18:37 2018 +0000
+
+    highlight warnings in tor log text browser. step1.
+
+commit 8a7145f21c4ffa87e3c0a8ba876cd60dbd4df950
+Author: troubadoour <trobador@riseup.net>
+Date:   Wed Apr 11 20:51:03 2018 +0000
+
+    misc
+
+commit 948789537228cfa556299f8ced7bc945aa8cb757
+Author: troubadoour <trobador@riseup.net>
+Date:   Mon Apr 9 20:28:32 2018 +0000
+
+    misc parse torrc, check ip
+
+commit 2f14f36d35e955fc23bfbaf279d105a51692073a
+Author: troubadoour <trobador@riseup.net>
+Date:   Sun Apr 8 20:02:31 2018 +0000
+
+    parse torrc logic
+
+commit 4632b3ccab1ae51162682908ce331fcf675dcace
+Author: troubadoour <trobador@riseup.net>
+Date:   Sat Apr 7 21:39:40 2018 +0000
+
+    parse torrc logic
+
+commit b4303f894b4c7d1b5104a83f3b513d3af94feed1
+Author: troubadoour <trobador@riseup.net>
+Date:   Fri Apr 6 21:09:19 2018 +0000
+
+    torrc generator, torrc parser
+
+commit 4b3fc9aa24e8abd7fdca09bd7ee4c6a1481739bb
+Author: troubadoour <trobador@riseup.net>
+Date:   Fri Apr 6 19:36:48 2018 +0000
+
+    proxy username password, parse torrc
+
+commit bbf93c661fd2fcc817fadf9d1da4fd2a6649adc9
+Author: troubadoour <trobador@riseup.net>
+Date:   Fri Mar 30 15:56:16 2018 +0000
+
+    proxy usrname and password
+
+commit 84711ff13e7c0d8dc95e26d5b5b0167afb133eb9
+Author: troubadoour <trobador@riseup.net>
+Date:   Sat Mar 24 21:32:40 2018 +0000
+
+    various
+
+commit 6b6a755f47dcf132f4b31d97b22e0630a44f4f8b
+Author: troubadoour <trobador@riseup.net>
+Date:   Fri Mar 23 22:39:16 2018 +0000
+
+    default configuration button
+
+commit 65e42a3f4afe1968634691e93e392492fd376e50
+Author: troubadoour <trobador@riseup.net>
+Date:   Fri Mar 23 20:49:17 2018 +0000
+
+    + python3-ipy --> use "ipaddress" in check proxy settings
+    better parsing, support ipv6
+
+commit e60c8c4a5904c047f7592c3dde62e2a1f6418e32
+Author: troubadoour <trobador@riseup.net>
+Date:   Fri Mar 23 19:30:35 2018 +0000
+
+    misc icons, check proxy settings
+
+commit c60df897159a18447d1b736e00bbaf9a597ecee7
+Author: troubadoour <trobador@riseup.net>
+Date:   Thu Mar 22 21:35:36 2018 +0000
+
+    misc logic, text boxes
+
+commit b088aaec2440496020fcdf5ce8d0ee251e3fea75
+Author: troubadoour <trobador@riseup.net>
+Date:   Thu Mar 22 20:55:26 2018 +0000
+
+    torrc-gen tweakings 2
+
+commit 122fd6a251c11ffcac2c1cd9699fd32618df474e
+Author: troubadoour <trobador@riseup.net>
+Date:   Thu Mar 22 17:33:21 2018 +0000
+
+    gen_torrc tweaking
+
+commit 32b3a6c3bc361ad6572e4d87d3b05e68856d03f5
+Author: troubadoour <trobador@riseup.net>
+Date:   Wed Mar 21 21:52:05 2018 +0000
+
+    custom bridges accept
+
+commit a6bcb12efa8c4f21557002a8bcf7cf73401dfbef
+Author: troubadoour <trobador@riseup.net>
+Date:   Tue Mar 20 21:58:32 2018 +0000
+
+    reverse testing
+
+commit 51b67084249a17ceb6a02bd264fb44a6f9b0460e
+Author: troubadoour <trobador@riseup.net>
+Date:   Tue Mar 20 21:53:00 2018 +0000
+
+    custom bridges gui step 1
+
+commit 7c497a859a00ef45333e1f24c56cbd598aa8a94e
+Author: troubadoour <trobador@riseup.net>
+Date:   Mon Mar 19 19:49:53 2018 +0000
+
+    configuration logic
+
+commit af6d89138a63d8351804757394ca2aaaff0dc4cf
+Author: troubadoour <trobador@riseup.net>
+Date:   Mon Mar 19 12:30:10 2018 +0000
+
+    cleanup
+
+commit 4b43e2f8c3ea614e55c3ef856100584fa411ac52
+Author: troubadoour <trobador@riseup.net>
+Date:   Sun Mar 18 20:54:34 2018 +0000
+
+    anon-connection-wizard integration: bridges, proxy settings
+
+commit 8d3692ae846134365d317bff274c8c4454419d52
+Author: troubadoour <trobador@riseup.net>
+Date:   Sat Mar 17 22:30:16 2018 +0000
+
+    previous button in configuration frame (temporary)
+
+commit 62759b6941a6daad3f4e6813ea9d50ca75bba667
+Author: troubadoour <trobador@riseup.net>
+Date:   Sat Mar 17 17:15:07 2018 +0000
+
+    fixes, help buttons, proxies
+
+commit f16a9b8d6c5574e2aed30a714eaddad28c59f562
+Author: troubadoour <trobador@riseup.net>
+Date:   Wed Mar 14 19:07:41 2018 +0000
+
+    proxy details in torrc_gen
+
+commit 5efd135fc573e695e7774c464280b045498fc182
+Author: troubadoour <trobador@riseup.net>
+Date:   Tue Mar 13 19:19:21 2018 +0000
+
+    integration of anon-connection-wizard, step 1
+
+commit e22f03eec62eb066caa0bb61fec8e5f88c1fca59
+Author: troubadoour <trobador@riseup.net>
+Date:   Mon Mar 5 20:53:29 2018 +0000
+
+    cleanup
+
+commit 997f3c18e3e09b348e920432d0204292574e723c
+Author: troubadoour <trobador@riseup.net>
+Date:   Sun Mar 4 21:59:38 2018 +0000
+
+    remove stop_bootstrap
+
+commit 5cfdfde0f20a8c7cf79c2fdb99efd1eb1dbd2a3f
+Author: troubadoour <trobador@riseup.net>
+Date:   Sun Mar 4 20:05:26 2018 +0000
+
+    intial commit
