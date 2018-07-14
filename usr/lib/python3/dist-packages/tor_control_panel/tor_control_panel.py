@@ -738,7 +738,17 @@ class TorControlPanel(QDialog):
 
 def main():
     import sys
+
     app = QApplication(sys.argv)
+
+    if os.getuid() != 0:
+        print('ERROR: This must be run as root!\nUse "kdesudo".')
+        reply = QMessageBox(QMessageBox.Critical, 'Warning',
+                                info.not_root(),
+                                QMessageBox.Ok)
+        reply.exec_()
+        sys.exit(1)
+
     tor_controller = TorControlPanel()
     tor_controller.refresh(True)
     tor_controller.show()
