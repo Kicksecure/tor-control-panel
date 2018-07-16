@@ -66,10 +66,10 @@ the next time you run anon-connection-wizard.\nDisableNetwork 0\n'
     else:
         if not os.path.exists('/etc/torrc.d/40_tor_control_panel.conf'):
             with open('/etc/torrc.d/40_tor_control_panel.conf', "w+") as f:
-                f.write()
+                f.write(torrc_text)
         if not os.path.exists('/etc/torrc.d/50_user.conf'):
             with open('/etc/torrc.d/50_user.conf', "w+") as f:
-                f.write(text2)
+                f.write(user_text)
 
 '''repair_torrc_d() will gurantee the existence of /etc/torrc.d/
 and if anon-connection-wizard is in Whonix,
