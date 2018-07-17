@@ -31,4 +31,5 @@ suitability or anything else.
 https://www.whonix.org
 
 ## AUTHOR
+This man page has been written by troubadour (trobador@riseup.net).
 

@@ -12,12 +12,15 @@ from subprocess import call, Popen, PIPE
 import os, re
 import glob
 
-from . import tor_status, tor_bootstrap, torrc_gen, info
+from . import tor_status, repair_torrc, tor_bootstrap, torrc_gen, info
 
 
 class TorControlPanel(QDialog):
     def __init__(self):
         super(TorControlPanel, self).__init__()
+
+        ## First action. We may not be in Whonix.
+        repair_torrc.repair_torrc()
 
         self.setMinimumSize(650, 465)
 
@@ -44,9 +47,11 @@ class TorControlPanel(QDialog):
         self.tor_path = '/var/run/tor'
         self.tor_running_path = '/var/run/tor/tor.pid'
 
-        self.paths = ['/usr/local/etc/torrc.d/40_anon_connection_wizard.conf',
-                      #'/var/log/tor/log']
-                      '/home/user/tmp']
+        whonix = os.path.exists('/usr/share/anon-gw-base-files/gateway')
+        if whonix:
+            self.paths = ['/usr/local/etc/torrc.d/40_tor_control_panel.conf']
+        else:
+            self.paths = ['/etc/torrc.d/40_tor_control_panel.conf']
 
         self.button_name = ['systemd &journal', 'Tor &log', '&torrc']
 
@@ -738,7 +743,17 @@ class TorControlPanel(QDialog):
 
 def main():
     import sys
+
     app = QApplication(sys.argv)
+
+    if os.getuid() != 0:
+        print('ERROR: This must be run as root!\nUse "kdesudo".')
+        reply = QMessageBox(QMessageBox.Critical, 'Warning',
+                                info.not_root(),
+                                QMessageBox.Ok)
+        reply.exec_()
+        sys.exit(1)
+
     tor_controller = TorControlPanel()
     tor_controller.refresh(True)
     tor_controller.show()

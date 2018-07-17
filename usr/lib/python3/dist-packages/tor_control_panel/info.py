@@ -3,6 +3,11 @@
 
 from PyQt5 import QtWidgets
 
+def not_root():
+    return('<p><B>ERROR. This must be run as root!</B></p> \
+            <p>Use a root file manager or "kdesudo" in a terminal.</p>')
+
+
 def show_help_censorship():
     reply = QtWidgets.QMessageBox(QtWidgets.QMessageBox.NoIcon, 'Censorship Circumvention Help',
                                   '''<p><b>  Censorship Circumvention Help</b></p>

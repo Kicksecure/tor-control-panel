@@ -8,16 +8,15 @@ import os
 import json
 import shutil
 import tempfile
-from . import info
+from . import repair_torrc, info
 
 whonix = os.path.exists('/usr/share/anon-gw-base-files/gateway')
 if whonix:
-    torrc_file_path = '/usr/local/etc/torrc.d/40_anon_connection_wizard.conf'
+    torrc_file_path = '/usr/local/etc/torrc.d/40_tor_control_panel.conf'
     torrc_user_file_path =  '/usr/local/etc/torrc.d/50_user.conf'
 else:
-    torrc_file_path = '/etc/torrc.d/40_anon_connection_wizard.conf'
+    torrc_file_path = '/etc/torrc.d/40_tor_control_panel.conf'
     torrc_user_file_path = '/etc/torrc.d/50_user.conf'
-torrc_tmp_file_path = ''
 
 bridges_default_path = '/usr/share/tor-control-panel/bridges_default'
 
@@ -95,6 +94,10 @@ def gen_torrc(args):
                     f.write('{0} {1}\n'.format(proxy_auth[2], proxy_password))
 
 def parse_torrc():
+    ## In case someone mess up with torrc files while tor-control-panel
+    ## is running.
+    repair_torrc.repair_torrc()
+
     if os.path.exists(torrc_file_path):
         use_bridge = 'UseBridges' in open(torrc_file_path).read()
         use_proxy = 'Proxy' in open(torrc_file_path).read()
