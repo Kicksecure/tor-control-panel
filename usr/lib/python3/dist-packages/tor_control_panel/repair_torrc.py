@@ -59,7 +59,7 @@ the next time you run anon-connection-wizard.\nDisableNetwork 0\n'
     if whonix:
         if not os.path.exists('/usr/local/etc/torrc.d/40_tor_control_panel.conf'):
             with open('/usr/local/etc/torrc.d/40_tor_control_panel.conf', "w+") as f:
-                f.write(toorc_text)
+                f.write(torrc_text)
         if not os.path.exists('/usr/local/etc/torrc.d/50_user.conf'):
             with open('/usr/local/etc/torrc.d/50_user.conf', "w+") as f:
                 f.write(user_text)
