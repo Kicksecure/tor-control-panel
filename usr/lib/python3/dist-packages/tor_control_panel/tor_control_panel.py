@@ -49,9 +49,9 @@ class TorControlPanel(QDialog):
 
         whonix = os.path.exists('/usr/share/anon-gw-base-files/gateway')
         if whonix:
-            self.paths = ['/usr/local/etc/torrc.d/40_tor_control_panel.conf']
+            self.paths = ['/usr/local/etc/torrc.d/40_anon_connection_wizard.conf']
         else:
-            self.paths = ['/etc/torrc.d/40_tor_control_panel.conf']
+            self.paths = ['/etc/torrc.d/40_anon_connection_wizard.conf']
 
         self.button_name = ['systemd &journal', 'Tor &log', '&torrc']
 
