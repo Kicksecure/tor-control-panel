@@ -1,3 +1,21 @@
+commit 8691ea5af7f3d322f9ccf2eb185188009fe364f9
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Thu Jul 19 14:54:20 2018 +0000
+
+    same config file name as anon-connection-wizard
+
+commit fb5417956b22fb0e642f9b77763e1db60d1cfd50
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Thu Jul 19 14:46:13 2018 +0000
+
+    fix
+
+commit 12c217ebd34052ae7f388218cb98b26f07db7f14
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Thu Jul 19 14:29:53 2018 +0000
+
+    bumped changelog version
+
 commit 95c828eb785d735080b429320cae4a36689fbce2
 Merge: 389a3b5 381f09b
 Author: Patrick Schleizer <adrelanos@riseup.net>
