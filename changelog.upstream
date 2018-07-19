@@ -1,3 +1,51 @@
+commit 95c828eb785d735080b429320cae4a36689fbce2
+Merge: 389a3b5 381f09b
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Tue Jul 17 14:00:43 2018 +0800
+
+    Merge remote-tracking branch 'troubadoour/master'
+
+commit 381f09bc0b4c07b0f367a6a20216c8edce4c4bd8
+Author: troubadoour <trobador@riseup.net>
+Date:   Mon Jul 16 20:14:45 2018 +0000
+
+    fix mistake
+
+commit 48274e81a650ab115e26dcb29a32ea3d1a104612
+Author: troubadoour <trobador@riseup.net>
+Date:   Mon Jul 16 18:59:33 2018 +0000
+
+    Add repair_torrc.py with additions.
+    
+    Create 95_whonix.conf, 40_tor_control_panel.conf
+    and 50_user.conf here if they do not exist.
+    
+    Set torrc path for whonix and non-whonix distributions.
+
+commit 33f5a6924cba974f7f699fe3870e4c50d807b6c7
+Author: troubadoour <trobador@riseup.net>
+Date:   Sat Jul 14 20:03:32 2018 +0000
+
+    author in man page
+
+commit 788ca9b525f1f6f7c38c8dea22bbf47b4e79dd43
+Author: troubadoour <trobador@riseup.net>
+Date:   Sat Jul 14 18:57:45 2018 +0000
+
+    add repair_torrc.py
+
+commit 3b083fdffedd41fe7d3b1c103ee080bca0421292
+Author: troubadoour <trobador@riseup.net>
+Date:   Sat Jul 14 18:46:55 2018 +0000
+
+    check if run as root
+
+commit 389a3b5a6ae05be3b58a9ff816af007f02cde175
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Thu Jul 12 07:58:50 2018 +0000
+
+    fix lintian warnings
+
 commit bcacc9ed686eec3ce061d5983409e2b132cdb983
 Merge: 60fa4a2 f87bb84
 Author: Patrick Schleizer <adrelanos@riseup.net>
