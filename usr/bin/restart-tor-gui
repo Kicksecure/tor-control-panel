@@ -1,0 +1,5 @@
+#!/usr/bin/python3 -u
+
+from tor_control_panel import restart_tor_gui
+
+restart_tor_gui.main()
