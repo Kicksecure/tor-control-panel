@@ -1,0 +1,6 @@
+## This file is part of Whonix.
+## Copyright (C) 2017 - 2019 Patrick Schleizer <adrelanos@riseup.net>
+## See the file COPYING for copying conditions.
+
+## tor-control-panel uses systemctl, therefore needs root.
+%sudo ALL=NOPASSWD: /usr/lib/tor-control-panel/tor-control-panel *

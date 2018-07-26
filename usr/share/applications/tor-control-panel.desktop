@@ -1,16 +1,23 @@
-## Copyright (C) 2012 - 2018 ENCRYPTED SUPPORT LP <adrelanos@riseup.net>
-## See the file COPYING for copying conditions.
-
 [Desktop Entry]
-Type=Application
-Terminal=false
-Exec=/usr/lib/tor-control-panel/tor-control-panel
-Name=Tor Control panel
-GenericName=Tor Control Panel
-Comment=Tor Connection Configuration
 Categories=System;
+Comment[en_US]=Tor Connection Configuration
+Comment=Tor Connection Configuration
+Exec=/usr/lib/tor-control-panel/tor-control-panel
+GenericName[en_US]=Tor Control Panel
+GenericName=Tor Control Panel
 Icon=/usr/share/tor-control-panel/onion64.png
-## Because we need a wrapper to start it.
-X-KDE-StartupNotify=false
 Keywords=system;Whonix;setup;connection;Tor;Anon;
-X-Desktop-File-Install-Version=0.22
+MimeType=
+Name[en_US]=Tor Control panel
+Name=Tor Control panel
+# Path=
+# StartupNotify=false
+# Terminal=false
+# TerminalOptions=
+# Type=Application
+# X-DBUS-ServiceName=
+# X-DBUS-StartupType=
+# X-Desktop-File-Install-Version=0.22
+# X-KDE-StartupNotify=false
+# X-KDE-SubstituteUID=false
+# X-KDE-Username=

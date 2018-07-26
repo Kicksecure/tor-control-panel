@@ -4,7 +4,7 @@
 Source: tor-control-panel
 Section: misc
 Priority: optional
-Maintainer: iry <iry@riseup.net>
+Maintainer: troubadour <trobador@riseup.net>
 Uploaders: Patrick Schleizer <adrelanos@riseup.net>
 Build-Depends: debhelper (>= 9), genmkfile, ruby-ronn, python3
 Homepage: https://www.whonix.org/

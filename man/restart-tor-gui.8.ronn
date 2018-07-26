@@ -1,0 +1,41 @@
+restart-tor-gui(8) -- Graphical Restart Tor Tool
+=============================================
+
+<span class="comment">
+# This file is part of Whonix.
+# Copyright (C) 2012 - 2014 Patrick Schleizer adrelanos@riseup.net
+# See the file COPYING for copying conditions.
+
+# Not using angle brackets in copyright notice for e-mail address, because
+# angle brackets would result in this file being non-deterministic. (There
+# must be a bug in Debian wheezy in ruby-ronn.)
+
+# Not using "##", because for some reason this comment would be visible in the
+# resulting man page.
+</span>
+
+## SYNOPSIS
+
+restart-tor-gui
+
+## DESCRIPTION
+
+restar-to-gui is a graphical tool for restarting Tor. It shows the
+tor bootstrap sequence in a progress bar. It closes itself two seconds
+after tor bootstrap has completed.
+
+Error catching is implemented after the restart command. In case of error,
+it displays the output of the "sudo systemctl restart tor@default" command
+in a message box.
+
+restart-tor-gui is produced independently from the Tor anonymity
+software and carries no guarantee from The Tor Project about quality,
+suitability or anything else.
+
+## WWW
+
+https://www.whonix.org
+
+## AUTHOR
+
+This man page has been written by troubadour (trobador@riseup.net).
