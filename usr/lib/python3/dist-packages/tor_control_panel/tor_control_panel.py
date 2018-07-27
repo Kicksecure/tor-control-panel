@@ -65,7 +65,7 @@ class TorControlPanel(QDialog):
                         'SOCKS4',
                         'SOCKS5']
 
-        self.tor_log = '/var/run/tor/log'
+        self.tor_log = '/var/log/tor/log'
         self.tor_log_html = '/home/user/tmp'
         ## tor log HTML style
         self.warn_style = '<span style="background-color:yellow">{}'\
@@ -621,7 +621,7 @@ class TorControlPanel(QDialog):
                 # Get n last lines from Tor log, HTML format for highlighting
                 # warnings and errors, write to file for text browser.
                 elif button.text() == self.button_name[1]:
-                    lines = os.popen('tail -n 3000 /var/run/tor/log').read()
+                    lines = os.popen('tail -n 3000 %s' % self.tor_log).read()
                     lines = lines.split('\n')
                     with open(self.tor_log_html, 'w') as fw:
                         for line in lines:

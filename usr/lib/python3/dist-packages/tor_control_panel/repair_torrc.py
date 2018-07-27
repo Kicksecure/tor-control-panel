@@ -62,6 +62,7 @@ the next time you run anon-connection-wizard.\nDisableNetwork 0\n'
         if not os.path.exists('/usr/local/etc/torrc.d/40_anon_connection_wizard.conf'):
             with open('/usr/local/etc/torrc.d/40_anon_connection_wizard.conf', "w+") as f:
                 f.write(torrc_text)
+
         if not os.path.exists('/usr/local/etc/torrc.d/50_user.conf'):
             with open('/usr/local/etc/torrc.d/50_user.conf', "w+") as f:
                 f.write(user_text)
@@ -69,9 +70,15 @@ the next time you run anon-connection-wizard.\nDisableNetwork 0\n'
         if not os.path.exists('/etc/torrc.d/40_tor_control_panel.conf'):
             with open('/etc/torrc.d/40_tor_control_panel.conf', "w+") as f:
                 f.write(torrc_text)
+
         if not os.path.exists('/etc/torrc.d/50_user.conf'):
             with open('/etc/torrc.d/50_user.conf', "w+") as f:
                 f.write(user_text)
+
+        log_exists = '/tor/log' in open('/usr/share/tor/tor-service-defaults-torrc').read()
+        if not log_exists:
+            with open('/usr/share/tor/tor-service-defaults-torrc', 'a') as f:
+                f.write('Log notice file /var/log/tor/log\n')
 
 
 '''repair_torrc_d() will guarantee the existence of /etc/torrc.d/
