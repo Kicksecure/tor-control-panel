@@ -25,7 +25,7 @@ def repair_torrc():
             if whonix:
                 f.write("%include /etc/torrc.d/95_whonix.conf\n")
             else:
-                f.write('%include /etc/torrc.d/40_anon_connection_wizard.conf\n')
+                f.write('%include /etc/torrc.d/40_tor_control_panel.conf\n')
                 f.write('%include /etc/torrc.d/50_user.conf\n')
     else:
         with open('/etc/tor/torrc', "r") as f:
@@ -34,15 +34,14 @@ def repair_torrc():
         torrcd_line_exists = False
         for line in lines:
             line = line.strip()
-            if (line.startswith('%include /etc/torrc.d')):
-                torrcd_line_exists = True
+            torrcd_line_exists = line.startswith('%include /etc/torrc.d')
 
         if not torrcd_line_exists:
             with open('/etc/tor/torrc', "a") as f:
                 if whonix:
                     f.write("%include /etc/torrc.d/95_whonix.conf\n")
                 else:
-                    f.write('%include /etc/torrc.d/40_anon_connection_wizard.conf\n')
+                    f.write('%include /etc/torrc.d/40_tor_control_panel.conf\n')
                     f.write('%include /etc/torrc.d/50_user.conf\n')
 
     if whonix and not os.path.exists('/etc/torrc.d/95_whonix.conf'):
@@ -67,14 +66,15 @@ the next time you run anon-connection-wizard.\nDisableNetwork 0\n'
             with open('/usr/local/etc/torrc.d/50_user.conf', "w+") as f:
                 f.write(user_text)
     else:
-        if not os.path.exists('/etc/torrc.d/40_anon_connection_wizard.conf'):
-            with open('/etc/torrc.d/40_anon_connection_wizard.conf', "w+") as f:
+        if not os.path.exists('/etc/torrc.d/40_tor_control_panel.conf'):
+            with open('/etc/torrc.d/40_tor_control_panel.conf', "w+") as f:
                 f.write(torrc_text)
         if not os.path.exists('/etc/torrc.d/50_user.conf'):
             with open('/etc/torrc.d/50_user.conf', "w+") as f:
                 f.write(user_text)
 
-'''repair_torrc_d() will gurantee the existence of /etc/torrc.d/
+
+'''repair_torrc_d() will guarantee the existence of /etc/torrc.d/
 and if anon-connection-wizard is in Whonix,
 then also gurantee the existence of /usr/local/etc/torrc.d/
 '''

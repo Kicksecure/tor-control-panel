@@ -47,12 +47,6 @@ class TorControlPanel(QDialog):
         self.tor_path = '/var/run/tor'
         self.tor_running_path = '/var/run/tor/tor.pid'
 
-        whonix = os.path.exists('/usr/share/anon-gw-base-files/gateway')
-        if whonix:
-            self.paths = ['/usr/local/etc/torrc.d/40_anon_connection_wizard.conf']
-        else:
-            self.paths = ['/etc/torrc.d/40_anon_connection_wizard.conf']
-
         self.button_name = ['systemd &journal', 'Tor &log', '&torrc']
 
         self.journal_command = ['journalctl', '-n', '200', '-u',
@@ -657,7 +651,7 @@ class TorControlPanel(QDialog):
                         text = f.read()
 
                 elif button.text() == self.button_name[2]:
-                    with open(self.paths[0]) as f:
+                    with open(torrc_gen.torrc_path()) as f:
                         text = f.read()
 
                 self.file_browser.setText(text)
