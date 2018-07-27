@@ -1,10 +1,7 @@
 #!/usr/bin/python3 -u
 
-'''
-This product is produced independently from the Tor® anonymity software and carries no guarantee from The Tor Project about quality, suitability or anything else.
-
-You can verify the original source of Tor for yourselves by visiting the official Tor website: https://www.torproject.org/
-'''
+## Copyright (C) 2018 Patrick Schleizer <adrelanos@riseup.net>
+## See the file COPYING for copying conditions.
 
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import *

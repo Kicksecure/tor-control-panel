@@ -1,5 +1,8 @@
 #!/usr/bin/python3 -u
 
+## Copyright (C) 2018 Patrick Schleizer <adrelanos@riseup.net>
+## See the file COPYING for copying conditions.
+
 import fileinput, os, shutil
 
 '''repair_torrc() function will be called when we want to gurantee the existence of:
