@@ -84,8 +84,8 @@ def tor_stopped():
 
             '<b>Tor is running but is disabled.</b><p> \
             A line <i>DisableNetwork 1</i> exists in torrc <p> \
-            Run <b>Anon Connection Wizard</b> \
-            to connect to or configure the Tor network.']
+            Tor can be enabled with <b>Configure</b> --> <b>Bridges type</b> --> <b>Enable Tor</b> --> \
+            <b>Accept</b> below.']
 
     return(tor_message)
 

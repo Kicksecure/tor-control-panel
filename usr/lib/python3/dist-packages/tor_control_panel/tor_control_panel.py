@@ -42,7 +42,7 @@ class TorControlPanel(QDialog):
         self.tor_status_list = ['running', 'stopped', 'disabled',
                                 'disabled-running','acquiring','no_controller']
 
-        self. message = ''
+        self.message = ''
         self.tor_message = info.tor_stopped()
         self.tor_path = '/var/run/tor'
         self.tor_running_path = '/var/run/tor/tor.pid'
@@ -556,6 +556,17 @@ class TorControlPanel(QDialog):
                 self.tor_message_browser.hide()
                 self.user_frame.hide()
                 self.custom_bridges_frame.show()
+
+            elif self.bridges_combo.currentText() == 'Disable Tor':
+                tor_status.set_disabled()
+                self.restart_tor()
+                self.exit_configuration()
+
+            elif self.bridges_combo.currentText() == 'Enable Tor':
+                tor_status.set_enabled()
+                self.restart_tor()
+                self.exit_configuration()
+
             else:
                 args = []
                 args.append(self.bridges_combo.currentText().split()[0])
@@ -634,19 +645,7 @@ class TorControlPanel(QDialog):
                             else:
                                 line = line.replace('\n', '<br>')
                             fw.write(line)
-                    # Copy Tor log to a new file, HTML format for highlighting
-                    # warnings and errors, use the new file in text browser.
-                    #with open(self.tor_log, 'r') as fr:
-                        #with open(self.tor_log_html, 'w') as fw:
-                            #for line in fr:
-                                #line = re.sub(line[12:19], '...', line)
-                                #line = line.replace('[warn]', self.warn_style)
-                                #line = line.replace('[error]', self.error_style)
-                                #if '[warn]' in line or '[error]' in line:
-                                    #line = line.replace('\n', '</span><br>')
-                                #else:
-                                    #line = line.replace('\n', '<br>')
-                                #fw.write(line)
+
                     with open(self.tor_log_html, 'r') as f:
                         text = f.read()
 
@@ -689,6 +688,8 @@ class TorControlPanel(QDialog):
             if not tor_is_running:
                 self.tor_status =  'stopped'
                 tor_state = False
+                self.bridges_combo.removeItem(8)
+                self.bridges_combo.addItem('Disable Tor')
 
             if not tor_is_enabled:
                 if tor_is_running:
@@ -698,6 +699,9 @@ class TorControlPanel(QDialog):
                 elif not tor_is_running:
                     self.tor_status =  'disabled'
                     tor_state = False
+                self.bridges_combo.removeItem(8)
+                self.bridges_combo.addItem('Enable Tor')
+
 
             self.message = self.tor_message[self.tor_status_list.index
                                             (self.tor_status)]
