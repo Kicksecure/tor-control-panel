@@ -77,14 +77,16 @@ def tor_stopped():
             In the <b>Logs</b> tab, check the content of torrc and \
             inspect Tor log and systemd journal <br><br>',
 
-            '<b>Tor is disabled</b>. <br><br>A line <i>DisableNetwork 1</i> \
-            exists in torrc <br> Therefore you most likely  can not connect to \
-            the internet. <p> Run the <b>Connection Wizard</b> to connect to \
-            or  configure the Tor network.',
+            '<b>The network is disabled</b>. <br><br>A line <i>DisableNetwork 1</i> \
+            exists in torrc  <p>   The network can be enabled with <p><b>Configure</b> --> \
+            <b>Bridges type</b> --> <b>Enable Tor</b> --> \
+            <b>Accept</b> below.',
 
-            '<b>Tor is running but is disabled.</b><p> \
-            A line <i>DisableNetwork 1</i> exists in torrc <p> \
-            Tor can be enabled with <b>Configure</b> --> <b>Bridges type</b> --> <b>Enable Tor</b> --> \
+            '<b>Tor is running but the network is disabled.</b><p> \
+            A line <i>DisableNetwork 1</i> exists in torrc \
+            <br> Therefore you most likely  can not connect to the internet. </br>\
+            <p>The network can be enabled with </br><p><b>Configure</b> --> \
+            <b>Bridges type</b> --> <b>Enable Tor</b> --> \
             <b>Accept</b> below.']
 
     return(tor_message)
