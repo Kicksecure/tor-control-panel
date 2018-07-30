@@ -117,7 +117,7 @@ class TorControlPanel(QDialog):
             self.bridges_combo.addItem(bridge)
         self.bridges_combo.insertSeparator(1)
         self.bridges_combo.insertSeparator(7)
-        self.bridges_combo.addItem('Disable Network')
+        self.bridges_combo.addItem('Disable network')
         self.bridge_info_button = QPushButton(self.info_icon, '')
         self.bridge_info_button.clicked.connect(info.show_help_censorship)
 
@@ -557,12 +557,12 @@ class TorControlPanel(QDialog):
                 self.user_frame.hide()
                 self.custom_bridges_frame.show()
 
-            elif self.bridges_combo.currentText() == 'Disable Network':
+            elif self.bridges_combo.currentText() == 'Disable network':
                 tor_status.set_disabled()
                 self.restart_tor()
                 self.exit_configuration()
 
-            elif self.bridges_combo.currentText() == 'Enable Network':
+            elif self.bridges_combo.currentText() == 'Enable network':
                 tor_status.set_enabled()
                 self.restart_tor()
                 self.exit_configuration()
@@ -676,7 +676,6 @@ class TorControlPanel(QDialog):
         ## get status
         tor_is_enabled = tor_status.tor_status() == 'tor_enabled'
         tor_is_running = os.path.exists(self.tor_running_path)
-        print(tor_is_enabled)
 
         if tor_is_enabled and tor_is_running:
             self.tor_status = 'running'
@@ -690,7 +689,7 @@ class TorControlPanel(QDialog):
                 self.tor_status =  'stopped'
                 tor_state = False
                 self.bridges_combo.removeItem(8)
-                self.bridges_combo.addItem('Disable Network')
+                self.bridges_combo.addItem('Disable network')
 
             if not tor_is_enabled:
                 if tor_is_running:
@@ -701,9 +700,8 @@ class TorControlPanel(QDialog):
                     self.tor_status =  'disabled'
                     tor_state = False
                 self.bridges_combo.removeItem(8)
-                self.bridges_combo.addItem('Enable Network')
+                self.bridges_combo.addItem('Enable network')
 
-            print(self.tor_status)
             self.message = self.tor_message[self.tor_status_list.index
                                             (self.tor_status)]
 
