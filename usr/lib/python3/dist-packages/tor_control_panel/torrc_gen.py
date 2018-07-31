@@ -12,7 +12,7 @@ from . import repair_torrc, info
 
 whonix = os.path.exists('/usr/share/anon-gw-base-files/gateway')
 if whonix:
-    torrc_file_path = '/usr/local/etc/torrc.d/40_anon_connection_wizard.conf'
+    torrc_file_path = '/usr/local/etc/torrc.d/40_tor_control_panel.conf'
     torrc_user_file_path =  '/usr/local/etc/torrc.d/50_user.conf'
 else:
     torrc_file_path = '/etc/torrc.d/40_tor_control_panel.conf'
@@ -54,6 +54,9 @@ proxy_auth =   ['HTTPSProxyAuthenticator',
 
 def torrc_path():
     return(torrc_file_path)
+
+def user_path():
+    return(torrc_user_file_path)
 
 def gen_torrc(args):
     bridge_type =       str(args[0])
