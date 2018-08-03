@@ -65,8 +65,8 @@ class TorControlPanel(QDialog):
                         'SOCKS4',
                         'SOCKS5']
 
-        self.tor_log = '/var/log/tor/log'
-        self.tor_log_html = '/home/user/tmp'
+        self.tor_log = '/var/run/tor/log'
+        self.tor_log_html = '/var/run/tor/html-log'
         ## tor log HTML style
         self.warn_style = '<span style="background-color:yellow">{}'\
                         .format('[warn]')
