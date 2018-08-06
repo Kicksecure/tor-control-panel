@@ -20,7 +20,7 @@ class TorControlPanel(QDialog):
         super(TorControlPanel, self).__init__()
 
         ## First action. We may not be in Whonix.
-        repair_torrc.repair_torrc()
+        #repair_torrc.repair_torrc()
 
         self.setMinimumSize(650, 465)
 
@@ -44,7 +44,7 @@ class TorControlPanel(QDialog):
 
         self.message = ''
         self.tor_message = info.tor_stopped()
-        self.tor_path = '/var/run/tor'
+        #self.tor_path = '/var/run/tor'
         self.tor_running_path = '/var/run/tor/tor.pid'
 
         self.button_name = ['systemd &journal', 'Tor &log', '&torrc']

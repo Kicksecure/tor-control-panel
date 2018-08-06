@@ -48,11 +48,11 @@ def repair_torrc():
             f.write('%include {0}\n'.format(torrc_path))
             f.write('%include {0}\n'.format(torrc_user_path))
 
-    torrc_text = '%s## "%s"\n' % (info.torrc_text(), torrc_user_path)
+    torrc_text = '%s# %s\n' % (info.torrc_text(), torrc_user_path)
     if not whonix:
         torrc_text = (torrc_text +
             'DisableNetwork 0\n' +
-            'Log notice file /var/log/tor/log\n')
+            'Log notice file /var/run/tor/log\n')
 
     user_text = info.user_torrc_text()
 

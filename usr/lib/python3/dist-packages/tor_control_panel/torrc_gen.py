@@ -69,7 +69,7 @@ def gen_torrc(args):
         proxy_password  =   str(args[6])
 
     with open(torrc_file_path, "w") as f:
-        f.write(info.torrc_info(torrc_user_file_path))
+        f.write('%s# %s\n' % (info.torrc_text(), torrc_user_file_path))
         f.write('DisableNetwork 0\n')
 
         if bridge_type in bridges_type:
@@ -102,7 +102,7 @@ def gen_torrc(args):
 def parse_torrc():
     ## In case someone mess up with torrc files while tor-control-panel
     ## is running.
-    repair_torrc.repair_torrc()
+    #repair_torrc.repair_torrc()
 
     if os.path.exists(torrc_file_path):
         use_bridge = 'UseBridges' in open(torrc_file_path).read()
