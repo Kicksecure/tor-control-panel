@@ -674,7 +674,8 @@ class TorControlPanel(QDialog):
 
     def refresh(self, bootstrap):
         ## get status
-        tor_is_enabled = tor_status.tor_status() == 'tor_enabled'
+        tor_is_enabled = tor_status.tor_status() == 'tor_enabled' or \
+            tor_status.tor_status() == 'missing_disablenetwork_line'
         tor_is_running = os.path.exists(self.tor_running_path)
 
         if tor_is_enabled and tor_is_running:
