@@ -3,4 +3,5 @@
 ## See the file COPYING for copying conditions.
 
 ## tor-control-panel uses systemctl, therefore needs root.
-%sudo ALL=NOPASSWD: /usr/lib/tor-control-panel/tor-control-panel *
+%sudo ALL=NOPASSWD: /usr/lib/tor-control-panel/tor-control-panel
+
