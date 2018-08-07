@@ -6,15 +6,9 @@
 from subprocess import call
 import sys, os
 import time
-import shutil
-
-tor_control_panel = shutil.which("tor-control-panel")
-if tor_control_panel == None:
-    print('ERROR: tor-control-panel not found! Exiting.')
-    sys.exit(1)
 
 command = 'xhost +local:root'
 call(command, shell = True)
 
-command = 'kdesudo {}'.format(tor_control_panel)
+command = 'kdesudo /usr/bin/tor-control-panel'
 call(command, shell=True)
