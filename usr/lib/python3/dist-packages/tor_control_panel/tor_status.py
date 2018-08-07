@@ -7,19 +7,22 @@ import sys, fileinput
 import os, time
 from subprocess import call
 
+from . import torrc_gen
+
 whonix = os.path.exists('/usr/share/anon-gw-base-files/gateway')
 
-if whonix:
-    DisableNetwork_torrc_path = '/usr/local/etc/torrc.d/40_anon_connection_wizard.conf'
-else:
-    DisableNetwork_torrc_path = '/etc/torrc.d/40_tor_control_panel.conf'
+torrc_path = torrc_gen.torrc_path()
+#if whonix:
+    #torrc_path = '/usr/local/etc/torrc.d/40_anon_connection_wizard.conf'
+#else:
+    #torrc_path = '/etc/torrc.d/40_tor_control_panel.conf'
 
 def tor_status():
     ## This might be redundant as we ensure torrc exists in repair_torrc.
-    if not os.path.exists(DisableNetwork_torrc_path):
+    if not os.path.exists(torrc_path):
         return "no_torrc"
 
-    with open(DisableNetwork_torrc_path,'r') as f:
+    with open(torrc_path,'r') as f:
         lines = f.readlines()
         f.close()
 
@@ -56,17 +59,17 @@ def set_enabled():
     ## change DisableNetwork line according to tor_status
     status = tor_status()
     if status == "no_torrc":
-        with open(DisableNetwork_torrc_path,'w+') as f:
+        with open(torrc_path,'w+') as f:
             f.write('DisableNetwork 0')
             f.write('\n')
     elif status == "tor_disabled":
-        for i, line in enumerate(fileinput.input(DisableNetwork_torrc_path, inplace=1)):
+        for i, line in enumerate(fileinput.input(torrc_path, inplace=1)):
             sys.stdout.write(line.replace('DisableNetwork 1', 'DisableNetwork 0'))
     elif status == "tor_enabled":
         # do nothing
         pass
     elif status == "missing_disablenetwork_line":
-        with open(DisableNetwork_torrc_path,'a') as f:
+        with open(torrc_path,'a') as f:
             f.write('DisableNetwork 0')
             f.write('\n')
 
@@ -93,17 +96,17 @@ def set_disabled():
     ## change DisableNetwork line according to tor_status
     status = tor_status()
     if status == "no_torrc":
-        with open(DisableNetwork_torrc_path,'w+') as f:
+        with open(torrc_path,'w+') as f:
             f.write('DisableNetwork 1')
             f.write('\n')
     elif status == "tor_disabled":
         # do nothing
         pass
     elif status == "tor_enabled":
-        for i, line in enumerate(fileinput.input(DisableNetwork_torrc_path, inplace=1)):
+        for i, line in enumerate(fileinput.input(torrc_path, inplace=1)):
             sys.stdout.write(line.replace('DisableNetwork 0', 'DisableNetwork 1'))
     elif status == "missing_disablenetwork_line":
-        with open(DisableNetwork_torrc_path,'a') as f:
+        with open(torrc_path,'a') as f:
             f.write('DisableNetwork 1')
             f.write('\n')
 

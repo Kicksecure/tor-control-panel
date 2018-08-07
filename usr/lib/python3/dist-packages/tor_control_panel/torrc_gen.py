@@ -12,7 +12,7 @@ from . import repair_torrc, info
 
 whonix = os.path.exists('/usr/share/anon-gw-base-files/gateway')
 if whonix:
-    torrc_file_path = '/usr/local/etc/torrc.d/40_anon_connection_wizard.conf'
+    torrc_file_path = '/usr/local/etc/torrc.d/40_tor_control_panel.conf'
     torrc_user_file_path =  '/usr/local/etc/torrc.d/50_user.conf'
 else:
     torrc_file_path = '/etc/torrc.d/40_tor_control_panel.conf'
@@ -52,6 +52,12 @@ proxy_auth =   ['HTTPSProxyAuthenticator',
                 'Socks5ProxyUsername',
                 'Socks5ProxyPassword']
 
+def torrc_path():
+    return(torrc_file_path)
+
+def user_path():
+    return(torrc_user_file_path)
+
 def gen_torrc(args):
     bridge_type =       str(args[0])
     custom_bridges =    str(args[1])
@@ -63,7 +69,7 @@ def gen_torrc(args):
         proxy_password  =   str(args[6])
 
     with open(torrc_file_path, "w") as f:
-        f.write(info.torrc_info(torrc_user_file_path))
+        f.write('%s# %s\n' % (info.torrc_text(), torrc_user_file_path))
         f.write('DisableNetwork 0\n')
 
         if bridge_type in bridges_type:
@@ -96,7 +102,7 @@ def gen_torrc(args):
 def parse_torrc():
     ## In case someone mess up with torrc files while tor-control-panel
     ## is running.
-    repair_torrc.repair_torrc()
+    #repair_torrc.repair_torrc()
 
     if os.path.exists(torrc_file_path):
         use_bridge = 'UseBridges' in open(torrc_file_path).read()

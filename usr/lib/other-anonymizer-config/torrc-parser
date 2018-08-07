@@ -1,0 +1,5 @@
+#!/usr/bin/python3
+
+from tor_control_panel import repair_torrc
+
+repair_torrc.repair_torrc()
