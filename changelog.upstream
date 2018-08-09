@@ -1,3 +1,15 @@
+commit 89f1a550d18e83c02f17bc072416872246c14131
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Thu Aug 9 16:51:20 2018 +0000
+
+    lib/systemd/system/other-anonymizer-config.service -> lib/systemd/system/tor-control-panel.service
+
+commit 0de45255a4c19becb0a5f29e2c4667630042b886
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Thu Aug 9 16:02:44 2018 +0000
+
+    bumped changelog version
+
 commit 175c7024b7800c1495c75bc234bd5898fcf9a2c5
 Author: Patrick Schleizer <adrelanos@riseup.net>
 Date:   Tue Aug 7 11:58:10 2018 +0000

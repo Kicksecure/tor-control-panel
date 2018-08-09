@@ -1,3 +1,9 @@
+tor-control-panel (1:0.7-1) unstable; urgency=medium
+
+  * New upstream version (local package).
+
+ -- Patrick Schleizer <adrelanos@riseup.net>  Thu, 09 Aug 2018 20:28:05 +0000
+
 tor-control-panel (1:0.6-1) unstable; urgency=medium
 
   * New upstream version (local package).
