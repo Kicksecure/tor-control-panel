@@ -1,3 +1,149 @@
+commit 175c7024b7800c1495c75bc234bd5898fcf9a2c5
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Tue Aug 7 11:58:10 2018 +0000
+
+    code simplification
+
+commit e7f2f227f82ac5e72ad60445cb064607122d573f
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Tue Aug 7 19:21:09 2018 +0800
+
+    sudoers.d asterix hardening
+
+commit c6272a3dc13b9f75c35b989dcb9fb59c3527fc9e
+Merge: d238aa6 d8651ab
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Tue Aug 7 19:17:52 2018 +0800
+
+    Merge remote-tracking branch 'troubadoour/master'
+
+commit d8651ab20d7d387a816e6f44980a46a660c17b32
+Author: troubadoour <trobador@riseup.net>
+Date:   Mon Aug 6 19:35:59 2018 +0000
+
+    tor_is_enabled if 'missing_disablenetwork_line'
+
+commit 0a4fc8a90f4f916ee2091d84d7da24690cce0d36
+Author: troubadoour <trobador@riseup.net>
+Date:   Mon Aug 6 18:11:32 2018 +0000
+
+    systemd other-anonymizer-config.service to set torrc for tor-control-panel
+    in both whonix and other (run repair_torrc())
+
+commit 2f703fab33e261f07c6c948a5e4983ce2895fbc0
+Author: troubadoour <trobador@riseup.net>
+Date:   Sun Aug 5 15:27:12 2018 +0000
+
+    fix mime type
+
+commit bd00227f6bb854ee69273f2349308e62f76b1d6d
+Author: troubadoour <trobador@riseup.net>
+Date:   Fri Aug 3 15:16:11 2018 +0000
+
+    uses /var/run/tor/log in read log
+    uses /var/run/tor/html-log in write log
+
+commit c2e5f3cccaa8deba5310baf40825b2153982cae8
+Author: troubadoour <trobador@riseup.net>
+Date:   Fri Aug 3 11:59:35 2018 +0000
+
+    dependencies
+
+commit ea30c674d7f75accff29433bf4fc79d0c80d51d4
+Author: troubadoour <trobador@riseup.net>
+Date:   Tue Jul 31 21:18:43 2018 +0000
+
+    repair_torrc: write "DisableNetwork 0" and "Log notice" only in non-whonix
+    if "torrc.d/40_tor_control_panel.conf" does not exist
+
+commit 7768ba66dcf679675a35668d4585ce8d411623e1
+Author: troubadoour <trobador@riseup.net>
+Date:   Tue Jul 31 18:56:19 2018 +0000
+
+    torrc path 40_tor_control_panel.conf
+    get paths in repair_torrc
+
+commit b105efca1d280d1f109e325a4d1655cf0356ee48
+Author: troubadoour <trobador@riseup.net>
+Date:   Mon Jul 30 17:56:19 2018 +0000
+
+    minor display text
+
+commit 00a5c9b3cbfb0dd580c42c47569f3646614042f2
+Author: troubadoour <trobador@riseup.net>
+Date:   Mon Jul 30 17:54:42 2018 +0000
+
+    Log notice in 40_xxxxx.conf
+
+commit eb21280e51ef2f023b5126061c161b7e60750252
+Author: troubadoour <trobador@riseup.net>
+Date:   Mon Jul 30 14:12:01 2018 +0000
+
+    Enable network <--> Enable tor
+
+commit 7c5bcf27583207a24387092c73757e57f4420afb
+Author: troubadoour <trobador@riseup.net>
+Date:   Sun Jul 29 20:59:47 2018 +0000
+
+    enable / disable tor
+
+commit c0d33dd155242b3443dcc21871f37aa1a32051be
+Author: troubadoour <trobador@riseup.net>
+Date:   Fri Jul 27 14:32:35 2018 +0000
+
+    tor log for non-whonix distributions
+
+commit 9049a822e798a30eb43e4ec494c55e56850bb174
+Author: troubadoour <trobador@riseup.net>
+Date:   Fri Jul 27 14:19:00 2018 +0000
+
+    get torrc path from a single place
+    use 40_tor_control_panel.conf for non-whonix distributions
+
+commit d238aa633f848f92c2390a540d25f5397e7b3c33
+Merge: 5e141e8 7d4b3d3
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Fri Jul 27 11:35:47 2018 +0800
+
+    Merge remote-tracking branch 'troubadoour/master'
+
+commit 7d4b3d38e515bc763b3ecf8716eb1b3ab32d4f7d
+Author: troubadoour <trobador@riseup.net>
+Date:   Thu Jul 26 20:54:57 2018 +0000
+
+    license
+
+commit 5e141e85a0942bfee293dc4c8ce7b9eb0ba6dc1d
+Merge: e7762e2 19ab05d
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Fri Jul 27 00:58:52 2018 +0800
+
+    Merge remote-tracking branch 'troubadoour/master'
+
+commit 19ab05d3ec06a26790ae2bbf7d3fa17e725c7ab9
+Author: troubadoour <trobador@riseup.net>
+Date:   Thu Jul 26 16:16:08 2018 +0000
+
+    remove make file
+
+commit 7baac2ad1b693686825b3ca7efe9c0d997a927f6
+Author: troubadoour <trobador@riseup.net>
+Date:   Thu Jul 26 16:03:26 2018 +0000
+
+    merge restart-tor-gui
+
+commit 33bbb9398686b7c1ae187a561b20ab9fdd08c602
+Author: troubadoour <trobador@riseup.net>
+Date:   Thu Jul 19 16:23:45 2018 +0000
+
+    same config file name as anon-connection-wizard in all files
+
+commit e7762e23606f6392d9cd53c634b811d13ab8fdc9
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Thu Jul 19 15:06:57 2018 +0000
+
+    bumped changelog version
+
 commit 8691ea5af7f3d322f9ccf2eb185188009fe364f9
 Author: Patrick Schleizer <adrelanos@riseup.net>
 Date:   Thu Jul 19 14:54:20 2018 +0000
