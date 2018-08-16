@@ -2,15 +2,15 @@
 ## See the file COPYING for copying conditions.
 
 [Unit]
-Description=Make Sure Torrc Files Exist For tor Control Panel
-Documentation=https://github.com/Whonix/anon-gw-anonymizer-config
+Description=Make Sure Torrc Files Exist For Tor Control Panel
+Documentation=https://github.com/Whonix/tor-control-panel
 ConditionPathExists=!/var/run/qubes/this-is-templatevm
 Before=tor.service
 
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=/usr/lib/other-anonymizer-config/torrc-parser
+ExecStart=/usr/lib/anon-shared-helper-scripts/repair_torrc.py
 
 [Install]
 WantedBy=multi-user.target
