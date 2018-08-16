@@ -19,9 +19,6 @@ class TorControlPanel(QDialog):
     def __init__(self):
         super(TorControlPanel, self).__init__()
 
-        ## First action. We may not be in Whonix.
-        #repair_torrc.repair_torrc()
-
         self.setMinimumSize(650, 465)
 
         icons_path = '/usr/share/tor-control-panel/'
