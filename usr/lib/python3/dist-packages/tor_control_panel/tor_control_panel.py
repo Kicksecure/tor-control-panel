@@ -12,7 +12,7 @@ from subprocess import call, Popen, PIPE
 import os, re
 import glob
 
-from . import tor_status, repair_torrc, tor_bootstrap, torrc_gen, info
+from . import tor_status, tor_bootstrap, torrc_gen, info
 
 
 class TorControlPanel(QDialog):
