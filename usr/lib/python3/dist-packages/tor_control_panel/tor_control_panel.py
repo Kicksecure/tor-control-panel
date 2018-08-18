@@ -12,15 +12,12 @@ from subprocess import call, Popen, PIPE
 import os, re
 import glob
 
-from . import tor_status, repair_torrc, tor_bootstrap, torrc_gen, info
+from . import tor_status, tor_bootstrap, torrc_gen, info
 
 
 class TorControlPanel(QDialog):
     def __init__(self):
         super(TorControlPanel, self).__init__()
-
-        ## First action. We may not be in Whonix.
-        #repair_torrc.repair_torrc()
 
         self.setMinimumSize(650, 465)
 
@@ -674,7 +671,7 @@ class TorControlPanel(QDialog):
 
     def refresh(self, bootstrap):
         ## get status
-        tor_is_enabled = tor_status.tor_status() == 'tor_enabled' or \
+        tor_is_enabled = tor_status.tor_status() == 'tor_enabled' or not \
             tor_status.tor_status() == 'missing_disablenetwork_line'
         tor_is_running = os.path.exists(self.tor_running_path)
 
