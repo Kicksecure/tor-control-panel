@@ -11,7 +11,6 @@ GenericName[en_US]=Tor Control Panel
 GenericName=Tor Control Panel
 Icon=/usr/share/tor-control-panel/onion64.png
 Keywords=system;Whonix;setup;connection;Tor;Anon;
-MimeType=
 Name[en_US]=Tor Control panel
 Name=Tor Control panel
 # Path=
