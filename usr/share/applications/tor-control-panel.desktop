@@ -3,6 +3,7 @@
 
 [Desktop Entry]
 Categories=System;
+Type=Application
 Comment[en_US]=Tor Connection Configuration
 Comment=Tor Connection Configuration
 Exec=/usr/lib/tor-control-panel/tor-control-panel
