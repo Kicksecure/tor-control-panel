@@ -19,6 +19,10 @@ class TorControlPanel(QDialog):
     def __init__(self):
         super(TorControlPanel, self).__init__()
 
+        ## Make sure torrc existss.
+        command = '/usr/lib/anon-shared-helper-scripts/repair_torrc.py'
+        call(command, shell=True)
+
         self.setMinimumSize(650, 465)
 
         icons_path = '/usr/share/tor-control-panel/'
@@ -629,22 +633,26 @@ class TorControlPanel(QDialog):
                 # Get n last lines from Tor log, HTML format for highlighting
                 # warnings and errors, write to file for text browser.
                 elif button.text() == self.button_name[1]:
-                    lines = os.popen('tail -n 3000 %s' % self.tor_log).read()
-                    lines = lines.split('\n')
-                    with open(self.tor_log_html, 'w') as fw:
-                        for line in lines:
-                            line = line + '\n'
-                            line = re.sub(line[12:19], '...', line)
-                            line = line.replace('[warn]', self.warn_style)
-                            line = line.replace('[error]', self.error_style)
-                            if '[warn]' in line or '[error]' in line:
-                                line = line.replace('\n', '</span><br>')
-                            else:
-                                line = line.replace('\n', '<br>')
-                            fw.write(line)
+                    if os.path.exists('/var/run/tor'):
+                        lines = os.popen('tail -n 3000 %s' % self.tor_log).read()
+                        lines = lines.split('\n')
+                        with open(self.tor_log_html, 'w') as fw:
+                            for line in lines:
+                                line = line + '\n'
+                                line = re.sub(line[12:19], '...', line)
+                                line = line.replace('[warn]', self.warn_style)
+                                line = line.replace('[error]', self.error_style)
+                                if '[warn]' in line or '[error]' in line:
+                                    line = line.replace('\n', '</span><br>')
+                                else:
+                                    line = line.replace('\n', '<br>')
+                                fw.write(line)
 
-                    with open(self.tor_log_html, 'r') as f:
-                        text = f.read()
+                        with open(self.tor_log_html, 'r') as f:
+                            text = f.read()
+
+                    else:
+                        text = 'Something is wrong: directory /var/run/tor does not exists. Try to restart Tor.'
 
                 elif button.text() == self.button_name[2]:
                     with open(torrc_gen.torrc_path()) as f:

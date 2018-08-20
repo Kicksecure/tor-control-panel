@@ -5,9 +5,7 @@
 
 import sys
 import os
-import json
-import shutil
-import tempfile
+from subprocess import call
 from . import info
 
 whonix = os.path.exists('/usr/share/anon-gw-base-files/gateway')
@@ -100,6 +98,10 @@ def gen_torrc(args):
                     f.write('{0} {1}\n'.format(proxy_auth[2], proxy_password))
 
 def parse_torrc():
+    ## Make sure Torrc existss.
+    command = '/usr/lib/anon-shared-helper-scripts/repair_torrc.py'
+    call(command, shell=True)
+
     if os.path.exists(torrc_file_path):
         use_bridge = 'UseBridges' in open(torrc_file_path).read()
         use_proxy = 'Proxy' in open(torrc_file_path).read()
