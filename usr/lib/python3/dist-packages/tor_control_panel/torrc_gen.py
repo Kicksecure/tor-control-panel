@@ -5,9 +5,7 @@
 
 import sys
 import os
-import json
-import shutil
-import tempfile
+from subprocess import call
 from . import info
 
 whonix = os.path.exists('/usr/share/anon-gw-base-files/gateway')
