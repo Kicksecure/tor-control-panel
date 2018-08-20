@@ -19,6 +19,10 @@ class TorControlPanel(QDialog):
     def __init__(self):
         super(TorControlPanel, self).__init__()
 
+        ## Make sure torrc existss.
+        command = '/usr/lib/anon-shared-helper-scripts/repair_torrc.py'
+        call(command, shell=True)
+
         self.setMinimumSize(650, 465)
 
         icons_path = '/usr/share/tor-control-panel/'
