@@ -1,3 +1,127 @@
+commit 902cd39999a71eea6eb6ec61c9fa676fdadc4012
+Merge: 0b62a06 f23cd7d
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Thu Aug 23 06:16:44 2018 -0400
+
+    Merge remote-tracking branch 'troubadoour/master'
+
+commit f23cd7d4d1e370dca78058580c9fb8f477b97b61
+Merge: a70061f 0b62a06
+Author: troubadoour <trobador@riseup.net>
+Date:   Wed Aug 22 19:30:32 2018 +0000
+
+    Merge remote-tracking branch 'whonix/master'
+
+commit a70061fa453f063508b465cc227cfef08586b117
+Author: troubadoour <trobador@riseup.net>
+Date:   Wed Aug 22 18:32:22 2018 +0000
+
+    tor-status logic
+
+commit 0b62a0622a53c0756de35d54ac0898ab10cd0199
+Merge: bc06f04 4b78169
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Tue Aug 21 05:24:13 2018 +0800
+
+    Merge remote-tracking branch 'troubadoour/master'
+
+commit bc06f045babaaac38c1b80d0e1b0ad64b788c7a2
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Tue Aug 21 05:18:40 2018 +0800
+
+    readme
+
+commit 4b781695de16371c605ebc88b6a4b16de4ec419e
+Author: troubadoour <trobador@riseup.net>
+Date:   Mon Aug 20 18:57:05 2018 +0000
+
+    import cleaning and missing
+
+commit 28f9dc80e7f5331616475df1b0608d41ec0ffed3
+Author: troubadoour <trobador@riseup.net>
+Date:   Mon Aug 20 18:35:38 2018 +0000
+
+    run repair_torrc
+
+commit f16c15f57190667903071586eada346caa8eecdf
+Author: troubadoour <trobador@riseup.net>
+Date:   Mon Aug 20 18:29:12 2018 +0000
+
+    code simplification
+
+commit 7acd91f80b9112a99e9876e693c3e76d0ecdfdf7
+Author: troubadoour <trobador@riseup.net>
+Date:   Sun Aug 19 21:13:37 2018 +0000
+
+    make code resilient if /var/run/tor does not exist
+
+commit fe3d55f2507d418c538220f4e29583fb8a6e97d8
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Sat Aug 18 16:20:21 2018 +0000
+
+    fix lintian warning desktop-mime-but-no-exec-code
+
+commit 43b0c5fabef5ad75b9efca43672b99fd052bf441
+Merge: c7e5543 d3384c0
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Sat Aug 18 16:01:23 2018 +0000
+
+    Merge remote-tracking branch 'troubadoour/master'
+
+commit d3384c0df4060f3e471ba321ea1c6addb0cb1266
+Author: troubadoour <trobador@riseup.net>
+Date:   Sat Aug 18 14:28:26 2018 +0000
+
+    tor-control-panel.desktop + Type=Application
+
+commit aeda3a0109553ed620e3321dece7696df9de4465
+Author: troubadoour <trobador@riseup.net>
+Date:   Thu Aug 16 20:16:54 2018 +0000
+
+    add dependency anon-shared-helper-scripts
+
+commit 85794d2a5cfaa144b7a97a1b549a1c02070e8ec3
+Author: troubadoour <trobador@riseup.net>
+Date:   Thu Aug 16 18:19:16 2018 +0000
+
+    modify tor-control-panel.service for new repair_torrc path
+
+commit fe6897055d1a82835e911eef59d17c42bcd8950a
+Author: troubadoour <trobador@riseup.net>
+Date:   Thu Aug 16 18:16:48 2018 +0000
+
+    remove repair_torrc from package
+
+commit 09a379e6b8d962f4511e851912b5a269c9accd19
+Author: troubadoour <trobador@riseup.net>
+Date:   Thu Aug 16 18:11:28 2018 +0000
+
+    remove usr/lib/other-anonymizer-config/torrc-parser
+
+commit 28b08fa24082dea6935f029b395eb057d3481571
+Author: troubadoour <trobador@riseup.net>
+Date:   Thu Aug 16 17:59:48 2018 +0000
+
+    fix logic flaw in tor status
+
+commit fb296a9900d50b4065af97475736d028c5c55b47
+Author: troubadoour <trobador@riseup.net>
+Date:   Thu Aug 16 17:57:15 2018 +0000
+
+    remove import repair_torrc
+
+commit 75c85bba57f83f555c1b2d6fca1f0a5289386f42
+Author: troubadoour <trobador@riseup.net>
+Date:   Thu Aug 16 12:43:04 2018 +0000
+
+    remove repair_torrc from tor-control-panel
+
+commit c7e554386941a81b3b0bcaeb2e8288141c62e654
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Thu Aug 9 20:28:05 2018 +0000
+
+    bumped changelog version
+
 commit 89f1a550d18e83c02f17bc072416872246c14131
 Author: Patrick Schleizer <adrelanos@riseup.net>
 Date:   Thu Aug 9 16:51:20 2018 +0000
