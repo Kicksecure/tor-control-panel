@@ -6,11 +6,11 @@ Section: misc
 Priority: optional
 Maintainer: troubadour <trobador@riseup.net>
 Uploaders: Patrick Schleizer <adrelanos@riseup.net>
-Build-Depends: debhelper (>= 9), genmkfile, ruby-ronn, dh-systemd
+Build-Depends: debhelper (>= 12), genmkfile, ronn
 Homepage: https://www.whonix.org/
 Vcs-Browser: https://github.com/troubadoour/tor-control-panel
 Vcs-Git: https://github.com/troubadoour/tor-control-panel.git
-Standards-Version: 3.9.8
+Standards-Version: 4.3.0
 
 Package: tor-control-panel
 Architecture: all
