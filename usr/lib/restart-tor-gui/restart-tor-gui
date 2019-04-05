@@ -10,5 +10,5 @@ import time
 command = 'xhost +local:root'
 call(command, shell = True)
 
-command = 'kdesudo /usr/bin/restart-tor-gui'
+command = 'gksudo /usr/bin/restart-tor-gui'
 call(command, shell=True)
