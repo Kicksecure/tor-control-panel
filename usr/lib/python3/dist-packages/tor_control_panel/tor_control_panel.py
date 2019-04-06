@@ -750,7 +750,7 @@ def main():
     app = QApplication(sys.argv)
 
     if os.getuid() != 0:
-        print('ERROR: This must be run as root!\nUse "gksudo".')
+        print('ERROR: This must be run as root!\nUse "sudo --set-home".')
         reply = QMessageBox(QMessageBox.Critical, 'Warning',
                                 info.not_root(),
                                 QMessageBox.Ok)
