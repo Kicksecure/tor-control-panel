@@ -1,3 +1,53 @@
+commit 48cf10cc7014db296f1964d2ae8b4279c28e03f4
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Sat Apr 6 11:27:27 2019 +0000
+
+    sudo
+
+commit a1fea28f4c928d09f4f200b5009064a188b514a5
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Sat Apr 6 09:56:57 2019 +0000
+
+    sudo
+
+commit 58ffae2d13f0187cdcf855914d53bec314a4e084
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Fri Apr 5 17:02:43 2019 -0400
+
+    gksudo
+
+commit 7d5c9f89b22c553fdfaeb82a08cbc645bb9a690e
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Fri Apr 5 09:48:22 2019 -0400
+
+    fix lintian warning
+    
+    P: tor-control-panel source: file-contains-trailing-whitespace debian/control (line 17)
+
+commit e9140a1201b10237d9779245771c24f30ded8e1d
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Thu Apr 4 05:55:52 2019 -0400
+
+    port to debian buster
+
+commit 357577e90b527de05ac917a238332a7c7abfd007
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Thu Apr 4 05:51:08 2019 -0400
+
+    port to debian buster
+
+commit 977d2d83f9d7ec5a495083dd99b8ad1eaf0754b5
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Wed Apr 3 18:05:57 2019 -0400
+
+    readme
+
+commit 3295a1ba4cb8de02732071737599c49865d1c4f2
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Fri Mar 29 10:07:32 2019 +0000
+
+    bumped changelog version
+
 commit 82fab99985bec937a0618963433b4824564ffbc8
 Author: Patrick Schleizer <adrelanos@riseup.net>
 Date:   Fri Mar 29 09:03:19 2019 +0000
