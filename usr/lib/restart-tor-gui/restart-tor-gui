@@ -3,4 +3,4 @@
 ## Copyright (C) 2012 - 2018 ENCRYPTED SUPPORT LP <adrelanos@riseup.net>
 ## See the file COPYING for copying conditions.
 
-pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY /usr/bin/restart-tor-gui
+lxsu /usr/bin/restart-tor-gui
