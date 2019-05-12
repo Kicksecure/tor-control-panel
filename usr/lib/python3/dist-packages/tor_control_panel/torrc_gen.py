@@ -99,7 +99,7 @@ def gen_torrc(args):
 
 def parse_torrc():
     ## Make sure Torrc existss.
-    command = '/usr/lib/anon-shared-helper-scripts/repair_torrc.py'
+    command = '/usr/lib/helper-scripts/repair_torrc.py'
     call(command, shell=True)
 
     if os.path.exists(torrc_file_path):

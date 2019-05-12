@@ -196,7 +196,7 @@ commit aeda3a0109553ed620e3321dece7696df9de4465
 Author: troubadoour <trobador@riseup.net>
 Date:   Thu Aug 16 20:16:54 2018 +0000
 
-    add dependency anon-shared-helper-scripts
+    add dependency helper-scripts
 
 commit 85794d2a5cfaa144b7a97a1b549a1c02070e8ec3
 Author: troubadoour <trobador@riseup.net>
