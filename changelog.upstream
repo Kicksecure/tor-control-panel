@@ -1,3 +1,15 @@
+commit b99fa464c139c04cbc65d4813a190362ad816ee0
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Sun May 12 02:50:16 2019 -0400
+
+    anon-shared-helper-scripts -> helper-scripts
+
+commit 7b9bea4ed16c4eb41a1cc454434f8a62e7462f34
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Fri May 3 11:39:07 2019 +0000
+
+    bumped changelog version
+
 commit d5b90e6cf3c024e487f0ad590742c64155c528ef
 Author: Patrick Schleizer <adrelanos@riseup.net>
 Date:   Fri May 3 10:56:57 2019 +0000
@@ -196,7 +208,7 @@ commit aeda3a0109553ed620e3321dece7696df9de4465
 Author: troubadoour <trobador@riseup.net>
 Date:   Thu Aug 16 20:16:54 2018 +0000
 
-    add dependency helper-scripts
+    add dependency anon-shared-helper-scripts
 
 commit 85794d2a5cfaa144b7a97a1b549a1c02070e8ec3
 Author: troubadoour <trobador@riseup.net>
