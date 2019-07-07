@@ -5,6 +5,7 @@
 
 import sys
 import os
+import json
 from subprocess import call
 from . import info
 
