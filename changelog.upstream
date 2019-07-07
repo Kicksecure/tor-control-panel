@@ -1,3 +1,23 @@
+commit 0c585f0c6f0febfbf096260e5f78484af4726b06
+Merge: 50750b7 8082803
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Sat Jul 6 20:40:15 2019 -0400
+
+    Merge remote-tracking branch 'troubadoour/master'
+
+commit 80828030094090c5d436309f6ba8de4e5ee589c0
+Author: troubadoour <trobador@riseup.net>
+Date:   Sat Jul 6 21:01:33 2019 +0000
+
+    missing "import json" in torrc_gen
+    crashing tor-control-panel on bridges selection
+
+commit 50750b7640cdd145e7a6710cb8c3ea5b1877120a
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Sun Jun 30 07:13:48 2019 -0400
+
+    bumped changelog version
+
 commit 5d00174948f95b74f0f7dbc274e398d026d3c01d
 Author: Patrick Schleizer <adrelanos@riseup.net>
 Date:   Sat Jun 29 13:45:41 2019 +0000
