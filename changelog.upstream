@@ -1,3 +1,15 @@
+commit 9d3a1470703f191594eb5842b61fcdf10f6b2e31
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Wed Jul 31 03:12:38 2019 -0400
+
+    /var/run -> /run
+
+commit b0b61798586be04f476b3b1edb938df3d9d30de4
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Sun Jul 28 19:35:14 2019 +0000
+
+    bumped changelog version
+
 commit a09643cb38f3b993150cec5065619c8abf660184
 Author: Patrick Schleizer <adrelanos@riseup.net>
 Date:   Sun Jul 28 19:31:23 2019 +0000
@@ -269,7 +281,7 @@ commit 7acd91f80b9112a99e9876e693c3e76d0ecdfdf7
 Author: troubadoour <trobador@riseup.net>
 Date:   Sun Aug 19 21:13:37 2018 +0000
 
-    make code resilient if /run/tor does not exist
+    make code resilient if /var/run/tor does not exist
 
 commit fe3d55f2507d418c538220f4e29583fb8a6e97d8
 Author: Patrick Schleizer <adrelanos@riseup.net>
@@ -392,8 +404,8 @@ commit bd00227f6bb854ee69273f2349308e62f76b1d6d
 Author: troubadoour <trobador@riseup.net>
 Date:   Fri Aug 3 15:16:11 2018 +0000
 
-    uses /run/tor/log in read log
-    uses /run/tor/html-log in write log
+    uses /var/run/tor/log in read log
+    uses /var/run/tor/html-log in write log
 
 commit c2e5f3cccaa8deba5310baf40825b2153982cae8
 Author: troubadoour <trobador@riseup.net>
