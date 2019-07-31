@@ -18,8 +18,8 @@ class TorBootstrap(QThread):
     def __init__(self, main):
         super(TorBootstrap, self).__init__(main)
 
-        self.control_cookie_path = '/var/run/tor/control.authcookie'
-        self.control_socket_path = '/var/run/tor/control'
+        self.control_cookie_path = '/run/tor/control.authcookie'
+        self.control_socket_path = '/run/tor/control'
         self.previous_status = ''
         bootstrap_percent = 0
         #self.is_running = False

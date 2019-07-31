@@ -4,7 +4,7 @@
 [Unit]
 Description=Make Sure Torrc Files Exist For Tor Control Panel
 Documentation=https://github.com/Whonix/tor-control-panel
-ConditionPathExists=!/var/run/qubes/this-is-templatevm
+ConditionPathExists=!/run/qubes/this-is-templatevm
 Before=tor.service
 
 [Service]

@@ -80,7 +80,7 @@ def set_enabled():
     if tor_status_code != 0:
         return 'cannot_connect', tor_status_code
 
-    ## we have to reload to open /var/run/tor/control and create /var/run/tor/control.authcookie
+    ## we have to reload to open /run/tor/control and create /run/tor/control.authcookie
     command = 'systemctl reload tor@default.service'
     tor_status_code = call(command, shell=True)
 

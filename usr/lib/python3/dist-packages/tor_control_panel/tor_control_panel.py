@@ -45,8 +45,8 @@ class TorControlPanel(QDialog):
 
         self.message = ''
         self.tor_message = info.tor_stopped()
-        #self.tor_path = '/var/run/tor'
-        self.tor_running_path = '/var/run/tor/tor.pid'
+        #self.tor_path = '/run/tor'
+        self.tor_running_path = '/run/tor/tor.pid'
 
         self.button_name = ['systemd &journal', 'Tor &log', '&torrc']
 
@@ -66,8 +66,8 @@ class TorControlPanel(QDialog):
                         'SOCKS4',
                         'SOCKS5']
 
-        self.tor_log = '/var/run/tor/log'
-        self.tor_log_html = '/var/run/tor/html-log'
+        self.tor_log = '/run/tor/log'
+        self.tor_log_html = '/run/tor/html-log'
         ## tor log HTML style
         self.warn_style = '<span style="background-color:yellow">{}'\
                         .format('[warn]')
@@ -411,7 +411,7 @@ class TorControlPanel(QDialog):
     def newnym(self):
         from stem import Signal
         from stem.control import Controller
-        with Controller.from_socket_file('/var/run/tor/control') as controller:
+        with Controller.from_socket_file('/run/tor/control') as controller:
             controller.authenticate()
             controller.signal(Signal.NEWNYM)
 
@@ -633,7 +633,7 @@ class TorControlPanel(QDialog):
                 # Get n last lines from Tor log, HTML format for highlighting
                 # warnings and errors, write to file for text browser.
                 elif button.text() == self.button_name[1]:
-                    if os.path.exists('/var/run/tor'):
+                    if os.path.exists('/run/tor'):
                         lines = os.popen('tail -n 3000 %s' % self.tor_log).read()
                         lines = lines.split('\n')
                         with open(self.tor_log_html, 'w') as fw:
@@ -652,7 +652,7 @@ class TorControlPanel(QDialog):
                             text = f.read()
 
                     else:
-                        text = 'Something is wrong: directory /var/run/tor does not exists. Try to restart Tor.'
+                        text = 'Something is wrong: directory /run/tor does not exists. Try to restart Tor.'
 
                 elif button.text() == self.button_name[2]:
                     with open(torrc_gen.torrc_path()) as f:
