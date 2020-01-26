@@ -416,7 +416,7 @@ class TorControlPanel(QDialog):
             controller.signal(Signal.NEWNYM)
 
     def onioncircuits(self):
-        command = '/usr/bin/onioncircuits &'
+        command = 'sudo --non-interactive --user debian-tor --set-home onioncircuits &'
         call(command, shell=True)
 
     def update_bootstrap(self, bootstrap_phase, bootstrap_percent):
