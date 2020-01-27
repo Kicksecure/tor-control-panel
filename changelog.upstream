@@ -1,3 +1,21 @@
+commit c240cbda120d3f67370bc66bdaab4f9f3e07bb34
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Sun Jan 26 04:04:58 2020 -0500
+
+    fix onioncircuits started from tor-control-panel
+    
+    by running it under user debian-tor rather than root
+    
+    https://forums.whonix.org/t/onion-circuits-does-not-appear-in-the-tor-control-panel/8838
+    
+    Thanks to @Masaika for reporting this bug!
+
+commit ea0c38b02201f311353e993b02fcd784c7fc004c
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Wed Aug 28 12:49:13 2019 +0000
+
+    bumped changelog version
+
 commit 5c4ca7ee89ec6644f382331c26336ecac38782e4
 Author: Patrick Schleizer <adrelanos@riseup.net>
 Date:   Wed Aug 28 11:35:30 2019 +0000
