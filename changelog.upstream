@@ -1,3 +1,33 @@
+commit 6af4b6cc7abafa8cfa35f88e969a36511a4ef49b
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Wed Apr 1 09:19:56 2020 -0400
+
+    copyright
+
+commit b85fead9b03668166bf969b14e69d3127451c54f
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Wed Apr 1 09:15:15 2020 -0400
+
+    copyright
+
+commit 3b74594326e7ec533ad614f47e1310e2c849e326
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Wed Apr 1 09:12:40 2020 -0400
+
+    remove obsolete comment
+
+commit 8a93bf5e7074f41fde41cecf1e32150ea5b9ded9
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Wed Apr 1 08:50:00 2020 -0400
+
+    update copyright year
+
+commit bcb3d3f391444811a3b7a42f750dc660eaf68e71
+Author: Patrick Schleizer <adrelanos@riseup.net>
+Date:   Mon Jan 27 04:53:26 2020 -0500
+
+    bumped changelog version
+
 commit c240cbda120d3f67370bc66bdaab4f9f3e07bb34
 Author: Patrick Schleizer <adrelanos@riseup.net>
 Date:   Sun Jan 26 04:04:58 2020 -0500
