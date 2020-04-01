@@ -6,7 +6,7 @@ Section: misc
 Priority: optional
 Maintainer: troubadour <trobador@riseup.net>
 Uploaders: Patrick Schleizer <adrelanos@riseup.net>
-Build-Depends: debhelper (>= 12), ronn
+Build-Depends: debhelper (>= 12)
 Homepage: https://www.whonix.org/
 Vcs-Browser: https://github.com/troubadoour/tor-control-panel
 Vcs-Git: https://github.com/troubadoour/tor-control-panel.git
