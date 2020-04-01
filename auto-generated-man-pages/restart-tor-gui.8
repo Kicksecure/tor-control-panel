@@ -1,0 +1,18 @@
+.\" generated with Ronn-NG/v0.8.0
+.\" http://github.com/apjanke/ronn-ng/tree/0.8.0
+.TH "RESTART\-TOR\-GUI" "8" "April 2020" "tor-control-panel" "tor-control-panel Manual"
+.SH "NAME"
+\fBrestart\-tor\-gui\fR \- Graphical Restart Tor Tool
+.P
+.SH "SYNOPSIS"
+restart\-tor\-gui
+.SH "DESCRIPTION"
+restar\-to\-gui is a graphical tool for restarting Tor\. It shows the tor bootstrap sequence in a progress bar\. It closes itself two seconds after tor bootstrap has completed\.
+.P
+Error catching is implemented after the restart command\. In case of error, it displays the output of the "sudo systemctl restart tor@default" command in a message box\.
+.P
+restart\-tor\-gui is produced independently from the Tor anonymity software and carries no guarantee from The Tor Project about quality, suitability or anything else\.
+.SH "WWW"
+https://www\.whonix\.org
+.SH "AUTHOR"
+This man page has been written by troubadour (trobador@riseup\.net)\.
