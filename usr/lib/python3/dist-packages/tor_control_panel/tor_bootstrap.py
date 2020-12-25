@@ -27,18 +27,26 @@ class TorBootstrap(QThread):
         https://gitweb.torproject.org/tor-launcher.git/tree/src/chrome/locale/en/torlauncher.properties
         '''
         self.tag_phase = {'starting': 'Starting',
-                    'conn_dir': 'Connecting to a relay directory...',
-                    'handshake_dir': 'Finishing handshake with directory server...',
-                    'onehop_create': 'Establishing an encrypted directory connection...',
-                    'requesting_status': 'Retrieving network status...',
-                    'loading_status': 'Loading network status...',
-                    'loading_keys': 'Loading authority certificates...',
-                    'requesting_descriptors': 'Requesting relay information...',
-                    'loading_descriptors': 'Loading relay information...',
-                    'conn_or': 'Connecting to the Tor network...',
-                    'handshake_or': 'Finishing handshake with first hop...',
-                    'circuit_create': 'Establishing a Tor circuit...',
-                    'done': 'Connected to the Tor network.'}
+                    'conn': 'Connecting to a relay',
+                    'conn_dir': 'Connecting to a relay directory',
+                    'handshake_dir': 'Finishing handshake with directory server',
+                    'onehop_create': 'Establishing an encrypted directory connection',
+                    'requesting_status': 'Retrieving network status',
+                    'loading_status': 'Loading network status',
+                    'loading_keys': 'Loading authority certificates',
+                    'enough_dirinfo': 'Loaded enough directory info to build circuits',
+                    'ap_conn': 'Connecting to a relay to build circuits',
+                    'ap_conn_done': 'Connected to a relay to build circuits',
+                    'ap_handshake': 'Finishing handshake with a relay to build circuits',
+                    'ap_handshake_done': 'Handshake finished with a relay to build circuits',
+                    'requesting_descriptors': 'Requesting relay information',
+                    'loading_descriptors': 'Loading relay information',
+                    'conn_or': 'Connecting to the Tor network',
+                    'conn_done': "Connected to a relay",
+                    'handshake': "Handshaking with a relay",
+                    'handshake_or': 'Finishing handshake with first hop',
+                    'circuit_create': 'Establishing a Tor circuit',
+                    'done': 'Connected to the Tor network!'}
 
     def connect_to_control_port(self):
         import stem
