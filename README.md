@@ -7,7 +7,7 @@ software and carries no guarantee from The Tor Project about quality,
 suitability or anything else.
 ## How to install `tor-control-panel` using apt-get ##
 
-1\. Download [Whonix's Signing Key]().
+1\. Download Whonix's Signing Key.
 
 ```
 wget https://www.whonix.org/patrick.asc
