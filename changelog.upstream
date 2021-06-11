@@ -1,3 +1,27 @@
+commit 39c0d67c7b536cbf9dbf4cb7306161ce63d41ef6
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri Jun 11 04:58:32 2021 -0400
+
+    remove obfs2, obfs3
+
+commit 45ba10eb17c90db4c5355ae4406626cb25290427
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri Jun 11 04:43:06 2021 -0400
+
+    fix
+
+commit 115b65e34785793b37a6f8f87f70195c5cbfeb99
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri Jun 11 04:36:00 2021 -0400
+
+    same default bridges as ACW
+
+commit b780320a04674309f3788a9089dea4534582cd4f
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Thu Mar 18 07:46:36 2021 -0400
+
+    bumped changelog version
+
 commit c3631038b3b10e86efc15ee2f8c15bf6ae83f465
 Author: Patrick Schleizer <adrelanos@whonix.org>
 Date:   Thu Mar 18 07:39:57 2021 -0400
