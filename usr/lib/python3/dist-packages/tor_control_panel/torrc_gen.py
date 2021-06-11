@@ -24,8 +24,7 @@ bridges_default_path = '/usr/share/tor-control-panel/bridges_default'
 command_useBridges = 'UseBridges 1\n'
 command_use_custom_bridge = '# Custom Bridge is used:'
 
-bridges_command = [ 'ClientTransportPlugin obfs2,obfs3 exec /usr/bin/obfs4proxy\n',
-                    'ClientTransportPlugin obfs4 exec /usr/bin/obfs4proxy\n',
+bridges_command = [ 'ClientTransportPlugin obfs4 exec /usr/bin/obfs4proxy\n',
 
                     'ClientTransportPlugin snowflake exec /usr/bin/snowflake-client -url https://snowflake-broker.azureedge.net/ -front ajax.aspnetcdn.com -ice stun:stun.l.google.com:19302 -max 3\n',
 
@@ -33,9 +32,9 @@ bridges_command = [ 'ClientTransportPlugin obfs2,obfs3 exec /usr/bin/obfs4proxy\
                     'ClientTransportPlugin scramblesuit exec /usr/bin/obfs4proxy\n',
                     'ClientTransportPlugin fte exec /usr/bin/fteproxy --managed\n']
 
-bridges_type = ['obfs3', 'obfs4', 'snowflake', 'meek-azure', 'scramblesuit', 'fte']
+bridges_type = ['obfs4', 'snowflake', 'meek-azure', 'scramblesuit', 'fte']
 
-bridges_display = ['obfs3', 'obfs4 (recommended)', 'snowflake',
+bridges_display = ['obfs4 (recommended)', 'snowflake',
                    'meek-azure (works in China)']
 
 #meek_amazon_address = 'a0.awsstatic.com\n'
