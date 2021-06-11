@@ -17,6 +17,8 @@ else:
     torrc_file_path = '/etc/torrc.d/40_tor_control_panel.conf'
     torrc_user_file_path = '/etc/torrc.d/50_user.conf'
 
+#torrc_file_path = '/etc/tor/torrc'
+
 bridges_default_path = '/usr/share/tor-control-panel/bridges_default'
 
 command_useBridges = 'UseBridges 1\n'
@@ -67,6 +69,8 @@ def gen_torrc(args):
         proxy_username =    str(args[5])
         proxy_password  =   str(args[6])
 
+    print("torrc_file_path: " + torrc_file_path)
+
     with open(torrc_file_path, "w") as f:
         f.write('%s# %s\n' % (info.torrc_text(), torrc_user_file_path))
         f.write('DisableNetwork 0\n')
@@ -76,7 +80,7 @@ def gen_torrc(args):
             f.write(bridges_command[bridges_type.index(bridge_type)])
             bridges = json.loads(open(bridges_default_path).read())
             for bridge in bridges['bridges'][bridge_type]:
-                f.write('bridge {0}\n'.format(bridge))
+                f.write('{0}\n'.format(bridge))
 
         elif bridge_type == 'Custom bridges':
             bridge = str(custom_bridges.split()[0]).lower()
@@ -85,7 +89,7 @@ def gen_torrc(args):
                 f.write(bridges_command[bridges_type.index(bridge)])
                 bridge_custom_list = custom_bridges.split('\n')
                 for bridge in bridge_custom_list:
-                    f.write('bridge {0}\n'.format(bridge))
+                    f.write('Bridge {0}\n'.format(bridge))
 
         if proxy_type in proxies:
             f.write('{0} {1}:{2}\n'.format(proxy_torrc[proxies.index(proxy_type)],
