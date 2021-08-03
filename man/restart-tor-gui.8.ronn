@@ -1,7 +1,7 @@
 restart-tor-gui(8) -- Graphical Restart Tor Tool
 =============================================
 
-<span class="comment">
+<!--
 # Copyright (C) 2012 - 2021 ENCRYPTED SUPPORT LP adrelanos@whonix.org
 # See the file COPYING for copying conditions.
 
@@ -11,7 +11,7 @@ restart-tor-gui(8) -- Graphical Restart Tor Tool
 
 # Not using "##", because for some reason this comment would be visible in the
 # resulting man page.
-</span>
+-->
 
 ## SYNOPSIS
 
