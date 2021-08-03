@@ -6,11 +6,12 @@ Section: misc
 Priority: optional
 Maintainer: troubadour <trobador@riseup.net>
 Uploaders: Patrick Schleizer <adrelanos@whonix.org>
-Build-Depends: debhelper (>= 12)
+Build-Depends: debhelper (>= 13), debhelper-compat (= 13)
 Homepage: https://www.whonix.org/
 Vcs-Browser: https://github.com/troubadoour/tor-control-panel
 Vcs-Git: https://github.com/troubadoour/tor-control-panel.git
-Standards-Version: 4.3.0
+Standards-Version: 4.5.1
+Rules-Requires-Root: no
 
 Package: tor-control-panel
 Architecture: all
