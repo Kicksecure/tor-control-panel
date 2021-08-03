@@ -10,7 +10,7 @@ Before=tor.service
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=/usr/lib/helper-scripts/repair_torrc.py
+ExecStart=/usr/libexec/helper-scripts/repair_torrc.py
 
 [Install]
 WantedBy=multi-user.target
