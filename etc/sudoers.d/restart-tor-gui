@@ -2,5 +2,5 @@
 ## See the file COPYING for copying conditions.
 
 ## restart-tor-gui uses systemctl, therefore needs root.
-%sudo ALL=NOPASSWD: /usr/lib/restart-tor-gui/restart-tor-gui
+%sudo ALL=NOPASSWD: /usr/libexec/restart-tor-gui/restart-tor-gui
 

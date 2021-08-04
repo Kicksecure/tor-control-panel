@@ -4,7 +4,7 @@
 [Desktop Entry]
 Type=Application
 Terminal=false
-Exec=/usr/lib/restart-tor-gui/restart-tor-gui
+Exec=/usr/libexec/restart-tor-gui/restart-tor-gui
 Name=Restart Tor GUI
 GenericName=Restart Tor GUI
 Comment=Graphical tool for restarting Tor
