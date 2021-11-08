@@ -139,7 +139,7 @@ class TorBootstrap(QThread):
                 self.previous_status = bootstrap_status
                 self.signal.emit(bootstrap_phase, bootstrap_percent)
             time.sleep(0.2)
-        # This will guarantee bootstrap_percent 100 is emited.
+        # This will guarantee bootstrap_percent 100 is emitted.
         self.signal.emit(bootstrap_phase, bootstrap_percent)
 
 
