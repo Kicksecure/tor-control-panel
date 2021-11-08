@@ -131,7 +131,7 @@ class TorBootstrap(QThread):
                 else:
                     '''Use a static message to cover unknown bootstrap tag to avoid potential
                     misleading/harmful info shown.'''
-                    bootstrap_phase = "Unknown Bootstrap TAG. In most cases this is harmless. Please report this."
+                    bootstrap_phase = "Unknown Bootstrap TAG. This is harmless. Please run this program from command line to view console output and report this."
                     sys.stdout.write('Unknown Bootstrap TAG. Full message is shown in the very next line:\n')
                     sys.stdout.flush()
                 sys.stdout.write('{0}\n'.format(bootstrap_status))
