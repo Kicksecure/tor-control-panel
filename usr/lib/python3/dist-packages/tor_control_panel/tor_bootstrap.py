@@ -29,6 +29,7 @@ class TorBootstrap(QThread):
         self.tag_phase = {'starting': 'Starting',
                     'conn': 'Connecting to a relay',
                     'conn_dir': 'Connecting to a relay directory',
+                    'conn_done_pt': "Connected to pluggable transport",
                     'handshake_dir': 'Finishing handshake with directory server',
                     'onehop_create': 'Establishing an encrypted directory connection',
                     'requesting_status': 'Retrieving network status',
