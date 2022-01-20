@@ -32,10 +32,10 @@ bridges_command = [ 'ClientTransportPlugin obfs4 exec /usr/bin/obfs4proxy\n',
                     'ClientTransportPlugin scramblesuit exec /usr/bin/obfs4proxy\n',
                     'ClientTransportPlugin fte exec /usr/bin/fteproxy --managed\n']
 
-bridges_type = ['obfs4', 'snowflake', 'meek-azure', 'scramblesuit', 'fte']
+bridges_type = ['obfs4', 'snowflake', 'meek-azure', 'scramblesuit', 'fte', 'plain']
 
 bridges_display = ['obfs4 (recommended)', 'snowflake',
-                   'meek-azure (works in China)']
+                   'meek-azure (works in China)', 'plain']
 
 #meek_amazon_address = 'a0.awsstatic.com\n'
 meek_azure_address = 'ajax.aspnetcdn.com\n'
@@ -110,18 +110,25 @@ def parse_torrc():
         use_bridge = 'UseBridges' in open(torrc_file_path).read()
         use_proxy = 'Proxy' in open(torrc_file_path).read()
 
+        bridge_type = ''
         if use_bridge:
             with open(torrc_file_path, 'r') as f:
                 for line in f:
+                    if line.startswith('#'):
+                        #print("parse_torrc: skipping comment line, OK: " + line)
+                        continue
                     if line.startswith('ClientTransportPlugin'):
                         bridge_type = bridges_type[bridges_command.index(line)]
                     #if line.endswith(meek_amazon_address):
                         #bridge_type = 'meek-amazon'
                     if line.endswith(meek_azure_address):
                         bridge_type = 'meek-azure'
+                if bridge_type == '':
+                        bridge_type = 'plain'
                 bridge_type = bridges_display[bridges_type.index(bridge_type)]
         else:
             bridge_type = 'None'
+        print("parse_torrc: bridge_type: " + bridge_type)
 
         if use_proxy:
             auth_check = False
