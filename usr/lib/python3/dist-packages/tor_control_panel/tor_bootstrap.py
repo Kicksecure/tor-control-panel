@@ -38,6 +38,7 @@ class TorBootstrap(QThread):
                     'enough_dirinfo': 'Loaded enough directory info to build circuits',
                     'ap_conn': 'Connecting to a relay to build circuits',
                     'ap_conn_done': 'Connected to a relay to build circuits',
+                    'ap_conn_done_pt': 'Connected to pluggable transport to build circuits'
                     'ap_handshake': 'Finishing handshake with a relay to build circuits',
                     'ap_handshake_done': 'Handshake finished with a relay to build circuits',
                     'requesting_descriptors': 'Requesting relay information',
