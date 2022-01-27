@@ -1,3 +1,35 @@
+commit 83db4e81c21e82985a150b00c4589ce92fa13978
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Thu Jan 20 18:14:20 2022 -0500
+
+    fix
+
+commit 4e4f87b865c61dcc98a8611e3306dbd39ccdc6dd
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Thu Jan 20 18:13:02 2022 -0500
+
+    add tag ap_conn_done_pt
+
+commit 05a733f9952054708786b158201f2d431f6cb3b1
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Thu Jan 20 18:11:12 2022 -0500
+
+    fix parsing Tor config file is using plain (not using pluggable transport) bridge
+    
+    https://forums.whonix.org/t/bridges-dont-work/13210/12
+
+commit dabfac891b3defb46900db8821805cee02b0025e
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Wed Jan 19 10:54:05 2022 -0500
+
+    add tag conn_done_pt
+
+commit fe761a7047bf958f7991f48f8c2e5331d2d62c13
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Wed Jan 19 07:08:59 2022 -0500
+
+    bumped changelog version
+
 commit 15fd57ac7aa82196a64361e9891690ed49ac68b8
 Author: Patrick Schleizer <adrelanos@whonix.org>
 Date:   Tue Jan 18 05:47:43 2022 -0500
