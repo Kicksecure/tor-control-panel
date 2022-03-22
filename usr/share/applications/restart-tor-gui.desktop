@@ -9,6 +9,6 @@ Name=Restart Tor GUI
 GenericName=Restart Tor GUI
 Comment=Graphical tool for restarting Tor
 Categories=System
-Icon=/usr/share/icons/anon-icon-pack/restart.ico
+Icon=/usr/share/icons/icon-pack-dist/restart.ico
 Keywords=system;tor;
 
