@@ -1,3 +1,15 @@
+commit e270a5dea075eaa0c7c47971c3c24fd521b1ff22
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri May 27 13:04:40 2022 -0400
+
+    genmkfile debinstfile
+
+commit 7e88f00b5cfc59f27aec91f464c799c9481df840
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri May 27 13:01:56 2022 -0400
+
+    bumped changelog version
+
 commit df3550f8885cfb71a3601503dc2cd233cf50f168
 Author: Patrick Schleizer <adrelanos@whonix.org>
 Date:   Fri May 27 12:50:10 2022 -0400
