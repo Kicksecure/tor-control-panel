@@ -1,3 +1,17 @@
+commit df3550f8885cfb71a3601503dc2cd233cf50f168
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri May 27 12:50:10 2022 -0400
+
+    remove tor-control-panel.service
+    
+    since running repair-torrc does not belong into this package
+
+commit cb6b3ce7c021a373d4db703bff2676fd5e63e5f1
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri May 27 12:36:15 2022 -0400
+
+    bumped changelog version
+
 commit d931c09fc05b2ec1b55cc3718f424f72c3497561
 Author: Patrick Schleizer <adrelanos@whonix.org>
 Date:   Fri May 27 12:19:35 2022 -0400
