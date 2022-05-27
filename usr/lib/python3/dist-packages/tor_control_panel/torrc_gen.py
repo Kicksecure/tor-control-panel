@@ -103,7 +103,7 @@ def gen_torrc(args):
 
 def parse_torrc():
     ## Make sure Torrc existss.
-    command = '/usr/libexec/helper-scripts/repair_torrc.py'
+    command = '/usr/libexec/helper-scripts/repair-torrc'
     call(command, shell=True)
 
     if os.path.exists(torrc_file_path):
