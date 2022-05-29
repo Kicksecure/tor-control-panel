@@ -1,3 +1,15 @@
+commit 5dbe215b1734f7234b0b787755dcad0e98d906a1
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Sat May 28 14:48:28 2022 -0400
+
+    update default bridges
+
+commit 16cef18797a21dfca5a5464ec4abf2183e45349b
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri May 27 13:05:18 2022 -0400
+
+    bumped changelog version
+
 commit e270a5dea075eaa0c7c47971c3c24fd521b1ff22
 Author: Patrick Schleizer <adrelanos@whonix.org>
 Date:   Fri May 27 13:04:40 2022 -0400
