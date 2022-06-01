@@ -113,7 +113,7 @@ class TorBootstrap(QThread):
         self.tor_controller = self.connect_to_control_port()
         '''if DisableNetwork is 1, then toggle it to 0
         because we really want Tor connect to the network'''
-        if self.tor_controller.get_conf('DisableNetwork') is '1':
+        if self.tor_controller.get_conf('DisableNetwork') == '1':
             self.tor_controller.set_conf('DisableNetwork', '0')
             sys.stdout.write('Toggle DisableNetwork value to 0. Tor is now allowed to connect to the network.\n')
             sys.stdout.flush()
