@@ -12,10 +12,6 @@ from . import torrc_gen
 whonix = os.path.exists('/usr/share/anon-gw-base-files/gateway')
 
 torrc_path = torrc_gen.torrc_path()
-#if whonix:
-    #torrc_path = '/usr/local/etc/torrc.d/40_anon_connection_wizard.conf'
-#else:
-    #torrc_path = '/etc/torrc.d/40_tor_control_panel.conf'
 
 def tor_status():
     ## This might be redundant as we ensure torrc exists in repair_torrc.

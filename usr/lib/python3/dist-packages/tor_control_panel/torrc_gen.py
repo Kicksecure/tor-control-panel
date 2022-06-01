@@ -10,14 +10,9 @@ from subprocess import call
 from . import info
 
 whonix = os.path.exists('/usr/share/anon-gw-base-files/gateway')
-if whonix:
-    torrc_file_path = '/usr/local/etc/torrc.d/40_tor_control_panel.conf'
-    torrc_user_file_path =  '/usr/local/etc/torrc.d/50_user.conf'
-else:
-    torrc_file_path = '/etc/torrc.d/40_tor_control_panel.conf'
-    torrc_user_file_path = '/etc/torrc.d/50_user.conf'
 
-#torrc_file_path = '/etc/tor/torrc'
+torrc_file_path = '/usr/local/etc/torrc.d/40_tor_control_panel.conf'
+torrc_user_file_path = '/usr/local/etc/torrc.d/50_user.conf'
 
 bridges_default_path = '/usr/share/tor-control-panel/bridges_default'
 
