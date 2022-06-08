@@ -1,3 +1,31 @@
+commit 9c405d8acdac16b2243d036d82bf22d19f967fd0
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Wed Jun 1 17:40:08 2022 -0400
+
+    description
+
+commit 4a6444db9ccee8c501b27132522f866588fe0fb9
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Wed Jun 1 17:32:56 2022 -0400
+
+    work towards non-Whonix support
+
+commit cd2dbc59ff970feb456d1f79ee436a3110d3945a
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Wed Jun 1 16:37:36 2022 -0400
+
+    fix `SyntaxWarning: "is" with a literal.`
+    
+    Thanks to @TNT_BOM_BOM for the bug report!
+    
+    https://forums.whonix.org/t/tor-controller-gui-tor-control-panel/5444/89
+
+commit 29cc7a991fb451c84dbe3fdfd1a62a51a26eb459
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Sun May 29 08:37:31 2022 -0400
+
+    bumped changelog version
+
 commit 5dbe215b1734f7234b0b787755dcad0e98d906a1
 Author: Patrick Schleizer <adrelanos@whonix.org>
 Date:   Sat May 28 14:48:28 2022 -0400
