@@ -7,9 +7,9 @@ Priority: optional
 Maintainer: troubadour <trobador@riseup.net>
 Uploaders: Patrick Schleizer <adrelanos@whonix.org>
 Build-Depends: debhelper (>= 13), debhelper-compat (= 13)
-Homepage: https://www.kicksecure.com/
-Vcs-Browser: https://github.com/troubadoour/tor-control-panel
-Vcs-Git: https://github.com/troubadoour/tor-control-panel.git
+Homepage: https://www.whonix.org/wiki/Tor-control-panel
+Vcs-Browser: https://github.com/Kicksecure/tor-control-panel
+Vcs-Git: https://github.com/Kicksecure/tor-control-panel.git
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 
