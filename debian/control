@@ -1,11 +1,11 @@
-## Copyright (C) 2012 - 2023 ENCRYPTED SUPPORT LP <adrelanos@whonix.org>
+## Copyright (C) 2012 - 2023 ENCRYPTED SUPPORT LP <adrelanos@kicksecure.com>
 ## See the file COPYING for copying conditions.
 
 Source: tor-control-panel
 Section: misc
 Priority: optional
 Maintainer: troubadour <trobador@riseup.net>
-Uploaders: Patrick Schleizer <adrelanos@whonix.org>
+Uploaders: Patrick Schleizer <adrelanos@kicksecure.com>
 Build-Depends: debhelper (>= 13), debhelper-compat (= 13)
 Homepage: https://www.whonix.org/wiki/Tor-control-panel
 Vcs-Browser: https://github.com/Kicksecure/tor-control-panel
