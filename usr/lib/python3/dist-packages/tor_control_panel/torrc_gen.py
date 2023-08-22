@@ -29,8 +29,8 @@ bridges_command = [ 'ClientTransportPlugin obfs4 exec /usr/bin/obfs4proxy\n',
 
 bridges_type = ['obfs4', 'snowflake', 'meek-azure', 'scramblesuit', 'fte', 'plain']
 
-bridges_display = ['obfs4 (recommended)', 'snowflake',
-                   'meek-azure (works in China)', 'plain']
+bridges_display = ['obfs4', 'snowflake',
+                   'meek-azure', 'plain']
 
 #meek_amazon_address = 'a0.awsstatic.com\n'
 meek_azure_address = 'ajax.aspnetcdn.com\n'

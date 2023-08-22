@@ -54,10 +54,9 @@ class TorControlPanel(QDialog):
                                 'tor@default.service']
 
         self.bridges = ['None',
-                        'obfs4 (recommended)',
+                        'obfs4',
                         'snowflake',
-                        #'meek-amazon (works in China)',
-                        'meek-azure (works in China)',
+                        'meek-azure',
                         'Custom bridges']
 
         self.proxies = ['None',
