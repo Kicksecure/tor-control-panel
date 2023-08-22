@@ -96,7 +96,7 @@ def gen_torrc(args):
                     f.write('{0} {1}\n'.format(proxy_auth[2], proxy_password))
 
 def parse_torrc():
-    ## Make sure Torrc existss.
+    ## Make sure Torrc exists.
     command = '/usr/libexec/helper-scripts/repair-torrc'
     call(command, shell=True)
 
