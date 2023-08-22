@@ -14,7 +14,7 @@ whonix = os.path.exists('/usr/share/anon-gw-base-files/gateway')
 torrc_file_path = '/usr/local/etc/torrc.d/40_tor_control_panel.conf'
 torrc_user_file_path = '/usr/local/etc/torrc.d/50_user.conf'
 
-bridges_default_path = '/usr/share/tor-control-panel/bridges_default'
+bridges_default_path = '/usr/share/anon-connection-wizard/bridges_default'
 
 command_useBridges = 'UseBridges 1\n'
 command_use_custom_bridge = '# Custom Bridge is used:'
