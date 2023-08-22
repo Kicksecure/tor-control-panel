@@ -68,6 +68,8 @@ def gen_torrc(args):
     print("torrc_file_path: " + torrc_file_path)
 
     with open(torrc_file_path, "w") as f:
+        print("bridge_type: ", bridge_type)
+
         f.write('%s# %s\n' % (info.torrc_text(), torrc_user_file_path))
         f.write('DisableNetwork 0\n')
 
@@ -86,6 +88,13 @@ def gen_torrc(args):
                 bridge_custom_list = custom_bridges.split('\n')
                 for bridge in bridge_custom_list:
                     f.write('Bridge {0}\n'.format(bridge))
+
+        if bridge_type.startswith('meek-azure'):
+            ## Required for meek and snowflake only.
+            ## https://forums.whonix.org/t/censorship-circumvention-tor-pluggable-transports/2601/9
+            edit_etc_resolv_conf_add()
+        if bridge_type.startswith('snowflake'):
+            edit_etc_resolv_conf_add()
 
         if proxy_type in proxies:
             f.write('{0} {1}:{2}\n'.format(proxy_torrc[proxies.index(proxy_type)],
