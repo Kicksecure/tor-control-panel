@@ -21,7 +21,7 @@ command_use_custom_bridge = '# Custom Bridge is used:'
 
 bridges_command = [ 'ClientTransportPlugin obfs4 exec /usr/bin/obfs4proxy\n',
 
-                    'ClientTransportPlugin snowflake exec /usr/bin/snowflake-client -url https://snowflake-broker.azureedge.net/ -front ajax.aspnetcdn.com -ice stun:stun.l.google.com:19302 -max 3\n',
+                    'ClientTransportPlugin snowflake exec /usr/bin/snowflake-client\n',
 
                     'ClientTransportPlugin meek_lite exec /usr/bin/obfs4proxy\n',
                     'ClientTransportPlugin scramblesuit exec /usr/bin/obfs4proxy\n',
