@@ -32,7 +32,6 @@ bridges_type = ['obfs4', 'snowflake', 'meek-azure', 'scramblesuit', 'fte', 'plai
 bridges_display = ['obfs4', 'snowflake',
                    'meek-azure', 'plain']
 
-#meek_amazon_address = 'a0.awsstatic.com\n'
 meek_azure_address = 'ajax.aspnetcdn.com\n'
 
 proxy_torrc =   ['HTTPSProxy',
@@ -114,8 +113,6 @@ def parse_torrc():
                         continue
                     if line.startswith('ClientTransportPlugin'):
                         bridge_type = bridges_type[bridges_command.index(line)]
-                    #if line.endswith(meek_amazon_address):
-                        #bridge_type = 'meek-amazon'
                     if line.endswith(meek_azure_address):
                         bridge_type = 'meek-azure'
                 if bridge_type == '':
