@@ -1,3 +1,61 @@
+commit a92b5feef2020bc20e937bf20552e30d5b2e6039
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Tue Aug 22 17:50:15 2023 -0400
+
+    enable Whonix-Gateway system DNS for meek-azure and snowflake
+    
+    https://forums.whonix.org/t/censorship-circumvention-tor-pluggable-transports/2601/9
+
+commit 3969180fef752e93d9dae56946f983e465727e36
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Tue Aug 22 17:38:58 2023 -0400
+
+    import edit_etc_resolv_conf
+
+commit 3f0fcdd09134cc17bc84aed950a2f041d7b4271f
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Tue Aug 22 17:24:35 2023 -0400
+
+    comment
+
+commit 6cb1cd4be253ca1782e2d99dbc908740e4e1e6be
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Tue Aug 22 17:23:26 2023 -0400
+
+    cleanup
+
+commit 9991b7d59cad15a5f40f92daf2a27db96e80f5b0
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Tue Aug 22 17:21:22 2023 -0400
+
+    output
+
+commit 91d16b5e3381ce83b9688c5ff13bbe7c3956a231
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Tue Aug 22 16:57:47 2023 -0400
+
+    snowflake
+
+commit 9eb5b8e622ac3918902068984f5ce2bff00a0a31
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Tue Aug 22 16:55:06 2023 -0400
+
+    remove unknown country specifics
+
+commit 56123ca4c7d643365685dba2aace7103dc2ed309
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Tue Aug 22 16:29:30 2023 -0400
+
+    move bridges_default file to anon-connection-wizard and depend on it
+    
+    to reduce code duplication
+
+commit 1b8551336216bdb3a1df6932e5c193003e9a7660
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Mon Jul 17 11:51:16 2023 -0400
+
+    bumped changelog version
+
 commit dad9b604dc32b151900522220aee2467401a2c5c
 Author: Patrick Schleizer <adrelanos@whonix.org>
 Date:   Mon Jul 17 11:20:09 2023 -0400
