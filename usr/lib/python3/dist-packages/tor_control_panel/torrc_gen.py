@@ -9,6 +9,9 @@ import json
 from subprocess import call
 from . import info
 
+from anon_connection_wizard.edit_etc_resolv_conf import edit_etc_resolv_conf_add
+from anon_connection_wizard.edit_etc_resolv_conf import edit_etc_resolv_conf_remove
+
 whonix = os.path.exists('/usr/share/anon-gw-base-files/gateway')
 
 torrc_file_path = '/usr/local/etc/torrc.d/40_tor_control_panel.conf'
