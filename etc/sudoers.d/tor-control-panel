@@ -1,6 +1,4 @@
 ## Copyright (C) 2017 - 2023 ENCRYPTED SUPPORT LP <adrelanos@whonix.org>
 ## See the file COPYING for copying conditions.
 
-## tor-control-panel uses systemctl, therefore needs root.
-%sudo ALL=NOPASSWD: /usr/libexec/tor-control-panel/tor-control-panel
-
+## Currently not in use.
