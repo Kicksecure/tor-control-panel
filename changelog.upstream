@@ -1,3 +1,21 @@
+commit d86465c790860edd28906fe03967895e5c1765e6
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Sun Oct 8 06:27:35 2023 -0400
+
+    wayland
+
+commit 9bc3db4cf4e5c2bfd38c380c6ee4edff01a506db
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Sun Oct 8 04:34:19 2023 -0400
+
+    wayland
+
+commit 7e97db43913c399077d110355d3e16b7d827c2e7
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Tue Aug 22 18:04:49 2023 -0400
+
+    bumped changelog version
+
 commit a9a3ca181cc9c68c9073cc6bddc341cccbdb3b75
 Author: Patrick Schleizer <adrelanos@whonix.org>
 Date:   Tue Aug 22 18:04:24 2023 -0400
