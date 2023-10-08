@@ -9,8 +9,11 @@ from PyQt5.QtGui import QCursor
 from PyQt5.QtWidgets import *
 
 from subprocess import call, Popen, PIPE
+import sys
 import os, re
+import signal
 import glob
+import tempfile
 
 from . import tor_status, tor_bootstrap, torrc_gen, info
 
@@ -65,7 +68,11 @@ class TorControlPanel(QDialog):
                         'SOCKS5']
 
         self.tor_log = '/run/tor/log'
-        self.tor_log_html = '/run/tor/html-log'
+
+        #self.tor_log_html = '/run/tor/html-log'
+        self.tor_log_tempfile = tempfile.NamedTemporaryFile()
+        self.tor_log_html = self.tor_log_tempfile.name
+
         ## tor log HTML style
         self.warn_style = '<span style="background-color:yellow">{}'\
                         .format('[warn]')
@@ -631,7 +638,7 @@ class TorControlPanel(QDialog):
                 # Get n last lines from Tor log, HTML format for highlighting
                 # warnings and errors, write to file for text browser.
                 elif button.text() == self.button_name[1]:
-                    if os.path.exists('/run/tor'):
+                    if os.path.exists(self.tor_log):
                         lines = os.popen('tail -n 3000 %s' % self.tor_log).read()
                         lines = lines.split('\n')
                         with open(self.tor_log_html, 'w') as fw:
@@ -742,10 +749,18 @@ class TorControlPanel(QDialog):
             self.bootstrap_thread.terminate()
         self.accept()
 
-def main():
-    import sys
+def signal_handler(sig, frame):
+   sys.exit(0)
 
+def main():
     app = QApplication(sys.argv)
+
+    signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGTERM, signal_handler)
+
+    timer = QtCore.QTimer()
+    timer.start(500)
+    timer.timeout.connect(lambda: None)
 
     tor_controller = TorControlPanel()
     tor_controller.refresh(True)
