@@ -138,6 +138,10 @@ def parse_torrc():
             auth_check = False
             with open(torrc_file_path, 'r') as f:
                 for line in f:
+                    if line == "":
+                        continue
+                    if line == "\n":
+                        continue
                     proxy = line.split()[0] in proxy_torrc
                     auth_http = line.startswith(proxy_auth[0])
                     socks5_user = line.startswith(proxy_auth[1])

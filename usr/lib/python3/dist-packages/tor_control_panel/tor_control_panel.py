@@ -15,7 +15,8 @@ import signal
 import glob
 import tempfile
 
-from . import tor_status, tor_bootstrap, torrc_gen, info
+from anon_connection_wizard import tor_status
+from . import tor_bootstrap, torrc_gen, info
 
 
 class TorControlPanel(QDialog):
@@ -697,18 +698,18 @@ class TorControlPanel(QDialog):
                 self.start_bootstrap()
         else:
             if not tor_is_running:
-                self.tor_status =  'stopped'
+                self.tor_status = 'stopped'
                 tor_state = False
                 self.bridges_combo.removeItem(8)
                 self.bridges_combo.addItem('Disable network')
 
             if not tor_is_enabled:
                 if tor_is_running:
-                    self.tor_status =  'disabled-running'
+                    self.tor_status = 'disabled-running'
                     tor_state = True
 
                 elif not tor_is_running:
-                    self.tor_status =  'disabled'
+                    self.tor_status = 'disabled'
                     tor_state = False
                 self.bridges_combo.removeItem(8)
                 self.bridges_combo.addItem('Enable network')
