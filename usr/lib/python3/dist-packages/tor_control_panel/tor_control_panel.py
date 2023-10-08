@@ -414,7 +414,7 @@ class TorControlPanel(QDialog):
             controller.signal(Signal.NEWNYM)
 
     def onioncircuits(self):
-        command = 'sudo --non-interactive --user debian-tor --set-home onioncircuits &'
+        command = 'onioncircuits &'
         call(command, shell=True)
 
     def update_bootstrap(self, bootstrap_phase, bootstrap_percent):
@@ -746,14 +746,6 @@ def main():
     import sys
 
     app = QApplication(sys.argv)
-
-    if os.getuid() != 0:
-        print('ERROR: This must be run as root!\nUse "sudo --set-home".')
-        reply = QMessageBox(QMessageBox.Critical, 'Warning',
-                                info.not_root(),
-                                QMessageBox.Ok)
-        reply.exec_()
-        sys.exit(1)
 
     tor_controller = TorControlPanel()
     tor_controller.refresh(True)
