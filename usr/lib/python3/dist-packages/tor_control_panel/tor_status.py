@@ -70,17 +70,17 @@ def set_enabled():
             f.write('\n')
 
     ## start the Tor now
-    command = 'systemctl --no-pager restart tor@default'
+    command = 'pkexec systemctl --no-pager restart tor@default'
     tor_status_code = call(command, shell=True)
 
     if tor_status_code != 0:
         return 'cannot_connect', tor_status_code
 
     ## we have to reload to open /run/tor/control and create /run/tor/control.authcookie
-    command = 'systemctl reload tor@default.service'
+    command = 'pkexec systemctl reload tor@default.service'
     tor_status_code = call(command, shell=True)
 
-    command = 'systemctl --no-pager status tor@default'
+    command = 'pkexec systemctl --no-pager status tor@default'
     tor_status_code= call(command, shell=True)
 
     if tor_status_code != 0:
@@ -107,7 +107,7 @@ def set_disabled():
             f.write('\n')
 
     ## stop the Tor now
-    command = 'systemctl --no-pager stop tor@default'
+    command = 'pkexec systemctl --no-pager stop tor@default'
     call(command, shell=True)
 
     return 'tor_disabled'

@@ -20,7 +20,7 @@ class TorControlPanel(QDialog):
         super(TorControlPanel, self).__init__()
 
         ## Make sure torrc exists.
-        command = '/usr/libexec/anon-gw-anonymizer-config/tor-config-sane'
+        command = 'pkexec /usr/libexec/anon-gw-anonymizer-config/tor-config-sane'
         call(command, shell=True)
 
         self.setMinimumSize(650, 465)
