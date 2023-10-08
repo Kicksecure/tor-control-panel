@@ -11,6 +11,8 @@ from . import info
 
 from anon_connection_wizard.edit_etc_resolv_conf import edit_etc_resolv_conf_add
 from anon_connection_wizard.edit_etc_resolv_conf import edit_etc_resolv_conf_remove
+from anon_connection_wizard.tor_status import tor_status
+from anon_connection_wizard.tor_status import write_to_temp_then_move
 
 whonix = os.path.exists('/usr/share/anon-gw-base-files/gateway')
 
@@ -56,56 +58,61 @@ def user_path():
     return(torrc_user_file_path)
 
 def gen_torrc(args):
-    bridge_type =       str(args[0])
-    custom_bridges =    str(args[1])
-    proxy_type =        str(args[2])
+    bridge_type = str(args[0])
+    custom_bridges = str(args[1])
+    proxy_type = str(args[2])
     if not proxy_type == 'None':
-        proxy_ip =          str(args[3])
-        proxy_port =        str(args[4])
-        proxy_username =    str(args[5])
-        proxy_password  =   str(args[6])
+        proxy_ip = str(args[3])
+        proxy_port = str(args[4])
+        proxy_username = str(args[5])
+        proxy_password = str(args[6])
 
-    print("torrc_file_path: " + torrc_file_path)
+    torrc_content = []
 
-    with open(torrc_file_path, "w") as f:
-        print("bridge_type: ", bridge_type)
+    print("bridge_type: ", bridge_type)
 
-        f.write('%s# %s\n' % (info.torrc_text(), torrc_user_file_path))
-        f.write('DisableNetwork 0\n')
+    torrc_content.append('%s# %s\n' % (info.torrc_text(), torrc_user_file_path))
+    torrc_content.append('DisableNetwork 0\n')
 
-        if bridge_type in bridges_type:
-            f.write(command_useBridges)
-            f.write(bridges_command[bridges_type.index(bridge_type)])
-            bridges = json.loads(open(bridges_default_path).read())
-            for bridge in bridges['bridges'][bridge_type]:
-                f.write('{0}\n'.format(bridge))
+    if bridge_type in bridges_type:
+        torrc_content.append(command_useBridges)
+        torrc_content.append(bridges_command[bridges_type.index(bridge_type)])
+        bridges = json.loads(open(bridges_default_path).read())
+        for bridge in bridges['bridges'][bridge_type]:
+            torrc_content.append('{0}\n'.format(bridge))
 
-        elif bridge_type == 'Custom bridges':
-            bridge = str(custom_bridges.split()[0]).lower()
-            if bridge in bridges_type:
-                f.write(command_useBridges)
-                f.write(bridges_command[bridges_type.index(bridge)])
-                bridge_custom_list = custom_bridges.split('\n')
-                for bridge in bridge_custom_list:
-                    f.write('Bridge {0}\n'.format(bridge))
+    elif bridge_type == 'Custom bridges':
+        bridge = str(custom_bridges.split()[0]).lower()
+        if bridge in bridges_type:
+            torrc_content.append(command_useBridges)
+            torrc_content.append(bridges_command[bridges_type.index(bridge)])
+            bridge_custom_list = custom_bridges.split('\n')
+            for bridge in bridge_custom_list:
+                torrc_content.append('Bridge {0}\n'.format(bridge))
 
-        if bridge_type.startswith('meek-azure'):
-            ## Required for meek and snowflake only.
-            ## https://forums.whonix.org/t/censorship-circumvention-tor-pluggable-transports/2601/9
-            edit_etc_resolv_conf_add()
-        if bridge_type.startswith('snowflake'):
-            edit_etc_resolv_conf_add()
+    if bridge_type.startswith('meek-azure'):
+        # Required for meek and snowflake only.
+        # https://forums.whonix.org/t/censorship-circumvention-tor-pluggable-transports/2601/9
+        edit_etc_resolv_conf_add()
+    if bridge_type.startswith('snowflake'):
+        edit_etc_resolv_conf_add()
 
-        if proxy_type in proxies:
-            f.write('{0} {1}:{2}\n'.format(proxy_torrc[proxies.index(proxy_type)],
-                                        proxy_ip, proxy_port))
-            if not proxy_username == '':
-                if proxy_type == proxies[0]:
-                    f.write('{0} {1}:{2}\n'.format(proxy_auth[0], proxy_username,
-                                                   proxy_password))
-                if proxy_type == proxies[2]:
-                    f.write('{0} {1}\n'.format(proxy_auth[1], proxy_username))
-                    f.write('{0} {1}\n'.format(proxy_auth[2], proxy_password))
+    if proxy_type in proxies:
+        torrc_content.append('{0} {1}:{2}\n'.format(proxy_torrc[proxies.index(proxy_type)],
+                                                    proxy_ip, proxy_port))
+        if not proxy_username == '':
+            if proxy_type == proxies[0]:
+                torrc_content.append('{0} {1}:{2}\n'.format(proxy_auth[0], proxy_username,
+                                                           proxy_password))
+            if proxy_type == proxies[2]:
+                torrc_content.append('{0} {1}\n'.format(proxy_auth[1], proxy_username))
+                torrc_content.append('{0} {1}\n'.format(proxy_auth[2], proxy_password))
+
+    # Convert the list of strings to a single string
+    final_torrc_content = ''.join(torrc_content)
+
+    # Use write_to_temp_then_move to write and move the content
+    write_to_temp_then_move(final_torrc_content)
 
 def parse_torrc():
     ## Make sure Torrc exists.
