@@ -3,13 +3,17 @@
 ## Copyright (C) 2018 - 2023 ENCRYPTED SUPPORT LP <adrelanos@whonix.org>
 ## See the file COPYING for copying conditions.
 
+import sys
+import signal
+
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import *
 
-import sys, os
+import os
 import re
-from subprocess import Popen, PIPE
 import time
+
+from subprocess import Popen, PIPE
 
 from tor_control_panel import tor_bootstrap, info
 

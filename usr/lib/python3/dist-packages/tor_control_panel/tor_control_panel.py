@@ -3,15 +3,18 @@
 ## Copyright (C) 2018 - 2023 ENCRYPTED SUPPORT LP <adrelanos@whonix.org>
 ## See the file COPYING for copying conditions.
 
+import sys
+import signal
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QCursor
 from PyQt5.QtWidgets import *
 
 from subprocess import call, Popen, PIPE
-import sys
-import os, re
-import signal
+
+import os
+import re
 import glob
 import tempfile
 

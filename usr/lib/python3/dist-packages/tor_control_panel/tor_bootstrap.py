@@ -4,7 +4,13 @@
 ## Copyright (C) 2018 - 2023 ENCRYPTED SUPPORT LP <adrelanos@whonix.org>
 ## See the file COPYING for copying conditions.
 
-import os, re, sys, time
+import sys
+import signal
+
+import os
+import re
+import time
+
 from PyQt5.QtCore import *
 
 
@@ -148,4 +154,3 @@ class TorBootstrap(QThread):
 def main():
     thread = TorBootstrap()
     sys.exit(app.exec_())
-
