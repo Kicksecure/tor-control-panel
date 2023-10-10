@@ -13,8 +13,9 @@
       <allow_active>auth_admin</allow_active>
     </defaults>
     <annotate key="org.freedesktop.policykit.exec.path">/usr/bin/systemctl</annotate>
-    <annotate key="org.freedesktop.policykit.exec.argv1">restart</annotate>
-    <annotate key="org.freedesktop.policykit.exec.argv2">tor@default</annotate>
+    <annotate key="org.freedesktop.policykit.exec.argv1">--no-pager</annotate>
+    <annotate key="org.freedesktop.policykit.exec.argv2">restart</annotate>
+    <annotate key="org.freedesktop.policykit.exec.argv3">tor@default</annotate>
   </action>
 
 </policyconfig>
