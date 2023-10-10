@@ -87,11 +87,6 @@ class RestartTor(QWidget):
             error.exec_()
             self.close()
 
-        ## TODO: remove
-        ## Only for pkexec testing.
-        command = Popen(['pkexec', '/usr/bin/systemctl', '--no-pager', 'status', 'tor@default'], stdout=PIPE, stderr=PIPE)
-        stdout, stderr = command.communicate()
-
         self.bootstrap_thread = tor_bootstrap.TorBootstrap(self)
         self.bootstrap_thread.signal.connect(self.update_bootstrap)
         self.bootstrap_thread.finished.connect(self.close)
