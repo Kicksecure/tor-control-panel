@@ -19,7 +19,7 @@ restart-tor-gui
 
 ## DESCRIPTION
 
-restar-to-gui is a graphical tool for restarting Tor. It shows the
+restart-tor-gui is a graphical tool for restarting Tor. It shows the
 tor bootstrap sequence in a progress bar. It closes itself two seconds
 after tor bootstrap has completed.
 

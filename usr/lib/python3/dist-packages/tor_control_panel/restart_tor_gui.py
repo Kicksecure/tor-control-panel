@@ -76,7 +76,7 @@ class RestartTor(QWidget):
         Use subprocess.Popen instead of subprocess.call in order to catch
         possible errors from "restart tor" command.
         '''
-        command = Popen(['pkexec', 'systemctl', 'restart', 'tor@default'], stdout=PIPE, stderr=PIPE)
+        command = Popen(['pkexec', 'systemctl', '--no-pager', 'restart', 'tor@default'], stdout=PIPE, stderr=PIPE)
         stdout, stderr = command.communicate()
 
         std_err = stderr.decode()
