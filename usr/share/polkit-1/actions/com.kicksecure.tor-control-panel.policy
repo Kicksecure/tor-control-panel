@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC
+ "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/PolicyKit/1/policyconfig.dtd">
+<policyconfig>
+  <vendor>Kicksecure</vendor>
+  <vendor_url>https://www.kicksecure.com/</vendor_url>
+
+  <action id="com.kicksecure.tor-control-panel.restart-tor">
+    <description>Restart Tor</description>
+    <message>Authentication is required to restart Tor (the tor@default service)</message>
+    <defaults>
+      <allow_any>auth_admin_keep</allow_any>
+      <allow_inactive>auth_admin_keep</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/bin/systemctl</annotate>
+    <annotate key="org.freedesktop.policykit.exec.argv1">--no-pager</annotate>
+    <annotate key="org.freedesktop.policykit.exec.argv2">restart</annotate>
+    <annotate key="org.freedesktop.policykit.exec.argv3">tor@default</annotate>
+  </action>
+
+  <action id="com.kicksecure.tor-control-panel.restart-tor">
+    <description>Restart Tor</description>
+    <message>Authentication is required to stop Tor (the tor@default service)</message>
+    <defaults>
+      <allow_any>auth_admin_keep</allow_any>
+      <allow_inactive>auth_admin_keep</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/bin/systemctl</annotate>
+    <annotate key="org.freedesktop.policykit.exec.argv1">--no-pager</annotate>
+    <annotate key="org.freedesktop.policykit.exec.argv2">stop</annotate>
+    <annotate key="org.freedesktop.policykit.exec.argv3">tor@default</annotate>
+  </action>
+
+  <action id="com.kicksecure.tor-control-panel.tor-config-sane">
+    <description>Restart Tor</description>
+    <message>Authentication is required to for tor-control-panel (/usr/libexec/anon-gw-anonymizer-config/tor-config-sane)</message>
+    <defaults>
+      <allow_any>auth_admin_keep</allow_any>
+      <allow_inactive>auth_admin_keep</allow_inactive>
+      <allow_active>auth_admin_keep</allow_active>
+    </defaults>
+    <annotate key="org.freedesktop.policykit.exec.path">/usr/libexec/anon-gw-anonymizer-config/tor-config-sane</annotate>
+  </action>
+
+</policyconfig>
