@@ -3,4 +3,4 @@
 ## Copyright (C) 2012 - 2023 ENCRYPTED SUPPORT LP <adrelanos@whonix.org>
 ## See the file COPYING for copying conditions.
 
-pkexec DISPLAY="$DISPLAY" /usr/bin/tor-control-panel
+/usr/bin/tor-control-panel
