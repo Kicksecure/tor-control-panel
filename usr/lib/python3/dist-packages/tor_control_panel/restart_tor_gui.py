@@ -96,6 +96,9 @@ class RestartTor(QWidget):
         self.center()
 
 def main():
+    if os.geteuid() == 0:
+        print('restart_tor.py: ERROR: Do not run with sudo / as root!')
+        sys.exit(1)
     app = QApplication(sys.argv)
     restart_tor = RestartTor()
     sys.exit(app.exec_())

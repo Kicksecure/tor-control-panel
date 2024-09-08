@@ -756,6 +756,10 @@ def signal_handler(sig, frame):
    sys.exit(128 + sig)
 
 def main():
+    if os.geteuid() == 0:
+        print('tor_control_panel.py: ERROR: Do not run with sudo / as root!')
+        sys.exit(1)
+
     app = QApplication(sys.argv)
 
     signal.signal(signal.SIGINT, signal_handler)
