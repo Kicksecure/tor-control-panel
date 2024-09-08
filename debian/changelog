@@ -1,3 +1,9 @@
+tor-control-panel (1:6.4-1) unstable; urgency=medium
+
+  * New upstream version (local package).
+
+ -- Patrick Schleizer <adrelanos@whonix.org>  Sun, 08 Sep 2024 17:42:15 +0000
+
 tor-control-panel (1:6.3-1) unstable; urgency=medium
 
   * New upstream version (local package).
