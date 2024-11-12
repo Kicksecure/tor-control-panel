@@ -1,3 +1,15 @@
+commit 4292197c10c9f3278b98753b40dcd86ded0d8124
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Tue Nov 12 08:44:37 2024 -0500
+
+    no more files in /etc
+
+commit 16fae3597345c09f19f403f07b209af535c84916
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Tue Nov 12 13:43:53 2024 +0000
+
+    bumped changelog version
+
 commit a1643323e5de0d64a1326acc7bcacb5b1c5485ca
 Author: Patrick Schleizer <adrelanos@whonix.org>
 Date:   Tue Nov 12 08:43:22 2024 -0500
