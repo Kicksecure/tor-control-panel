@@ -1,3 +1,15 @@
+commit a1643323e5de0d64a1326acc7bcacb5b1c5485ca
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Tue Nov 12 08:43:22 2024 -0500
+
+    cleanup: remove no longer already commented out sudoers.d exceptions
+
+commit 9a20b12f3b1cae483f2360a66ec2d0da92a5104b
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Sun Sep 8 17:42:16 2024 +0000
+
+    bumped changelog version
+
 commit aacbd3e0588e4376ffa0b4ef00c7badf1df870f1
 Author: Patrick Schleizer <adrelanos@whonix.org>
 Date:   Sun Sep 8 13:01:07 2024 -0400
