@@ -733,7 +733,7 @@ class TorControlPanel(QDialog):
         self.stop_tor()
         self.restart_button.setEnabled(False)
 
-        restart_command = 'pkexec /usr/bin/systemctl --no-pager restart tor@default'
+        restart_command = 'pkexec /usr/libexec/anon-connection-wizard/acw-tor-control restart'
         p = Popen(restart_command, shell=True)
         self.start_bootstrap()
 
@@ -742,7 +742,7 @@ class TorControlPanel(QDialog):
         if not self.bootstrap_done:
             self.bootstrap_progress.hide()
             self.bootstrap_thread.terminate()
-        stop_command = 'pkexec /usr/bin/systemctl --no-pager stop tor@default'
+        stop_command = 'pkexec /usr/libexec/anon-connection-wizard/acw-tor-control stop'
         p = Popen(stop_command, shell=True)
         p.wait()
         self.refresh(True)
