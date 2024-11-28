@@ -1,3 +1,22 @@
+commit 91562f6923c664415a58259b090c2c26b2b42433
+Merge: db4fafa 5390409
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Thu Nov 28 13:31:32 2024 -0500
+
+    Merge remote-tracking branch 'ArrayBolt3/arraybolt3/pkexec'
+
+commit 5390409e9ff46cb71e6397cb9c9d89a4ef58eaff
+Author: Aaron Rainbolt <arraybolt3@ubuntu.com>
+Date:   Thu Nov 28 11:30:21 2024 -0600
+
+    Use new calls for Tor stop and restart
+
+commit db4fafaee1781c81982488ae1e1abe7afb93ec12
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Tue Nov 12 13:44:55 2024 +0000
+
+    bumped changelog version
+
 commit 4292197c10c9f3278b98753b40dcd86ded0d8124
 Author: Patrick Schleizer <adrelanos@whonix.org>
 Date:   Tue Nov 12 08:44:37 2024 -0500
