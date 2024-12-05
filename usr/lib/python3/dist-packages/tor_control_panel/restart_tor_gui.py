@@ -83,9 +83,13 @@ class RestartTor(QWidget):
         command_success = std_err == ''
 
         if not command_success:
-            error = QMessageBox(QMessageBox.Critical, 'Restart tor', std_err, QMessageBox.Ok)
-            error.exec_()
-            self.close()
+            ## Was functional.
+            ## Nowadays broken because acw-tor-control bash xtrace (stderr).
+            #error = QMessageBox(QMessageBox.Critical, 'Restart tor', std_err, QMessageBox.Ok)
+            #error.exec_()
+            #self.close()
+            ## Instead just write to stdout.
+            print(std_err)
 
         self.bootstrap_thread = tor_bootstrap.TorBootstrap(self)
         self.bootstrap_thread.signal.connect(self.update_bootstrap)
