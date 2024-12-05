@@ -1,3 +1,15 @@
+commit 68ce8a7dc0da0fa523132ccb8b25a01b045b15f8
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Thu Dec 5 05:27:51 2024 -0500
+
+    fix restart-tor-gui
+
+commit 035b374d47149b7f07e1e27c5f603c2cbaf8bd48
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Thu Nov 28 18:31:45 2024 +0000
+
+    bumped changelog version
+
 commit 91562f6923c664415a58259b090c2c26b2b42433
 Merge: db4fafa 5390409
 Author: Patrick Schleizer <adrelanos@whonix.org>
