@@ -27,7 +27,7 @@ class TorControlPanel(QDialog):
         super(TorControlPanel, self).__init__()
 
         ## Make sure torrc exists.
-        command = 'pkexec /usr/libexec/anon-gw-anonymizer-config/tor-config-sane'
+        command = 'leaprun tor-config-sane'
         call(command, shell=True)
 
         self.setMinimumSize(650, 465)
@@ -733,7 +733,7 @@ class TorControlPanel(QDialog):
         self.stop_tor()
         self.restart_button.setEnabled(False)
 
-        restart_command = 'pkexec /usr/libexec/anon-connection-wizard/acw-tor-control restart'
+        restart_command = 'leaprun acw-tor-control-restart'
         p = Popen(restart_command, shell=True)
         self.start_bootstrap()
 
@@ -742,7 +742,7 @@ class TorControlPanel(QDialog):
         if not self.bootstrap_done:
             self.bootstrap_progress.hide()
             self.bootstrap_thread.terminate()
-        stop_command = 'pkexec /usr/libexec/anon-connection-wizard/acw-tor-control stop'
+        stop_command = 'leaprun acw-tor-control-stop'
         p = Popen(stop_command, shell=True)
         p.wait()
         self.refresh(True)
