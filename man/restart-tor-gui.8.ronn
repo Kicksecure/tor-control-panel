@@ -24,7 +24,7 @@ tor bootstrap sequence in a progress bar. It closes itself two seconds
 after tor bootstrap has completed.
 
 Error catching is implemented after the restart command. In case of error,
-it displays the output of the "pkexec systemctl restart tor@default" command
+it displays the output of the "systemctl restart tor@default" command
 in a message box.
 
 restart-tor-gui is produced independently from the Tor anonymity
