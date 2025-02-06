@@ -116,7 +116,7 @@ def gen_torrc(args):
 
 def parse_torrc():
     ## Make sure Torrc exists.
-    command = 'pkexec /usr/libexec/anon-gw-anonymizer-config/tor-config-sane'
+    command = 'leaprun tor-config-sane'
     call(command, shell=True)
 
     if os.path.exists(torrc_file_path):
