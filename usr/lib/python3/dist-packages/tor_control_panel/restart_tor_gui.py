@@ -29,7 +29,7 @@ class RestartTor(QWidget):
 
     def setupUI(self):
         self.setGeometry(300, 150, 450, 150)
-        self.setWindowTitle('Restart tor')
+        self.setWindowTitle('Restart Tor')
 
         self.text.setWordWrap(True)
         self.text.setAlignment(QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
