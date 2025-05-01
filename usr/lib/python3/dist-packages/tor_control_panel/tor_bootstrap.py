@@ -12,13 +12,9 @@ import re
 import time
 
 from PyQt5.QtCore import *
-
+from PyQt5.QtWidgets import QApplication
 
 class TorBootstrap(QThread):
-    '''signal will receive the emit from TorBootstrap with two values:
-    bootstrap_phase and bootstrap_percent.
-    It will pass them to the update_bootstrap()
-    '''
     signal = pyqtSignal(str, int)
 
     def __init__(self, main):
@@ -27,7 +23,6 @@ class TorBootstrap(QThread):
         self.control_cookie_path = '/run/tor/control.authcookie'
         self.control_socket_path = '/run/tor/control'
         self.previous_status = ''
-        bootstrap_percent = 0
         #self.is_running = False
         '''The TAG to phase mapping is mainly according to:
         https://gitweb.torproject.org/tor-launcher.git/tree/src/chrome/locale/en/torlauncher.properties
@@ -99,7 +94,7 @@ class TorBootstrap(QThread):
         try:
             tor_controller.authenticate(self.control_cookie_path)
         except stem.connection.IncorrectCookieSize:
-            pass  #if # TODO: the cookie file's size is wrong
+            return None  #if # TODO: the cookie file's size is wrong
         except stem.connection.UnreadableCookieFile:
             # TODO: can we let Tor generate a cookie to fix this situation?
             print('Tor allows for authentication by reading it a cookie file, \
@@ -108,10 +103,13 @@ class TorBootstrap(QThread):
             bootstrap_percent = 0
             self.signal.emit(bootstrap_phase, bootstrap_percent)
             time.sleep(10)
+            return None
         except stem.connection.CookieAuthRejected:
-            pass  #if cookie authentication is attempted but the socket doesn't accept it
+            return None  #if cookie authentication is attempted but the socket doesn't accept it
         except stem.connection.IncorrectCookieValue:
-            pass  #if the cookie file's value is rejected
+            return None  #if the cookie file's value is rejected
+        except:
+            return None
 
         return tor_controller
 
@@ -119,6 +117,12 @@ class TorBootstrap(QThread):
         self.tor_controller = self.connect_to_control_port()
         '''if DisableNetwork is 1, then toggle it to 0
         because we really want Tor connect to the network'''
+
+        if self.tor_controller == None:
+            sys.stdout.write('Controller connection failed.\n')
+            sys.stdout.flush()
+            sys.exit(1)
+
         if self.tor_controller.get_conf('DisableNetwork') == '1':
             self.tor_controller.set_conf('DisableNetwork', '0')
             sys.stdout.write('Toggle DisableNetwork value to 0. Tor is now allowed to connect to the network.\n')
@@ -126,6 +130,7 @@ class TorBootstrap(QThread):
 
         bootstrap_percent = 0
         while bootstrap_percent < 100:
+            bootstrap_phase = ''
             bootstrap_status = self.tor_controller.get_info("status/bootstrap-phase")
 
             if bootstrap_status != self.previous_status:
@@ -152,5 +157,7 @@ class TorBootstrap(QThread):
 
 
 def main():
+    app = QApplication(sys.argv)
     thread = TorBootstrap()
+    thread.start()
     sys.exit(app.exec_())
