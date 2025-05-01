@@ -67,7 +67,7 @@ class TorBootstrap(QThread):
         # causing /run/tor/control never be generated.
         # We set up a time counter and hardcode the wait time limitation as 10s.
 
-        bootstrap_phase =  'Constructing Tor Controller...'
+        bootstrap_phase = 'Constructing Tor Controller...'
         bootstrap_percent = 0
         self.signal.emit(bootstrap_phase, bootstrap_percent)
 
@@ -80,7 +80,7 @@ class TorBootstrap(QThread):
             tor_controller = stem.control.Controller.from_socket_file(self.control_socket_path)
         except stem.SocketError:
             print('Construct Tor Controller Failed: unable to establish a connection')
-            bootstrap_phase =  'no_controller'
+            bootstrap_phase = 'no_controller'
             bootstrap_percent = 0
             ## After emiting the `no_controller`,
             ## update_bootstrap() will pop the messagebox and quit
@@ -92,7 +92,7 @@ class TorBootstrap(QThread):
         '''Step 2: Controller Authentication
         In order to interact with Tor, we have to do the authentication.
         '''
-        bootstrap_phase =  'Authenticating the Tor Controller...'
+        bootstrap_phase = 'Authenticating the Tor Controller...'
         bootstrap_percent = 0
         self.signal.emit(bootstrap_phase, bootstrap_percent)
 
@@ -104,7 +104,7 @@ class TorBootstrap(QThread):
             # TODO: can we let Tor generate a cookie to fix this situation?
             print('Tor allows for authentication by reading it a cookie file, \
             but we cannot read that file (probably due to permissions)')
-            bootstrap_phase =  'cookie_authentication_failed'
+            bootstrap_phase = 'cookie_authentication_failed'
             bootstrap_percent = 0
             self.signal.emit(bootstrap_phase, bootstrap_percent)
             time.sleep(10)
