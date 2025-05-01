@@ -90,6 +90,7 @@ class RestartTor(QWidget):
             #self.close()
             ## Instead just write to stdout.
             print(std_err)
+            sys.exit(1)
 
         self.bootstrap_thread = tor_bootstrap.TorBootstrap(self)
         self.bootstrap_thread.signal.connect(self.update_bootstrap)
