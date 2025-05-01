@@ -61,13 +61,13 @@ class RestartTor(QWidget):
             self.text.setText('<p><b>Bootstrapping Tor...</b></p>Bootstrap phase: {0}'.format(bootstrap_phase))
 
         if bootstrap_phase == 'no_controller':
-            self.text.setText = info.no_controller()
+            self.text.setText(info.no_controller())
 
         elif bootstrap_phase == 'cookie_authentication_failed':
-            self.text.setText = info.cookie_error()
+            self.text.setText(info.cookie_error())
 
     def close(self):
-        time.sleep(2)
+        QtCore.QTimer.singleShot(2000, QApplication.instance().quit)
         sys.exit()
 
     def restart_tor(self):
@@ -80,7 +80,7 @@ class RestartTor(QWidget):
         stdout, stderr = command.communicate()
 
         std_err = stderr.decode()
-        command_success = std_err == ''
+        command_success = command.returncode == 0
 
         if not command_success:
             ## Was functional.
