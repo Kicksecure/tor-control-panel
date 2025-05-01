@@ -83,11 +83,17 @@ class RestartTor(QWidget):
         command_success = command.returncode == 0
 
         if not command_success:
-            ## Was functional.
-            ## Nowadays broken because acw-tor-control bash xtrace (stderr).
-            #error = QMessageBox(QMessageBox.Critical, 'Restart tor', std_err, QMessageBox.Ok)
-            #error.exec_()
-            #self.close()
+            box = QMessageBox()
+            box.setIcon(QMessageBox.Critical)
+            box.setWindowTitle("restart-tor - Error")
+            text = (
+                "Command 'leaprun acw-tor-control-restart' failed.\n\n"
+            )
+            print("ERROR: " + text)
+            box.setText(text)
+            box.exec_()
+            sys.exit(1)
+
             ## Instead just write to stdout.
             print(std_err)
             sys.exit(1)
