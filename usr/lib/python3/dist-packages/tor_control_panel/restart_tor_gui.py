@@ -99,11 +99,22 @@ class RestartTor(QWidget):
         self.show()
         self.center()
 
+def signal_handler(sig, frame):
+    sys.exit(128 + sig)
+
 def main():
     if os.geteuid() == 0:
         print('restart_tor.py: ERROR: Do not run with sudo / as root!')
         sys.exit(1)
     app = QApplication(sys.argv)
+
+    signal.signal(signal.SIGINT, signal_handler)
+    signal.signal(signal.SIGTERM, signal_handler)
+
+    timer = QtCore.QTimer()
+    timer.start(500)
+    timer.timeout.connect(lambda: None)
+
     restart_tor = RestartTor()
     sys.exit(app.exec_())
 
