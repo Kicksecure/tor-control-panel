@@ -8,10 +8,9 @@ import signal
 
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import *
+from PyQt5.QtGui import QGuiApplication
 
 import os
-import re
-import time
 
 from subprocess import Popen, PIPE
 
@@ -46,8 +45,9 @@ class RestartTor(QWidget):
         self.restart_tor()
 
     def center(self):
+        screen = QGuiApplication.primaryScreen()
+        center_point = screen.availableGeometry().center()
         rectangle = self.frameGeometry()
-        center_point = QDesktopWidget().availableGeometry().center()
         rectangle.moveCenter(center_point)
         self.move(rectangle.topLeft())
 
