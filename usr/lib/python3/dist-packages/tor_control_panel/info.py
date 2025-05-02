@@ -71,7 +71,7 @@ If Tor was stopped intentionally, you can restart it using the
 [Restart Tor] button below.</p>
 <p>Hints:<br>
 In the <b>Logs</b> tab, check the content of torrc and
-inspect the Tor log and systemd journal.<br><br>,
+inspect the Tor log and systemd journal.<br><br>
 
 <b>The network is disabled.</b><br><br>
 
