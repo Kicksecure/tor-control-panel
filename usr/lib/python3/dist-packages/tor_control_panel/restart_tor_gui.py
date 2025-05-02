@@ -56,9 +56,10 @@ class RestartTor(QWidget):
 
         if bootstrap_phase == 'no_controller':
             self.text.setText(info.no_controller())
-
+            return
         elif bootstrap_phase == 'cookie_authentication_failed':
             self.text.setText(info.cookie_error())
+            return
 
         if bootstrap_percent == 100:
             self.bootstrap_progress.setValue(100)
