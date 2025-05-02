@@ -94,6 +94,17 @@ In the <b>Logs</b> tab, check the content of torrc and inspect the Tor log and s
     ]
     return text
 
+def socket_error():
+    text = '''
+<b>ERROR: Tor Controller Authentication Failed</b> \
+<p>Tor allows for authentication by reading using control socket, \
+but we cannot read that file (probably due to permissions)</p>
+<br><br>
+<p>(File /run/tor/control might lack read/write permission.
+See terminal output.)</p>
+'''
+    return text.strip()
+
 def cookie_error():
     text = '''
 <b>ERROR: Tor Controller Authentication Failed</b> \
@@ -173,6 +184,7 @@ if __name__ == "__main__":
 
     QtWidgets.QMessageBox.information(None, "custom_bridges_help()", custom_bridges_help(), QtWidgets.QMessageBox.Ok)
     QtWidgets.QMessageBox.information(None, "tor_stopped()", tor_stopped(), QtWidgets.QMessageBox.Ok)
+    QtWidgets.QMessageBox.information(None, "socket_error()", socket_error(), QtWidgets.QMessageBox.Ok)
     QtWidgets.QMessageBox.information(None, "cookie_error()", cookie_error(), QtWidgets.QMessageBox.Ok)
     QtWidgets.QMessageBox.information(None, "no_controller()", no_controller(), QtWidgets.QMessageBox.Ok)
     QtWidgets.QMessageBox.information(None, "invalid_ip_port()", invalid_ip_port(), QtWidgets.QMessageBox.Ok)

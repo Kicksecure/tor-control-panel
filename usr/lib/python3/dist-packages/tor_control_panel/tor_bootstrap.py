@@ -71,6 +71,14 @@ class TorBootstrap(QThread):
             count += 0.2
             time.sleep(0.2)
 
+        if not os.access(self.control_socket_path, os.R_OK):
+            print(f"[ERROR] Cannot read control socket at {self.control_socket_path} - permission denied.")
+            bootstrap_phase = 'socket_error'
+            bootstrap_percent = 0
+            self.signal.emit(bootstrap_phase, bootstrap_percent)
+            time.sleep(10)
+            return None
+
         try:
             tor_controller = stem.control.Controller.from_socket_file(self.control_socket_path)
         except stem.SocketError:

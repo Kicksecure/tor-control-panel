@@ -457,6 +457,13 @@ class TorControlPanel(QDialog):
             self.stop_button.setEnabled(True)
             self.refresh_status()
 
+        elif bootstrap_phase == 'socket_error':
+            self.bootstrap_thread.terminate()
+            self.message = info.socket_error()
+            self.bootstrap_progress.hide()
+            self.control_box.setEnabled(True)
+            self.refresh_status()
+
         elif bootstrap_phase == 'cookie_authentication_failed':
             self.bootstrap_thread.terminate()
             self.message = info.cookie_error()
