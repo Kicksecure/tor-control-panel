@@ -61,90 +61,103 @@ https://www.riseup.net, https://mail.google.com, or https://mail.yahoo.com</p>
 <p>For assistance, visit <b>torproject.org/about/contact.html#support</b></p>
 <p>Paste the bridge list received from the Tor Project:</p>
 '''
-    return text
+    return text.strip()
 
 
 def tor_stopped():
-    text = [
-        '',
-        '<b>Tor is not running.</b> <p> \
-        If Tor was stopped intentionally, you can restart it using the \
-        [Restart Tor] button below.</p> \
-        <p>Hints:<br>  \
-        In the <b>Logs</b> tab, check the content of torrc and \
-        inspect the Tor log and systemd journal.<br><br>',
+    text = '''
+<b>Tor is not running.</b> <p>
+If Tor was stopped intentionally, you can restart it using the
+[Restart Tor] button below.</p>
+<p>Hints:<br>
+In the <b>Logs</b> tab, check the content of torrc and
+inspect the Tor log and systemd journal.<br><br>,
 
-        '<b>The network is disabled.</b><br><br>A line <i>DisableNetwork 1</i> \
-        exists in torrc. <p>The network can be enabled by: <p><b>Configure</b> --> \
-        <b>Bridges type</b> --> <b>Enable network</b> --> \
-        <b>Accept</b>',
+<b>The network is disabled.</b><br><br>
 
-        '<b>Tor is running but the network is disabled.</b><p> \
-        A line <i>DisableNetwork 1</i> exists in torrc. \
-        <br>Therefore, you most likely cannot connect to the internet.</br>\
-        <p>The network can be enabled by:</br><p><b>Configure</b> --> \
-        <b>Bridges type</b> --> <b>Enable network</b> --> \
-        <b>Accept</b>'
-    ]
-    return text
+A line <i>DisableNetwork 1</i> exists in torrc. <p>The network can be enabled by: <p><b>Configure</b> -->
+<b>Bridges type</b> --> <b>Enable network</b> -->
+<b>Accept</b>,
+
+<b>Tor is running but the network is disabled.</b><p>
+A line <i>DisableNetwork 1</i> exists in torrc.
+<br>Therefore, you most likely cannot connect to the internet.</br>\
+<p>The network can be enabled by:</br><p><b>Configure</b> -->
+<b>Bridges type</b> --> <b>Enable network</b> -->
+<b>Accept</b>
+'''
+    return text.strip()
 
 
 def cookie_error():
-    text = '<b>ERROR: Tor Controller Authentication Failed</b> \
-            <p>Tor allows for authentication by reading a cookie file, \
-            but we cannot read that file (probably due to permissions)</p>'
-    return text
+    text = '''
+<b>ERROR: Tor Controller Authentication Failed</b> \
+<p>Tor allows for authentication by reading a cookie file, \
+but we cannot read that file (probably due to permissions)</p>
+'''
+    return text.strip()
 
 
 def no_controller():
-    text = '<b>ERROR: Tor Controller Not Constructed</b><p>The Tor \
-        controller cannot be constructed. This is most likely because \
-        you have a \"DisableNetwork 1\" line in a torrc file.\
-        Please manually remove or comment out those lines, then run \
-        anon-connection-wizard or restart Tor.'
-    return text
+    text = '''
+<b>ERROR: Tor Controller Not Constructed</b><p>The Tor \
+controller cannot be constructed. This is most likely because \
+you have a \"DisableNetwork 1\" line in a torrc file.\
+Please manually remove or comment out those lines, then run \
+anon-connection-wizard or restart Tor.
+'''
+    return text.strip()
 
 
 def invalid_ip_port():
-    text = '''<p><b>ERROR: Please enter a valid address and port number.</b></p>
+    text = '''
+<p><b>ERROR: Please enter a valid address and port number.</b></p>
 <p>The address should look like: 127.0.0.1 or localhost</p>
-<p>The port number should be an integer between 1 and 65535</p>'''
-    return text
+<p>The port number should be an integer between 1 and 65535</p>
+'''
+    return text.strip()
 
 
 def newnym_text():
-    text = '''<p>Same functionality as the Tor Button's "New Identity", except:</p>
+    text = '''
+<p>Same functionality as the Tor Button's "New Identity", except:</p>
 
 <p><span style="font:bold;color:red">Use with care</span>.\
  After this operation, Tor Browser will close tabs and clear the current \
 history, cache, etc. <b>"All linkable identifiers and browser state \
-MUST be cleared by this feature"</b> (from the Tor Browser design document).</p>'''
-    return text
+MUST be cleared by this feature"</b> (from the Tor Browser design document).</p>
+'''
+    return text.strip()
 
 
 def onions_text():
-    text = '''Displays Tor circuits and streams. It allows inspection of the circuits built by the locally running Tor daemon, along with some additional metadata for each node.
+    text = '''
+Displays Tor circuits and streams. It allows inspection of the circuits built by the locally running Tor daemon, along with some additional metadata for each node.
 
-It is intended as a successor to the currently unmaintained Vidalia software.'''
-    return text
+It is intended as a successor to the currently unmaintained Vidalia software.
+'''
+    return text.strip()
 
 
 def torrc_text():
-    text = '''# This file is generated by and should ONLY be used by tor-control-panel.
+    text = '''
+# This file is generated by and should ONLY be used by tor-control-panel.
 # User configuration should go to /usr/local/etc/torrc.d/50_user.conf, not here, because:
 #    1. This file can be easily overwritten by tor-control-panel.
 #    2. Even a single character change in this file may cause errors.
-# However, deleting this file is fine, since a new plain file will be generated the next time you run tor-control-panel.'''
-    return text
+# However, deleting this file is fine, since a new plain file will be generated the next time you run tor-control-panel.
+'''
+    return text.strip()
 
 
 def user_torrc_text():
-    text = '''# Tor user-specific configuration file
+    text = '''
+# Tor user-specific configuration file
 #
 # Add user modifications below this line:
 ############################################
 '''
-    return text
+    return text.strip()
 
 if __name__ == "__main__":
     import sys
@@ -154,7 +167,7 @@ if __name__ == "__main__":
     show_proxy_help()
 
     QtWidgets.QMessageBox.information(None, "custom_bridges_help()", custom_bridges_help(), QtWidgets.QMessageBox.Ok)
-    QtWidgets.QMessageBox.information(None, "tor_stopped()", "\n\n".join(tor_stopped()), QtWidgets.QMessageBox.Ok)
+    QtWidgets.QMessageBox.information(None, "tor_stopped()", tor_stopped(), QtWidgets.QMessageBox.Ok)
     QtWidgets.QMessageBox.information(None, "cookie_error()", cookie_error(), QtWidgets.QMessageBox.Ok)
     QtWidgets.QMessageBox.information(None, "no_controller()", no_controller(), QtWidgets.QMessageBox.Ok)
     QtWidgets.QMessageBox.information(None, "invalid_ip_port()", invalid_ip_port(), QtWidgets.QMessageBox.Ok)
