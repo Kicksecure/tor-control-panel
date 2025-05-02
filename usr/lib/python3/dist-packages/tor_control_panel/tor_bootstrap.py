@@ -83,6 +83,7 @@ class TorBootstrap(QThread):
             ## suspend is really useful because we have to wait for our
             ## emitted signal really reach update_bootstrap()
             time.sleep(10)
+            return None
 
         '''Step 2: Controller Authentication
         In order to interact with Tor, we have to do the authentication.
