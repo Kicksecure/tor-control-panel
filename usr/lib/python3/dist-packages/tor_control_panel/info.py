@@ -133,3 +133,20 @@ def user_torrc_text():
 #\n\
 # Add user modifications below this line:\n\
 ############################################\n')
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+
+    show_help_censorship()
+    show_proxy_help()
+
+    print("custom_bridges_help():\n", custom_bridges_help())
+    print("tor_stopped():\n", tor_stopped())
+    print("cookie_error():\n", cookie_error())
+    print("no_controller():\n", no_controller())
+    print("invalid_ip_port():\n", invalid_ip_port())
+    print("newnym_text():\n", newnym_text())
+    print("onions_text():\n", onions_text())
+    print("torrc_text():\n", torrc_text())
+    print("user_torrc_text():\n", user_torrc_text())
