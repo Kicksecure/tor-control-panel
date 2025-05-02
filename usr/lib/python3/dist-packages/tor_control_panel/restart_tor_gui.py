@@ -66,9 +66,9 @@ class RestartTor(QWidget):
         elif bootstrap_phase == 'cookie_authentication_failed':
             self.text.setText(info.cookie_error())
 
-    def close(self):
+    def closeEvent(self, event):
         QtCore.QTimer.singleShot(2000, QApplication.instance().quit)
-        sys.exit()
+        event.accept()
 
     def restart_tor(self):
         '''
@@ -88,6 +88,7 @@ class RestartTor(QWidget):
             box.setWindowTitle("restart-tor - Error")
             text = (
                 "Command 'leaprun acw-tor-control-restart' failed.\n\n"
+                "stderr: " + std_err
             )
             print("ERROR: " + text)
             box.setText(text)
