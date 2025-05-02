@@ -53,18 +53,19 @@ class RestartTor(QWidget):
 
     def update_bootstrap(self, bootstrap_phase, bootstrap_percent):
         self.bootstrap_progress.show()
-        if bootstrap_percent == 100:
-            self.bootstrap_progress.setValue(100)
-            self.text.setText('<p><b>Tor bootstrapping done</b></p>Bootstrap phase: {0}'.format(bootstrap_phase))
-        else:
-            self.bootstrap_progress.setValue(bootstrap_percent)
-            self.text.setText('<p><b>Bootstrapping Tor...</b></p>Bootstrap phase: {0}'.format(bootstrap_phase))
 
         if bootstrap_phase == 'no_controller':
             self.text.setText(info.no_controller())
 
         elif bootstrap_phase == 'cookie_authentication_failed':
             self.text.setText(info.cookie_error())
+
+        if bootstrap_percent == 100:
+            self.bootstrap_progress.setValue(100)
+            self.text.setText('<p><b>Tor bootstrapping done</b></p>Bootstrap phase: {0}'.format(bootstrap_phase))
+        else:
+            self.bootstrap_progress.setValue(bootstrap_percent)
+            self.text.setText('<p><b>Bootstrapping Tor...</b></p>Bootstrap phase: {0}'.format(bootstrap_phase))
 
     def closeEvent(self, event):
         QtCore.QTimer.singleShot(2000, QApplication.instance().quit)
