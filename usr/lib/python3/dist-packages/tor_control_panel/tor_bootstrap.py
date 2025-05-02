@@ -127,6 +127,7 @@ class TorBootstrap(QThread):
             self.tor_controller.set_conf('DisableNetwork', '0')
             sys.stdout.write('Toggle DisableNetwork value to 0. Tor is now allowed to connect to the network.\n')
             sys.stdout.flush()
+            sys.exit(1)
 
         bootstrap_percent = 0
         while bootstrap_percent < 100:
@@ -160,4 +161,4 @@ def main():
     app = QApplication(sys.argv)
     thread = TorBootstrap()
     thread.start()
-    sys.exit(app.exec_())
+    app.exec_()
