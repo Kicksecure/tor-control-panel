@@ -77,11 +77,11 @@ class TorBootstrap(QThread):
             print('Construct Tor Controller Failed: unable to establish a connection')
             bootstrap_phase = 'no_controller'
             bootstrap_percent = 0
-            ## After emiting the `no_controller`,
+            ## After emitting the `no_controller`,
             ## update_bootstrap() will pop the messagebox and quit
             self.signal.emit(bootstrap_phase, bootstrap_percent)
             ## suspend is really useful because we have to wait for our
-            ## emited siganl really reach update_bootstrap()
+            ## emitted signal really reach update_bootstrap()
             time.sleep(10)
 
         '''Step 2: Controller Authentication
