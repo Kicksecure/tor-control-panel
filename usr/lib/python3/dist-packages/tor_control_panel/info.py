@@ -87,22 +87,22 @@ def tor_stopped():
     return(tor_message)
 
 def cookie_error():
-    return('Tor Controller Authentication Failed', 'Tor allows for authentication by reading a cookie file, but we cannot read that file (probably due to permissions)')
+    return('ERROR: Tor Controller Authentication Failed', 'Tor allows for authentication by reading a cookie file, but we cannot read that file (probably due to permissions)')
 
 def no_controller():
-    return('<b>Tor Controller Not Constructed</b><p>The Tor \
+    return('<b>ERROR: Tor Controller Not Constructed</b><p>The Tor \
         controller cannot be constructed. This is most likely because \
         you have a \"DisableNetwork 1\" line in a torrc file.\
         Please manually remove or comment out those lines, then run \
         anon-connection-wizard or restart Tor.')
 
 def cookie_error():
-    return('<b>Tor Controller Authentication Failed</b> \
+    return('<b>ERROR: Tor Controller Authentication Failed</b> \
             <p>Tor allows for authentication by reading a cookie file, \
             but we cannot read that file (probably due to permissions)</p>')
 
 def invalid_ip_port():
-    return('''<p><b>Please enter a valid address and port number.</b></p>
+    return('''<p><b>ERROR: Please enter a valid address and port number.</b></p>
                 <p>The address should look like: 127.0.0.1 or localhost</p>
                 <p>The port number should be an integer between 1 and 65535</p>''')
 
