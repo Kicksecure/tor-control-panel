@@ -429,6 +429,9 @@ class TorControlPanel(QDialog):
         call(command, shell=True)
 
     def update_bootstrap(self, bootstrap_phase, bootstrap_percent):
+        print(f"[DEBUG] bootstrap_phase = {bootstrap_phase}")
+        print(f"[DEBUG] bootstrap_percent = {bootstrap_percent}")
+
         self.bootstrap_progress.show()
         self.bootstrap_progress.setValue(bootstrap_percent)
         self.bootstrap_done = False
@@ -445,7 +448,8 @@ class TorControlPanel(QDialog):
             self.refresh_status()
 
         if bootstrap_phase == 'no_controller':
-            self.bootstrap_thread.terminate()
+            if hasattr(self, 'bootstrap_thread'):
+                self.bootstrap_thread.terminate()
             self.tor_status = 'no_controller'
             self.message = info.no_controller()
             self.bootstrap_progress.hide()
@@ -480,7 +484,6 @@ class TorControlPanel(QDialog):
         else:
             return()
         proxy = self.proxy_combo.currentText()
-        args.append(proxy)
         if not proxy == None:
             if self.check_proxy_ip(self.proxy_ip_edit.text()) and \
                 self.check_proxy_port(self.proxy_port_edit.text()):
@@ -625,6 +628,8 @@ class TorControlPanel(QDialog):
         self.proxy_pwd_edit.setEnabled(False)
 
     def refresh_status(self):
+        print(f"[DEBUG] tor_status = {self.tor_status}")
+        print(f"[DEBUG] message = {self.message}")
         self.tor_message_browser.setText(self.message)
         color = self.tor_status_color[self.tor_status_list.index(
             self.tor_status)]

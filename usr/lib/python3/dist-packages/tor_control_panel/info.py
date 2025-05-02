@@ -65,29 +65,34 @@ https://www.riseup.net, https://mail.google.com, or https://mail.yahoo.com</p>
 
 
 def tor_stopped():
-    text = '''
-<b>Tor is not running.</b> <p>
-If Tor was stopped intentionally, you can restart it using the
-[Restart Tor] button below.</p>
+    text = [
+        '''<b>Tor is running.</b>
+<p>Everything looks good.</p>''',
+
+        '''<b>Tor is not running.</b>
+<p>If Tor was stopped intentionally, you can restart it using the [Restart Tor] button below.</p>
 <p>Hints:<br>
-In the <b>Logs</b> tab, check the content of torrc and
-inspect the Tor log and systemd journal.<br><br>
+In the <b>Logs</b> tab, check the content of torrc and inspect the Tor log and systemd journal.</p>''',
 
-<b>The network is disabled.</b><br><br>
+        '''<b>The network is disabled.</b>
+<p>A line <i>DisableNetwork 1</i> exists in torrc.</p>
+<p>The network can be enabled by:</p>
+<p><b>Configure</b> -> <b>Bridges type</b> -> <b>Enable network</b> -> <b>Accept</b></p>''',
 
-A line <i>DisableNetwork 1</i> exists in torrc. <p>The network can be enabled by: <p><b>Configure</b> -->
-<b>Bridges type</b> --> <b>Enable network</b> -->
-<b>Accept</b>,
+        '''<b>Tor is running but the network is disabled.</b>
+<p>A line <i>DisableNetwork 1</i> exists in torrc.</p>
+<p>Therefore, you most likely cannot connect to the internet.</p>
+<p>The network can be enabled by:</p>
+<p><b>Configure</b> -> <b>Bridges type</b> -> <b>Enable network</b> -> <b>Accept</b></p>''',
 
-<b>Tor is running but the network is disabled.</b><p>
-A line <i>DisableNetwork 1</i> exists in torrc.
-<br>Therefore, you most likely cannot connect to the internet.</br>\
-<p>The network can be enabled by:</br><p><b>Configure</b> -->
-<b>Bridges type</b> --> <b>Enable network</b> -->
-<b>Accept</b>
-'''
-    return text.strip()
+        '''<b>Connecting...</b>
+<p>Tor is acquiring a connection to the network. Please wait.</p>''',
 
+        '''<b>Tor Controller Not Constructed</b>
+<p>This is very likely because you have a <i>DisableNetwork 1</i> line in torrc.</p>
+<p>Remove or comment it out and restart Tor.</p>'''
+    ]
+    return text
 
 def cookie_error():
     text = '''
