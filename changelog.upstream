@@ -1,3 +1,165 @@
+commit 7f37780a292987adeae277e5b4623ffa16662845
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri May 2 05:41:11 2025 -0400
+
+    shebang
+
+commit 86e947077d9252f07d5364eded86f23df75bde5d
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri May 2 05:18:58 2025 -0400
+
+    notify if Tor control socket file permission issues
+
+commit cb5438cc4c10ac98feb1402caa59223d4702c638
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri May 2 05:02:47 2025 -0400
+
+    fix
+
+commit f767fcf3a6589e1302350593644b7e49ff37f38b
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri May 2 04:44:44 2025 -0400
+
+    output
+
+commit 15eb784eb2a639218845968a967173e4df02269c
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri May 2 04:42:25 2025 -0400
+
+    refactoring
+
+commit 3988ff5f165e5e877a5b9dcca4cc34738ce79977
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri May 2 04:34:14 2025 -0400
+
+    refactoring
+
+commit a50d79c1067064497154e703365a33f5bb5e23b0
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri May 2 04:25:39 2025 -0400
+
+    fix
+
+commit ca2da1ba71894160ee57d39920d000a24406b66f
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri May 2 04:23:59 2025 -0400
+
+    comments
+
+commit 461ca07de1753ed91e8aa98b9881947bd84cc5a4
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri May 2 04:22:03 2025 -0400
+
+    output
+
+commit 8d78dd6da39f142605b84b06ef4ec2ee2e53efc4
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri May 2 04:19:18 2025 -0400
+
+    fix
+
+commit 902cb759953ece255a0349093c12df639d4c3023
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri May 2 04:07:25 2025 -0400
+
+    test
+
+commit 70128e7452099af39fd200c7b878ebe67e4f113a
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri May 2 04:02:27 2025 -0400
+
+    test
+
+commit 68bef967aca73e52f95f5ec9c208985bb57afcaf
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri May 2 03:58:10 2025 -0400
+
+    output
+
+commit 809b8e7c5aedb9efbc7cdadec1ef66a5e8c3ef8b
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri May 2 03:52:42 2025 -0400
+
+    output
+
+commit 6ebe0bcd2e9cc7bdb4f379cfca4f11ceff120b10
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri May 2 03:36:21 2025 -0400
+
+    fix
+
+commit 7e443bf7f953aaa5159688d5590bb9570c1d1ed8
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri May 2 03:35:08 2025 -0400
+
+    fix
+
+commit ef620430fb401a6d7aab3064871c26a014130757
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri May 2 03:34:25 2025 -0400
+
+    fix
+
+commit 2b6ab35ae2845485b08207772f9ac66ad479ca31
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri May 2 03:30:03 2025 -0400
+
+    fix
+
+commit 97d42b3c80e58496e0a771a365923bf441fb0720
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri May 2 03:17:27 2025 -0400
+
+    cleanup
+
+commit 5d9eadda52e090b4d845b07b56d84943d83ce57d
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Thu May 1 03:51:03 2025 -0400
+
+    improve error handling
+
+commit 84ebdc39d8d2d60c300c01df37041fe404496db6
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Thu May 1 03:48:12 2025 -0400
+
+    fix
+
+commit 3fe108d239d10fc8ad9cc23ae9eaa7a260a44577
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Thu May 1 03:38:34 2025 -0400
+
+    restart-tor: add sigterm signal support
+
+commit 1e2367635970f6b19922ffbe80781b5d6bd07651
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Thu May 1 03:34:58 2025 -0400
+
+    fix
+
+commit 967a1c6f3512eff698dd8bd0a896e679bd48ce70
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Thu May 1 03:23:36 2025 -0400
+
+    minor
+
+commit e9adc39dbe46ee149bbafa43405be8818e1426f1
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Thu May 1 03:20:46 2025 -0400
+
+    fix
+
+commit 59cc71251a9ccc073a3bb47cd4c428a0576dff4f
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Thu May 1 03:09:13 2025 -0400
+
+    output
+
+commit 10089ed0ce78930da25121eb5340c4cc25cd183f
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Thu Feb 6 20:38:50 2025 +0000
+
+    bumped changelog version
+
 commit 472143154d3ad0ae1feb9543688b2c10aa3c2202
 Author: Patrick Schleizer <adrelanos@whonix.org>
 Date:   Thu Feb 6 15:07:52 2025 -0500
