@@ -1,4 +1,4 @@
-#!/usr/bin/python3 -u
+#!/usr/bin/python3 -su
 # -*- coding: utf-8 -*-
 
 ## Copyright (C) 2018 - 2025 ENCRYPTED SUPPORT LLC <adrelanos@whonix.org>
