@@ -58,10 +58,13 @@ def user_path():
     return(torrc_user_file_path)
 
 def gen_torrc(args):
-    bridge_type = str(args[0])
-    custom_bridges = str(args[1])
-    proxy_type = str(args[2])
-    if not proxy_type == 'None':
+    bridge_type = str(args[0]) if len(args) > 0 else 'None'
+    custom_bridges = str(args[1]) if len(args) > 1 else 'error-unknown-bridge-type'
+    proxy_type = str(args[2]) if len(args) > 2 else 'None'
+
+    proxy_ip = proxy_port = proxy_username = proxy_password = ''
+
+    if proxy_type != 'None' and len(args) >= 7:
         proxy_ip = str(args[3])
         proxy_port = str(args[4])
         proxy_username = str(args[5])
@@ -69,25 +72,28 @@ def gen_torrc(args):
 
     torrc_content = []
 
-    print("bridge_type: ", bridge_type)
+    print(f"gen_torrc: bridge_type: '{bridge_type}'")
 
     torrc_content.append('%s# %s\n' % (info.torrc_text(), torrc_user_file_path))
     torrc_content.append('DisableNetwork 0\n')
 
     if bridge_type in bridges_type:
+        print(f"gen_torrc: (if 1) valid bridge type")
         torrc_content.append(command_useBridges)
         torrc_content.append(bridges_command[bridges_type.index(bridge_type)])
         bridges = json.loads(open(bridges_default_path).read())
         for bridge in bridges['bridges'][bridge_type]:
-            torrc_content.append('{0}\n'.format(bridge))
+            if bridge.strip():
+                torrc_content.append('{0}\n'.format(bridge))
 
     elif bridge_type == 'Custom bridges':
+        print(f"gen_torrc: bridge_type is 'Custom bridges'")
         bridge = str(custom_bridges.split()[0]).lower()
-        if bridge in bridges_type:
-            torrc_content.append(command_useBridges)
-            torrc_content.append(bridges_command[bridges_type.index(bridge)])
-            bridge_custom_list = custom_bridges.split('\n')
-            for bridge in bridge_custom_list:
+        torrc_content.append(command_useBridges)
+        torrc_content.append(bridges_command[bridges_type.index(bridge)])
+        bridge_custom_list = custom_bridges.split('\n')
+        for bridge in bridge_custom_list:
+            if bridge.strip():
                 torrc_content.append('Bridge {0}\n'.format(bridge))
 
     if bridge_type.startswith('meek-azure'):
@@ -97,7 +103,7 @@ def gen_torrc(args):
     if bridge_type.startswith('snowflake'):
         edit_etc_resolv_conf_add()
 
-    if proxy_type in proxies:
+    if proxy_type in proxies and proxy_ip and proxy_port:
         torrc_content.append('{0} {1}:{2}\n'.format(proxy_torrc[proxies.index(proxy_type)],
                                                     proxy_ip, proxy_port))
         if not proxy_username == '':
@@ -139,7 +145,7 @@ def parse_torrc():
                 bridge_type = bridges_display[bridges_type.index(bridge_type)]
         else:
             bridge_type = 'None'
-        print("parse_torrc: bridge_type: " + bridge_type)
+        print(f"parse_torrc: bridge_type: '{bridge_type}'")
 
         if use_proxy:
             auth_check = False
