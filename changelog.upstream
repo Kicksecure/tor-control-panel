@@ -1,3 +1,21 @@
+commit 31d0f92e81e3284df47f1bd7f07cf40cf04bedc7
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri May 16 13:14:13 2025 -0400
+
+    improve robustness of proxy configuration code
+
+commit 1c59ba4a88375174d93dfeeca217f5eac00ea1e9
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Fri May 16 12:55:02 2025 -0400
+
+    fix adding custom bridges
+
+commit d2354417465c8241d1cd23cbcc66fb1ae52a2223
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Wed May 7 06:43:30 2025 +0000
+
+    bumped changelog version
+
 commit 5025151cfbfb69ae1ab20f00766cbaec75bf694f
 Author: Patrick Schleizer <adrelanos@whonix.org>
 Date:   Wed May 7 02:37:30 2025 -0400
