@@ -106,13 +106,14 @@ def gen_torrc(args):
     if proxy_type in proxies and proxy_ip and proxy_port:
         torrc_content.append('{0} {1}:{2}\n'.format(proxy_torrc[proxies.index(proxy_type)],
                                                     proxy_ip, proxy_port))
-        if not proxy_username == '':
+        if proxy_username:
             if proxy_type == proxies[0]:
                 torrc_content.append('{0} {1}:{2}\n'.format(proxy_auth[0], proxy_username,
                                                            proxy_password))
             if proxy_type == proxies[2]:
                 torrc_content.append('{0} {1}\n'.format(proxy_auth[1], proxy_username))
-                torrc_content.append('{0} {1}\n'.format(proxy_auth[2], proxy_password))
+                if proxy_password:
+                    torrc_content.append('{0} {1}\n'.format(proxy_auth[2], proxy_password))
 
     # Convert the list of strings to a single string
     final_torrc_content = ''.join(torrc_content)
@@ -149,34 +150,45 @@ def parse_torrc():
 
         if use_proxy:
             auth_check = False
+            proxy_type = proxy_ip = proxy_port = proxy_username = proxy_password = ''
             with open(torrc_file_path, 'r') as f:
                 for line in f:
-                    if line == "":
+                    line = line.strip()
+                    if not line:
                         continue
-                    if line == "\n":
+
+                    parts = line.split()
+                    if len(parts) < 2:
                         continue
-                    proxy = line.split()[0] in proxy_torrc
-                    auth_http = line.startswith(proxy_auth[0])
-                    socks5_user = line.startswith(proxy_auth[1])
-                    socks5_pwd = line.startswith(proxy_auth[2])
-                    if proxy:
-                        proxy_type = proxies[proxy_torrc.index(line.split()[0])]
-                        proxy_ip = line.split()[1].split(':')[0]
-                        proxy_port = line.split()[1].split(':')[1].split('\n')[0]
-                        proxy = False
-                    if auth_http:
+
+                    key, value = parts[0], parts[1]
+
+                    if key in proxy_torrc:
+                        proxy_type = proxies[proxy_torrc.index(key)]
+                        if ':' in value:
+                            ip_port = value.split(':', 1)
+                            proxy_ip = ip_port[0]
+                            proxy_port = ip_port[1] if len(ip_port) > 1 else ''
+                        continue
+
+                    if key == proxy_auth[0]:  # HTTPSProxyAuthenticator
                         auth_check = True
-                        proxy_username = line.split()[1].split(':')[0]
-                        proxy_password = line.split()[1].split(':')[1]
-                        auth_http = False
-                    if socks5_user:
+                        if ':' in value:
+                            user_pass = value.split(':', 1)
+                            proxy_username = user_pass[0]
+                            proxy_password = user_pass[1] if len(user_pass) > 1 else ''
+                        continue
+
+                    if key == proxy_auth[1]:  # Socks5ProxyUsername
                         auth_check = True
-                        proxy_username = line.split()[1]
-                        socks5_user = False
-                    if socks5_pwd:
+                        proxy_username = value
+                        continue
+
+                    if key == proxy_auth[2]:  # Socks5ProxyPassword
                         auth_check = True
-                        proxy_password = line.split()[1]
-                        socks5_pwd = False
+                        proxy_password = value
+                        continue
+
             if not auth_check:
                 proxy_username = ''
                 proxy_password = ''
@@ -187,5 +199,4 @@ def parse_torrc():
             proxy_username = ''
             proxy_password = ''
 
-        return(bridge_type, proxy_type, proxy_ip, proxy_port,
-               proxy_username, proxy_password)
+        return (bridge_type, proxy_type, proxy_ip, proxy_port, proxy_username, proxy_password)
