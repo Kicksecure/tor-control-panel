@@ -18,7 +18,7 @@ Architecture: all
 Depends: anon-connection-wizard,
          helper-scripts,
          pkexec,
-         policykit-1-gnome | polkit-1-auth-agent,
+         mate-polkit,
          python3,
          python3-ipy,
          python3-pyqt5,
