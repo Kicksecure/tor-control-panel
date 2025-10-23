@@ -57,8 +57,8 @@ class TorControlPanel(QDialog):
 
         self.button_name = ['systemd &journal', 'Tor &log', '&torrc']
 
-        self.journal_command = ['journalctl', '-n', '200', '-u',
-                                'tor@default.service']
+        self.journal_command = ['leaprun',
+                                'tor-control-panel-read-tor-default-log']
 
         self.bridges = ['None',
                         'obfs4',
