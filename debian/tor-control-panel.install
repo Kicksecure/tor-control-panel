@@ -3,4 +3,5 @@
 
 ## This file was generated using 'genmkfile debinstfile'.
 
+etc/*
 usr/*
