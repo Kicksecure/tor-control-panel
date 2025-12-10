@@ -32,12 +32,12 @@ bridges_command = [ 'ClientTransportPlugin obfs4 exec /usr/bin/obfs4proxy\n',
                     'ClientTransportPlugin scramblesuit exec /usr/bin/obfs4proxy\n',
                     'ClientTransportPlugin fte exec /usr/bin/fteproxy --managed\n']
 
-bridges_type = ['obfs4', 'snowflake', 'meek-azure', 'scramblesuit', 'fte', 'plain']
+bridges_type = ['obfs4', 'snowflake', 'meek', 'scramblesuit', 'fte', 'plain']
 
 bridges_display = ['obfs4', 'snowflake',
-                   'meek-azure', 'plain']
+                   'meek', 'plain']
 
-meek_azure_address = 'ajax.aspnetcdn.com\n'
+meek_address = 'www.phpmyadmin.net'
 
 proxy_torrc =   ['HTTPSProxy',
                 'Socks4Proxy',
@@ -96,7 +96,7 @@ def gen_torrc(args):
             if bridge.strip():
                 torrc_content.append('Bridge {0}\n'.format(bridge))
 
-    if bridge_type.startswith('meek-azure'):
+    if bridge_type.startswith('meek'):
         # Required for meek and snowflake only.
         # https://forums.whonix.org/t/censorship-circumvention-tor-pluggable-transports/2601/9
         edit_etc_resolv_conf_add()
@@ -139,8 +139,8 @@ def parse_torrc():
                         continue
                     if line.startswith('ClientTransportPlugin'):
                         bridge_type = bridges_type[bridges_command.index(line)]
-                    if line.endswith(meek_azure_address):
-                        bridge_type = 'meek-azure'
+                    if meek_address in line:
+                        bridge_type = 'meek'
                 if bridge_type == '':
                         bridge_type = 'plain'
                 bridge_type = bridges_display[bridges_type.index(bridge_type)]

@@ -63,7 +63,7 @@ class TorControlPanel(QDialog):
         self.bridges = ['None',
                         'obfs4',
                         'snowflake',
-                        'meek-azure',
+                        'meek',
                         'Custom bridges']
 
         self.proxies = ['None',
