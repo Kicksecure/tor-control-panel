@@ -18,6 +18,7 @@ Architecture: all
 Depends: anon-connection-wizard,
          helper-scripts,
          pkexec,
+         sudo,
          mate-polkit,
          python3,
          python3-ipy,

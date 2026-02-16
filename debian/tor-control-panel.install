@@ -2,6 +2,13 @@
 ## See the file COPYING for copying conditions.
 
 ## This file was generated using 'genmkfile debinstfile'.
+## NOTE: do not use 'usr/*' — it would ship the anon_connection_wizard
+## stubs which are only for standalone testing outside Whonix and would
+## conflict with the real anon-connection-wizard package.
 
 etc/*
-usr/*
+usr/bin/*
+usr/lib/python3/dist-packages/tor_control_panel/*
+usr/libexec/*
+usr/share/*
+debian/sudoers_files/tor-control-panel etc/sudoers.d/

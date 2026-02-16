@@ -1,6 +1,6 @@
 #!/usr/bin/python3 -su
 
-## Copyright (C) 2018 - 2025 ENCRYPTED SUPPORT LLC <adrelanos@whonix.org>
+## Copyright (C) 2018 - 2026 ENCRYPTED SUPPORT LLC <adrelanos@whonix.org>
 ## See the file COPYING for copying conditions.
 
 import sys
@@ -16,8 +16,39 @@ from anon_connection_wizard.tor_status import write_to_temp_then_move
 
 whonix = os.path.exists('/usr/share/anon-gw-base-files/gateway')
 
-torrc_file_path = '/usr/local/etc/torrc.d/40_tor_control_panel.conf'
-torrc_user_file_path = '/usr/local/etc/torrc.d/50_user.conf'
+## Platform-aware torrc paths
+##
+## torrc_file_path — the SYSTEM torrc (read-only for parsing existing config)
+## torrc_user_file_path — where we WRITE our config (circuit settings, etc.)
+##
+## On all platforms we ALWAYS apply config via set_conf (immediate).
+## The torrc write is for persistence only (survives Tor restart).
+## If the user_path is outside Tor's include path, config still works
+## via set_conf — it just won't persist across Tor restarts.
+
+_user_config_dir = os.path.join(
+    os.path.expanduser('~'), '.config', 'tor-control-panel')
+
+if os.path.isdir('/usr/local/etc/torrc.d'):
+    ## Whonix / Kicksecure
+    torrc_file_path = '/usr/local/etc/torrc.d/40_tor_control_panel.conf'
+    torrc_user_file_path = '/usr/local/etc/torrc.d/50_user.conf'
+elif os.path.isdir('/etc/tor/torrc.d'):
+    ## Distros with torrc.d drop-in directory (Debian, etc.)
+    torrc_file_path = '/etc/tor/torrc.d/40_tor_control_panel.conf'
+    torrc_user_file_path = '/etc/tor/torrc.d/50_user.conf'
+elif os.path.isfile('/etc/tor/torrc'):
+    ## Generic Linux (Fedora, Arch, etc.) — system torrc exists
+    ## but no drop-in dir.  Read from system torrc, write to
+    ## user-local config (never overwrite /etc/tor/torrc).
+    torrc_file_path = '/etc/tor/torrc'
+    torrc_user_file_path = os.path.join(
+        _user_config_dir, 'user_torrc.conf')
+else:
+    ## Fallback: user-local config
+    torrc_file_path = os.path.join(_user_config_dir, 'torrc.conf')
+    torrc_user_file_path = os.path.join(
+        _user_config_dir, 'user_torrc.conf')
 
 bridges_default_path = '/usr/share/anon-connection-wizard/bridges_default'
 
@@ -57,6 +88,70 @@ def torrc_path():
 def user_path():
     return(torrc_user_file_path)
 
+
+def detect_torrc_write_path(controller):
+    """Detect the correct torrc write path from a running Tor instance.
+
+    Queries GETINFO config-file to find the REAL torrc, then determines
+    the best writable path for our circuit config:
+      1. If the torrc has a %include pointing to a writable dir → use that
+      2. If the torrc dir itself has a writable torrc.d/ → use that
+      3. If the torrc itself is writable → append-safe path alongside it
+      4. Fallback → user-local config dir (set_conf still works)
+
+    Returns (torrc_read_path, torrc_write_path) tuple.
+    """
+    ## Step 1: Ask the running Tor for its config file
+    try:
+        real_torrc = controller.get_info('config-file')
+    except Exception:
+        return torrc_file_path, torrc_user_file_path
+
+    if not real_torrc or not os.path.isfile(real_torrc):
+        return torrc_file_path, torrc_user_file_path
+
+    torrc_dir = os.path.dirname(real_torrc)
+
+    ## Step 2: Parse %include directives from the torrc
+    include_dirs = []
+    try:
+        with open(real_torrc, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line.lower().startswith('%include'):
+                    inc_path = line.split(None, 1)[1].strip()
+                    ## Resolve relative paths
+                    if not os.path.isabs(inc_path):
+                        inc_path = os.path.join(torrc_dir, inc_path)
+                    ## Handle glob patterns (e.g. %include /etc/tor/torrc.d/*.conf)
+                    inc_dir = os.path.dirname(inc_path) if '*' in inc_path \
+                        else inc_path
+                    if os.path.isdir(inc_dir):
+                        include_dirs.append(inc_dir)
+    except Exception:
+        pass
+
+    ## Step 3: Find best writable path
+    ## 3a: Check %include directories
+    for inc_dir in include_dirs:
+        candidate = os.path.join(inc_dir, '50_user.conf')
+        if os.access(inc_dir, os.W_OK):
+            return real_torrc, candidate
+
+    ## 3b: Check for torrc.d/ alongside the torrc
+    torrc_d = os.path.join(torrc_dir, 'torrc.d')
+    if os.path.isdir(torrc_d) and os.access(torrc_d, os.W_OK):
+        return real_torrc, os.path.join(torrc_d, '50_user.conf')
+
+    ## 3c: If torrc dir is writable, create a sibling file
+    if os.access(torrc_dir, os.W_OK):
+        return real_torrc, os.path.join(
+            torrc_dir, '50_tor_control_panel_user.conf')
+
+    ## 3d: Fallback to user-local config dir
+    return real_torrc, os.path.join(
+        _user_config_dir, 'user_torrc.conf')
+
 def gen_torrc(args):
     bridge_type = str(args[0]) if len(args) > 0 else 'None'
     custom_bridges = str(args[1]) if len(args) > 1 else 'error-unknown-bridge-type'
@@ -81,7 +176,8 @@ def gen_torrc(args):
         print(f"gen_torrc: (if 1) valid bridge type")
         torrc_content.append(command_useBridges)
         torrc_content.append(bridges_command[bridges_type.index(bridge_type)])
-        bridges = json.loads(open(bridges_default_path).read())
+        with open(bridges_default_path) as _bf:
+            bridges = json.loads(_bf.read())
         for bridge in bridges['bridges'][bridge_type]:
             if bridge.strip():
                 torrc_content.append('{0}\n'.format(bridge))
@@ -123,12 +219,16 @@ def gen_torrc(args):
 
 def parse_torrc():
     ## Make sure Torrc exists.
-    command = 'leaprun tor-config-sane'
-    call(command, shell=True)
+    try:
+        call(['leaprun', 'tor-config-sane'])
+    except FileNotFoundError:
+        pass
 
     if os.path.exists(torrc_file_path):
-        use_bridge = 'UseBridges' in open(torrc_file_path).read()
-        use_proxy = 'Proxy' in open(torrc_file_path).read()
+        with open(torrc_file_path) as _tf:
+            _content = _tf.read()
+        use_bridge = 'UseBridges' in _content
+        use_proxy = 'Proxy' in _content
 
         bridge_type = ''
         if use_bridge:

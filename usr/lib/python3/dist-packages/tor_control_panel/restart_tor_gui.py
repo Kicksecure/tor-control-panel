@@ -1,6 +1,6 @@
 #!/usr/bin/python3 -su
 
-## Copyright (C) 2018 - 2025 ENCRYPTED SUPPORT LLC <adrelanos@whonix.org>
+## Copyright (C) 2018 - 2026 ENCRYPTED SUPPORT LLC <adrelanos@whonix.org>
 ## See the file COPYING for copying conditions.
 
 import sys
@@ -78,7 +78,20 @@ class RestartTor(QWidget):
         Use subprocess.Popen instead of subprocess.call in order to catch
         possible errors from "restart tor" command.
         '''
-        command = Popen(['leaprun', 'acw-tor-control-restart'], stdout=PIPE, stderr=PIPE)
+        try:
+            command = Popen(['leaprun', 'acw-tor-control-restart'],
+                            stdout=PIPE, stderr=PIPE)
+        except FileNotFoundError:
+            try:
+                command = Popen(['sudo', '-n', 'systemctl', 'restart',
+                                 'tor@default'], stdout=PIPE, stderr=PIPE)
+            except Exception as e:
+                box = QMessageBox()
+                box.setIcon(QMessageBox.Critical)
+                box.setWindowTitle("restart-tor - Error")
+                box.setText("Cannot restart Tor: %s" % e)
+                box.exec_()
+                sys.exit(1)
         stdout, stderr = command.communicate()
 
         std_err = stderr.decode()
@@ -89,7 +102,7 @@ class RestartTor(QWidget):
             box.setIcon(QMessageBox.Critical)
             box.setWindowTitle("restart-tor - Error")
             text = (
-                "Command 'leaprun acw-tor-control-restart' failed.\n\n"
+                "Restart command failed.\n\n"
                 "stderr: " + std_err
             )
             print("ERROR: " + text)

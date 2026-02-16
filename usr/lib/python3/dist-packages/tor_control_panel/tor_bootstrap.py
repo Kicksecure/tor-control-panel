@@ -1,7 +1,7 @@
 #!/usr/bin/python3 -su
 # -*- coding: utf-8 -*-
 
-## Copyright (C) 2018 - 2025 ENCRYPTED SUPPORT LLC <adrelanos@whonix.org>
+## Copyright (C) 2018 - 2026 ENCRYPTED SUPPORT LLC <adrelanos@whonix.org>
 ## See the file COPYING for copying conditions.
 
 import sys
@@ -22,6 +22,22 @@ class TorBootstrap(QThread):
 
         self.control_cookie_path = '/run/tor/control.authcookie'
         self.control_socket_path = '/run/tor/control'
+        self.control_method = 'socket'
+        self.control_address = '127.0.0.1'
+        self.control_port = 9051
+        self.control_password = ''
+
+        if hasattr(main, 'control_method'):
+            self.control_method = main.control_method
+        if hasattr(main, 'control_socket_path_setting'):
+            self.control_socket_path = main.control_socket_path_setting
+        if hasattr(main, 'control_address_setting'):
+            self.control_address = main.control_address_setting
+        if hasattr(main, 'control_port_setting'):
+            self.control_port = main.control_port_setting
+        if hasattr(main, 'control_password'):
+            self.control_password = main.control_password
+
         self.previous_status = ''
         #self.is_running = False
         '''The TAG to phase mapping is mainly according to:
@@ -71,16 +87,21 @@ class TorBootstrap(QThread):
             count += 0.2
             time.sleep(0.2)
 
-        if not os.access(self.control_socket_path, os.R_OK):
-            print(f"[ERROR] Cannot read control socket at {self.control_socket_path} - permission denied.")
-            bootstrap_phase = 'socket_error'
-            bootstrap_percent = 0
-            self.signal.emit(bootstrap_phase, bootstrap_percent)
-            time.sleep(10)
-            return None
+        if self.control_method == 'socket':
+            if not os.access(self.control_socket_path, os.R_OK):
+                print(f"[ERROR] Cannot read control socket at {self.control_socket_path} - permission denied.")
+                bootstrap_phase = 'socket_error'
+                bootstrap_percent = 0
+                self.signal.emit(bootstrap_phase, bootstrap_percent)
+                time.sleep(10)
+                return None
 
         try:
-            tor_controller = stem.control.Controller.from_socket_file(self.control_socket_path)
+            if self.control_method == 'socket':
+                tor_controller = stem.control.Controller.from_socket_file(self.control_socket_path)
+            else:
+                tor_controller = stem.control.Controller.from_port(
+                    self.control_address, int(self.control_port))
         except stem.SocketError:
             print('Construct Tor Controller Failed: unable to establish a connection')
             bootstrap_phase = 'no_controller'
@@ -101,7 +122,12 @@ class TorBootstrap(QThread):
         self.signal.emit(bootstrap_phase, bootstrap_percent)
 
         try:
-            tor_controller.authenticate(self.control_cookie_path)
+            if self.control_method == 'socket':
+                tor_controller.authenticate(self.control_cookie_path)
+            elif self.control_password:
+                tor_controller.authenticate(password=self.control_password)
+            else:
+                tor_controller.authenticate()
         except stem.connection.IncorrectCookieSize:
             return None  #if # TODO: the cookie file's size is wrong
         except stem.connection.UnreadableCookieFile:
@@ -117,7 +143,7 @@ class TorBootstrap(QThread):
             return None  #if cookie authentication is attempted but the socket doesn't accept it
         except stem.connection.IncorrectCookieValue:
             return None  #if the cookie file's value is rejected
-        except:
+        except Exception:
             return None
 
         return tor_controller
@@ -133,7 +159,15 @@ class TorBootstrap(QThread):
             sys.exit(1)
 
         if self.tor_controller.get_conf('DisableNetwork') == '1':
-            self.tor_controller.set_conf('DisableNetwork', '0')
+            try:
+                self.tor_controller.set_conf('DisableNetwork', '0')
+            except Exception as e:
+                sys.stdout.write(
+                    'Failed to enable Tor network: %s\n'
+                    'This may happen if Tor cannot bind its listener '
+                    'ports (e.g. port conflict).\n' % e)
+                sys.stdout.flush()
+                sys.exit(1)
             sys.stdout.write('Toggle DisableNetwork value to 0. Tor is now allowed to connect to the network.\n')
             sys.stdout.flush()
             sys.exit(1)

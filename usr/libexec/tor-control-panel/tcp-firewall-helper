@@ -1,0 +1,213 @@
+#!/usr/bin/python3
+
+## Copyright (C) 2026 ENCRYPTED SUPPORT LLC <adrelanos@whonix.org>
+## See the file COPYING for copying conditions.
+
+"""
+Privileged helper script for Tor Control Panel firewall operations.
+Allows the unprivileged user to modify specific nftables rules for
+Exit Proxy functionality without granting full root access.
+"""
+
+import sys
+import argparse
+import subprocess
+import re
+import os
+
+# Only allow operations on these specific tables/chains
+ALLOWED_FAMILIES = {'inet'}
+ALLOWED_TABLES = {'filter', 'nat', 'tor_control_panel'}
+ALLOWED_CHAINS = {'input', 'prerouting', 'output'}
+
+def run_nft(args, capture=True):
+    cmd = ['nft'] + args
+    try:
+        # We assume this script is running as root (via sudoers)
+        res = subprocess.run(
+            cmd,
+            stdout=subprocess.PIPE if capture else subprocess.DEVNULL,
+            stderr=subprocess.STDOUT,
+            text=True,
+            check=True
+        )
+        return res.stdout
+    except subprocess.CalledProcessError as e:
+        print(f"Error running nft: {e.output}", file=sys.stderr)
+        sys.exit(e.returncode)
+    except FileNotFoundError:
+        print("Error: nft command not found", file=sys.stderr)
+        sys.exit(1)
+
+def validate_port(port):
+    """Validate port is in valid TCP range."""
+    port = int(port)
+    if port < 1 or port > 65535:
+        print(f"Invalid port number: {port}", file=sys.stderr)
+        sys.exit(1)
+    return port
+
+def validate_iface(iface):
+    # Allow alphanumeric, dashes, and wildcards (e.g. vif*)
+    if len(iface) > 32:
+        print(f"Interface name too long: {iface}", file=sys.stderr)
+        sys.exit(1)
+    if not re.match(r'^[a-zA-Z0-9\-\.\*]+$', iface):
+        print(f"Invalid interface name: {iface}", file=sys.stderr)
+        sys.exit(1)
+    return f'"{iface}"' if '*' in iface or '.' in iface else iface
+
+def validate_addr(addr):
+    # Allow IPv4, IPv6, hostnames (alphanumeric, dot, dash, colon)
+    if len(addr) > 128:
+        print(f"Address too long: {addr}", file=sys.stderr)
+        sys.exit(1)
+    if not re.match(r'^[a-zA-Z0-9\-\.\:]+$', addr):
+        print(f"Invalid address: {addr}", file=sys.stderr)
+        sys.exit(1)
+    return addr
+
+def cmd_detect_if():
+    # Helper to detect interface (though typically done by caller, 
+    # we can provide a privileged check if needed, but not strictly required)
+    pass
+
+def cmd_add_gw_input(args):
+    # nft add rule inet filter input iifname "eth1" tcp dport 9050 counter accept
+    iface = validate_iface(args.interface)
+    port = validate_port(args.port)
+    
+    # -e -a to get handle
+    nft_args = [
+        '-e', '-a', 'insert', 'rule',
+        'inet', 'filter', 'input',
+        'iifname', iface,
+        'tcp', 'dport', str(port),
+        'counter', 'accept'
+    ]
+    out = run_nft(nft_args)
+    print(out.strip())
+
+def cmd_add_gw_redirect(args):
+    # nft add rule inet nat prerouting iifname "eth1" tcp dport 9050 counter redirect to :9060
+    iface = validate_iface(args.interface)
+    src_port = validate_port(args.src_port)
+    dst_port = validate_port(args.dst_port)
+    
+    nft_args = [
+        '-e', '-a', 'insert', 'rule',
+        'inet', 'nat', 'prerouting',
+        'iifname', iface,
+        'tcp', 'dport', str(src_port),
+        'counter', 'redirect', 'to', f":{dst_port}"
+    ]
+    out = run_nft(nft_args)
+    print(out.strip())
+
+def cmd_ws_init_table(args):
+    # Create dedicated table and chain for WS
+    run_nft(['add', 'table', 'inet', 'tor_control_panel'], capture=False)
+    run_nft(['add', 'chain', 'inet', 'tor_control_panel', 'output', 
+             '{ type nat hook output priority -100; }'], capture=False)
+    run_nft(['flush', 'chain', 'inet', 'tor_control_panel', 'output'], capture=False)
+
+def cmd_ws_add_redirect(args):
+    # nft add rule inet tor_control_panel output ip daddr 1.2.3.4 tcp dport 9050 counter redirect to :9060
+    # or ip6 daddr ...
+    dst_addr = validate_addr(args.dst_addr)
+    dst_port = validate_port(args.dst_port)
+    proxy_port = validate_port(args.proxy_port)
+    
+    # Basic address validation
+    is_ipv6 = ':' in dst_addr
+    addr_family = 'ip6' if is_ipv6 else 'ip'
+    
+    nft_args = [
+        'add', 'rule', 'inet', 'tor_control_panel', 'output',
+        addr_family, 'daddr', dst_addr,
+        'tcp', 'dport', str(dst_port),
+        'counter', 'redirect', 'to', f":{proxy_port}"
+    ]
+    run_nft(nft_args, capture=False)
+
+def cmd_ws_clear(args):
+    run_nft(['delete', 'table', 'inet', 'tor_control_panel'], capture=False)
+
+def cmd_delete_rule(args):
+    family = args.family
+    table = args.table
+    chain = args.chain
+    handle = int(args.handle)
+    
+    if family not in ALLOWED_FAMILIES:
+        print(f"Invalid family: {family}", file=sys.stderr)
+        sys.exit(1)
+    if table not in ALLOWED_TABLES:
+        print(f"Invalid table: {table}", file=sys.stderr)
+        sys.exit(1)
+    if chain not in ALLOWED_CHAINS:
+        print(f"Invalid chain: {chain}", file=sys.stderr)
+        sys.exit(1)
+    if handle < 0:
+        print(f"Invalid handle: {handle}", file=sys.stderr)
+        sys.exit(1)
+
+    run_nft(['delete', 'rule', family, table, chain, 'handle', str(handle)], capture=False)
+
+def main():
+    if os.geteuid() != 0:
+        print("This script must be run as root", file=sys.stderr)
+        sys.exit(1)
+
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='command', required=True)
+
+    # GW Input Rule
+    p_gw_input = subparsers.add_parser('gw-input')
+    p_gw_input.add_argument('--interface', required=True)
+    p_gw_input.add_argument('--port', required=True, type=int)
+
+    # GW Redirect Rule
+    p_gw_redir = subparsers.add_parser('gw-redirect')
+    p_gw_redir.add_argument('--interface', required=True)
+    p_gw_redir.add_argument('--src-port', required=True, type=int)
+    p_gw_redir.add_argument('--dst-port', required=True, type=int)
+
+    # WS Init
+    subparsers.add_parser('ws-init')
+
+    # WS Redirect Rule
+    p_ws_redir = subparsers.add_parser('ws-redirect')
+    p_ws_redir.add_argument('--dst-addr', required=True)
+    p_ws_redir.add_argument('--dst-port', required=True, type=int)
+    p_ws_redir.add_argument('--proxy-port', required=True, type=int)
+
+    # WS Clear
+    subparsers.add_parser('ws-clear')
+
+    # Delete Rule (Generic)
+    p_del = subparsers.add_parser('delete-rule')
+    p_del.add_argument('--family', required=True)
+    p_del.add_argument('--table', required=True)
+    p_del.add_argument('--chain', required=True)
+    p_del.add_argument('--handle', required=True, type=int)
+
+    args = parser.parse_args()
+
+    funcs = {
+        'gw-input': cmd_add_gw_input,
+        'gw-redirect': cmd_add_gw_redirect,
+        'ws-init': cmd_ws_init_table,
+        'ws-redirect': cmd_ws_add_redirect,
+        'ws-clear': cmd_ws_clear,
+        'delete-rule': cmd_delete_rule,
+    }
+
+    try:
+        funcs[args.command](args)
+    except Exception as e:
+        print(f"Error executing command {args.command}: {e}", file=sys.stderr)
+        sys.exit(1)
+
+if __name__ == '__main__':
+    main()

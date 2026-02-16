@@ -1,0 +1,8 @@
+## Copyright (C) 2025 ENCRYPTED SUPPORT LLC <adrelanos@whonix.org>
+## See the file COPYING for copying conditions.
+
+## Allow user to run the Tor Control Panel firewall helper without a password
+## This is required to allow the GUI (running as user) to modify
+## specific nftables rules for the Exit Proxy feature.
+
+%sudo ALL=(root) NOPASSWD: /usr/libexec/tor-control-panel/tcp-firewall-helper
