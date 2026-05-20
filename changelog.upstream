@@ -1,3 +1,9 @@
+commit 2fc4bdf861108658ede01bed3242dc60501c9dd2
+Author: Patrick Schleizer <adrelanos@whonix.org>
+Date:   Sat Apr 11 08:38:45 2026 +0000
+
+    bumped changelog version
+
 commit 56904207bd9aba20ad2cd7e49ffbcf1eedc9bcbc
 Merge: cd6be52 3cff2d9
 Author: Patrick Schleizer <adrelanos@whonix.org>
@@ -681,7 +687,7 @@ Author: Patrick Schleizer <adrelanos@whonix.org>
 Date:   Tue Aug 22 17:50:15 2023 -0400
 
     enable Whonix-Gateway system DNS for meek-azure and snowflake
-    
+
     https://forums.whonix.org/t/censorship-circumvention-tor-pluggable-transports/2601/9
 
 commit 3969180fef752e93d9dae56946f983e465727e36
@@ -725,7 +731,7 @@ Author: Patrick Schleizer <adrelanos@whonix.org>
 Date:   Tue Aug 22 16:29:30 2023 -0400
 
     move bridges_default file to anon-connection-wizard and depend on it
-    
+
     to reduce code duplication
 
 commit 1b8551336216bdb3a1df6932e5c193003e9a7660
@@ -835,9 +841,9 @@ Author: Patrick Schleizer <adrelanos@whonix.org>
 Date:   Wed Jun 1 16:37:36 2022 -0400
 
     fix `SyntaxWarning: "is" with a literal.`
-    
+
     Thanks to @TNT_BOM_BOM for the bug report!
-    
+
     https://forums.whonix.org/t/tor-controller-gui-tor-control-panel/5444/89
 
 commit 29cc7a991fb451c84dbe3fdfd1a62a51a26eb459
@@ -875,7 +881,7 @@ Author: Patrick Schleizer <adrelanos@whonix.org>
 Date:   Fri May 27 12:50:10 2022 -0400
 
     remove tor-control-panel.service
-    
+
     since running repair-torrc does not belong into this package
 
 commit cb6b3ce7c021a373d4db703bff2676fd5e63e5f1
@@ -943,7 +949,7 @@ Author: Patrick Schleizer <adrelanos@whonix.org>
 Date:   Thu Jan 20 18:11:12 2022 -0500
 
     fix parsing Tor config file is using plain (not using pluggable transport) bridge
-    
+
     https://forums.whonix.org/t/bridges-dont-work/13210/12
 
 commit dabfac891b3defb46900db8821805cee02b0025e
@@ -1228,11 +1234,11 @@ Author: Patrick Schleizer <adrelanos@riseup.net>
 Date:   Sun Jan 26 04:04:58 2020 -0500
 
     fix onioncircuits started from tor-control-panel
-    
+
     by running it under user debian-tor rather than root
-    
+
     https://forums.whonix.org/t/onion-circuits-does-not-appear-in-the-tor-control-panel/8838
-    
+
     Thanks to @Masaika for reporting this bug!
 
 commit ea0c38b02201f311353e993b02fcd784c7fc004c
@@ -1440,7 +1446,7 @@ Author: Patrick Schleizer <adrelanos@riseup.net>
 Date:   Fri Apr 5 09:48:22 2019 -0400
 
     fix lintian warning
-    
+
     P: tor-control-panel source: file-contains-trailing-whitespace debian/control (line 17)
 
 commit e9140a1201b10237d9779245771c24f30ded8e1d
@@ -1484,18 +1490,18 @@ Author: Patrick Schleizer <adrelanos@riseup.net>
 Date:   Fri Mar 1 14:32:42 2019 +0000
 
     add improved legal protections clauses
-    
+
     The license for software created by Whonix is the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version with additional terms applicable per GNU GPL version 3 section 7.
-    
+
     The additional terms are based on the Doom 3 license which is Debian refers to as `GPL-3+-with-id-software-additional-terms`, which is Debian DFSG [1] (The Debian Free Software Guidelines) approved and which is therefore suitable for Debian `main`. Whonix made applied minimal changes to it:
-    
+
     * Rewrite `The Doom 3 BFG Edition GPL Source Code` to the more common `this program` which is used throughout the GPL.
     * Added a "trump clause" [2], in other words, any conflicts or disputes between the additional terms and the GPLv3 shall be resolved in favor of the GPLv3 by adding `Notwithstanding any other provision of this License` (as mentioned in GPL FAQ [3]) at the beginning of the additional terms.
-    
+
     [1] https://www.debian.org/social_contract#guidelines
     [2] https://www.fsf.org/news/canonical-updated-licensing-terms
     [3] https://www.gnu.org/licenses/gpl-faq.html#v3Notwithstanding
-    
+
     For more considerations, see also:
     https://www.whonix.org/wiki/Dev/Licensing
 
@@ -1823,10 +1829,10 @@ Author: troubadoour <trobador@riseup.net>
 Date:   Mon Jul 16 18:59:33 2018 +0000
 
     Add repair_torrc.py with additions.
-    
+
     Create 95_whonix.conf, 40_tor_control_panel.conf
     and 50_user.conf here if they do not exist.
-    
+
     Set torrc path for whonix and non-whonix distributions.
 
 commit 33f5a6924cba974f7f699fe3870e4c50d807b6c7
